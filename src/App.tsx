@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Code2, FileJson } from 'lucide-react';
+import { Code2, FileJson, Github, Linkedin } from 'lucide-react';
 import { ThemeToggle } from './components/ThemeToggle';
 import { JsonFormatter } from './components/JsonFormatter';
 import { CSharpGenerator } from './components/CSharpGenerator';
@@ -61,7 +61,29 @@ function App() {
         </main>
 
         <footer className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>Professional JSON formatter and C# class generator tool</p>
+          <p className="mb-3">Professional JSON formatter and C# class generator tool</p>
+          <div className="flex items-center justify-center gap-4">
+            <a
+              href="https://github.com/svolkancav"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              aria-label="GitHub Profile"
+            >
+              <Github className="w-4 h-4" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/svcavusoglu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin className="w-4 h-4" />
+              <span>LinkedIn</span>
+            </a>
+          </div>
         </footer>
       </div>
     </div>
