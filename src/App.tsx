@@ -11,6 +11,9 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
+import { JsonToCSharp } from './pages/tools/JsonToCSharp';
+import { JsonToTypeScript } from './pages/tools/JsonToTypeScript';
+import { JsonValidator } from './pages/tools/JsonValidator';
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/tools" element={<Tools />} />
+            <Route path="/json-to-csharp" element={<JsonToCSharp />} />
+            <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
+            <Route path="/json-validator" element={<JsonValidator />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogArticle />} />
             <Route path="/tutorials" element={<Tutorials />} />

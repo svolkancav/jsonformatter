@@ -1,3 +1,87 @@
+export function generateCSharpClasses(json: string, rootName: string = 'Root'): string {
+  try {
+    const obj = JSON.parse(json);
+    const classes: string[] = [];
+    const processedTypes = new Set<string>();
+
+    function getCSharpType(value: any): string {
+      if (value === null) return 'object';
+      if (Array.isArray(value)) {
+        if (value.length === 0) return 'List<object>';
+        const itemType = getCSharpType(value[0]);
+        return `List<${itemType}>`;
+      }
+      if (typeof value === 'object') return 'object';
+      if (typeof value === 'string') return 'string';
+      if (typeof value === 'number') {
+        return Number.isInteger(value) ? 'int' : 'double';
+      }
+      if (typeof value === 'boolean') return 'bool';
+      return 'object';
+    }
+
+    function toPascalCase(str: string): string {
+      return str.charAt(0).toUpperCase() + str.slice(1).replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+    }
+
+    function generateClass(obj: any, name: string): string {
+      if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
+        return '';
+      }
+
+      const className = toPascalCase(name);
+      if (processedTypes.has(className)) return '';
+      processedTypes.add(className);
+
+      const properties: string[] = [];
+      const usings = new Set<string>();
+
+      for (const [key, value] of Object.entries(obj)) {
+        let propType: string;
+
+        if (value === null) {
+          propType = 'object';
+        } else if (Array.isArray(value)) {
+          usings.add('System.Collections.Generic');
+          if (value.length > 0 && typeof value[0] === 'object' && !Array.isArray(value[0])) {
+            const nestedClassName = toPascalCase(key.replace(/s$/, ''));
+            generateClass(value[0], nestedClassName);
+            propType = `List<${nestedClassName}>`;
+          } else {
+            propType = getCSharpType(value);
+          }
+        } else if (typeof value === 'object') {
+          const nestedClassName = toPascalCase(key);
+          generateClass(value, key);
+          propType = nestedClassName;
+        } else {
+          propType = getCSharpType(value);
+        }
+
+        const propName = toPascalCase(key);
+        properties.push(`    public ${propType} ${propName} { get; set; }`);
+      }
+
+      let classCode = '';
+      if (usings.size > 0) {
+        classCode += Array.from(usings).map(u => `using ${u};`).join('\n') + '\n\n';
+      }
+
+      classCode += `public class ${className}\n{\n`;
+      classCode += properties.join('\n') + '\n';
+      classCode += '}';
+
+      classes.push(classCode);
+      return className;
+    }
+
+    generateClass(obj, rootName);
+    return classes.reverse().join('\n\n');
+  } catch (error) {
+    throw new Error('Invalid JSON: ' + (error as Error).message);
+  }
+}
+
 export function generateTypeScriptInterfaces(json: string, rootName: string = 'Root'): string {
   try {
     const obj = JSON.parse(json);
