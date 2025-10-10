@@ -6,17 +6,19 @@ interface SEOProps {
   description?: string;
   keywords?: string;
   ogType?: string;
+  canonicalUrl?: string;
 }
 
 export function SEO({
   title = 'JSON Formatter - Format JSON & Generate C# Classes',
   description = 'Professional JSON formatter and C# class generator tool. Format, minify JSON and generate C# classes instantly. Free forever.',
   keywords = 'JSON formatter, C# generator, JSON to C#, JSON minifier, JSON beautifier, JSON validator',
-  ogType = 'website'
+  ogType = 'website',
+  canonicalUrl
 }: SEOProps) {
   const location = useLocation();
   const baseUrl = 'https://jsonformater.com';
-  const fullUrl = `${baseUrl}${location.pathname}`;
+  const fullUrl = canonicalUrl || `${baseUrl}${location.pathname}`;
 
   useEffect(() => {
     document.title = title;
@@ -24,10 +26,12 @@ export function SEO({
     const metaTags = [
       { name: 'description', content: description },
       { name: 'keywords', content: keywords },
+      { name: 'robots', content: 'index, follow' },
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:type', content: ogType },
       { property: 'og:url', content: fullUrl },
+      { property: 'og:site_name', content: 'JSON Formatter' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description }
@@ -48,19 +52,41 @@ export function SEO({
       element.setAttribute('content', content);
     });
 
+    // Add canonical URL
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', fullUrl);
+
+    // Enhanced structured data
     const structuredData = {
       '@context': 'https://schema.org',
-      '@type': 'WebApplication',
-      name: 'JSON Formatter',
+      '@type': 'SoftwareApplication',
+      name: title.split(' - ')[0],
       description: description,
-      url: baseUrl,
-      applicationCategory: 'DeveloperApplication',
+      url: fullUrl,
+      applicationCategory: 'DeveloperTool',
       operatingSystem: 'Any',
+      browserRequirements: 'Requires JavaScript',
       offers: {
         '@type': 'Offer',
         price: '0',
         priceCurrency: 'USD'
-      }
+      },
+      author: {
+        '@type': 'Organization',
+        name: 'JSON Formatter'
+      },
+      featureList: [
+        'JSON formatting and validation',
+        'Excel to JSON conversion',
+        'JSON to Excel conversion',
+        'C# class generation',
+        'Free online tool'
+      ]
     };
 
     let scriptTag = document.querySelector('script[type="application/ld+json"]');

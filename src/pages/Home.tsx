@@ -1,34 +1,99 @@
+import { useState } from 'react';
 import { JsonFormatter } from '../components/JsonFormatter';
+import { ExcelToJsonConverter } from '../components/ExcelToJsonConverter';
+import { JsonToExcelConverter } from '../components/JsonToExcelConverter';
+import { ToolNavigation, ToolType } from '../components/ToolNavigation';
 import { Book, Code, Zap, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 
 export function Home() {
+  const [activeTool, setActiveTool] = useState<ToolType>('formatter');
+  const [sharedJson, setSharedJson] = useState('');
+
+  const handleJsonGenerated = (json: string) => {
+    setSharedJson(json);
+  };
+
   const loadExample = (json: string) => {
     const event = new CustomEvent('loadExample', { detail: json });
     window.dispatchEvent(event);
   };
 
+  const renderActiveTool = () => {
+    switch (activeTool) {
+      case 'formatter':
+        return <JsonFormatter />;
+      case 'excel-to-json':
+        return <ExcelToJsonConverter onJsonGenerated={handleJsonGenerated} />;
+      case 'json-to-excel':
+        return <JsonToExcelConverter initialJson={sharedJson} />;
+      default:
+        return <JsonFormatter />;
+    }
+  };
+
+  const getSEOData = () => {
+    switch (activeTool) {
+      case 'formatter':
+        return {
+          title: 'JSON Formatter - Format, Validate & Beautify JSON Online',
+          description: 'Free online JSON formatter and validator. Format, beautify, minify and validate JSON data instantly. Convert JSON to C#, TypeScript, Java, Python classes.',
+          keywords: 'json formatter, json validator, json beautifier, json minifier, json to csharp, format json online'
+        };
+      case 'excel-to-json':
+        return {
+          title: 'Excel to JSON Converter | Convert XLSX or CSV to JSON Online',
+          description: 'Easily convert Excel or CSV files to JSON online. Upload your Excel sheet, preview JSON output, and download it instantly.',
+          keywords: 'excel to json converter, convert excel to json online, csv to json, xlsx to json, free converter'
+        };
+      case 'json-to-excel':
+        return {
+          title: 'JSON to Excel Converter | Export JSON to XLSX Online',
+          description: 'Convert JSON data to Excel (.xlsx) instantly. Paste JSON, validate it, and download as Excel file — simple, secure, and free.',
+          keywords: 'json to excel converter, convert json to excel online, export json to xlsx, json to spreadsheet'
+        };
+      default:
+        return {
+          title: 'JSON Formatter - Format, Validate & Beautify JSON Online',
+          description: 'Free online JSON formatter and validator. Format, beautify, minify and validate JSON data instantly. Convert JSON to C#, TypeScript, Java, Python classes.',
+          keywords: 'json formatter, json validator, json beautifier, json minifier, json to csharp, format json online'
+        };
+    }
+  };
+
+  const seoData = getSEOData();
+
   return (
     <>
       <SEO
-        title="JSON Formatter - Format, Validate & Beautify JSON Online"
-        description="Free online JSON formatter and validator. Format, beautify, minify and validate JSON data instantly. Convert JSON to C#, TypeScript, Java, Python classes."
-        keywords="json formatter, json validator, json beautifier, json minifier, json to csharp, format json online"
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
       />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <header className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            JSON Formatter & Validator
+            {activeTool === 'formatter' && 'JSON Formatter & Validator'}
+            {activeTool === 'excel-to-json' && 'Excel to JSON Converter'}
+            {activeTool === 'json-to-excel' && 'JSON to Excel Converter'}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Format, validate, and beautify your JSON data instantly. Professional tools for developers, completely free.
+            {activeTool === 'formatter' && 'Format, validate, and beautify your JSON data instantly. Professional tools for developers, completely free.'}
+            {activeTool === 'excel-to-json' && 'Easily convert Excel or CSV files to JSON online. Upload your Excel sheet, preview JSON output, and download it instantly.'}
+            {activeTool === 'json-to-excel' && 'Convert JSON data to Excel (.xlsx) instantly. Paste JSON, validate it, and download as Excel file — simple, secure, and free.'}
           </p>
         </header>
 
+        {/* Tool Navigation */}
+        <div className="mb-8">
+          <ToolNavigation activeTool={activeTool} onToolChange={setActiveTool} />
+        </div>
+
+        {/* Main Tool Area */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-12">
-          <JsonFormatter />
+          {renderActiveTool()}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

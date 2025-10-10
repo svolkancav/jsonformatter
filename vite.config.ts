@@ -14,7 +14,7 @@ export default defineConfig({
     }),
   ],
   optimizeDeps: {
-    exclude: ['lucide-react'],
+    exclude: ['lucide-react', 'xlsx', 'papaparse'],
   },
   build: {
     // Enable code splitting
@@ -26,6 +26,7 @@ export default defineConfig({
           router: ['react-router-dom'],
           supabase: ['@supabase/supabase-js'],
           icons: ['lucide-react'],
+          excel: ['xlsx', 'papaparse'],
         },
       },
     },
