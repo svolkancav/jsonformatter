@@ -14,6 +14,7 @@ import { Terms } from './pages/Terms';
 import { JsonToCSharp } from './pages/tools/JsonToCSharp';
 import { JsonToTypeScript } from './pages/tools/JsonToTypeScript';
 import { JsonValidator } from './pages/tools/JsonValidator';
+import { BlobView } from './pages/BlobView';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/json-to-csharp" element={<JsonToCSharp />} />
             <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
             <Route path="/json-validator" element={<JsonValidator />} />
+            <Route path="/blob/:shortId" element={<BlobView />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogArticle />} />
             <Route path="/tutorials" element={<Tutorials />} />
