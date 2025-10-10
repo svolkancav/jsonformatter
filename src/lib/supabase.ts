@@ -1,13 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
-}
+export const isSupabaseConfigured: boolean = Boolean(supabaseUrl && supabaseAnonKey);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase: SupabaseClient | null = isSupabaseConfigured
+  ? createClient(supabaseUrl as string, supabaseAnonKey as string)
+  : null;
 
 export const generateShortId = (): string => {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -45,6 +45,9 @@ export const saveJsonBlob = async (
   jsonContent: any,
   options: SaveBlobOptions = {}
 ): Promise<JsonBlob & { url: string }> => {
+  if (!isSupabaseConfigured || !supabase) {
+    throw new Error('Sharing is unavailable: Supabase is not configured.');
+  }
   const shortId = generateShortId();
 
   const { data, error } = await supabase
@@ -68,6 +71,9 @@ export const saveJsonBlob = async (
 };
 
 export const getJsonBlob = async (shortId: string): Promise<JsonBlob> => {
+  if (!isSupabaseConfigured || !supabase) {
+    throw new Error('Content storage is not configured.');
+  }
   const { data, error } = await supabase
     .from('json_blobs')
     .select('*')
@@ -83,6 +89,9 @@ export const getJsonBlob = async (shortId: string): Promise<JsonBlob> => {
 };
 
 export const getRecentBlobs = async (limit: number = 10): Promise<JsonBlob[]> => {
+  if (!isSupabaseConfigured || !supabase) {
+    return [];
+  }
   const { data, error } = await supabase
     .from('json_blobs')
     .select('*')
@@ -95,6 +104,9 @@ export const getRecentBlobs = async (limit: number = 10): Promise<JsonBlob[]> =>
 };
 
 export const getPopularBlobs = async (limit: number = 10): Promise<JsonBlob[]> => {
+  if (!isSupabaseConfigured || !supabase) {
+    return [];
+  }
   const { data, error } = await supabase
     .from('json_blobs')
     .select('*')
@@ -107,14 +119,20 @@ export const getPopularBlobs = async (limit: number = 10): Promise<JsonBlob[]> =
 };
 
 export const getBlobStats = async (): Promise<BlobStats> => {
+  if (!isSupabaseConfigured || !supabase) {
+    return { total_blobs: 0, blobs_today: 0, total_views: 0 };
+  }
   const { data, error } = await supabase.rpc('get_blob_stats').single();
 
   if (error) throw error;
-  return data;
+  return data as BlobStats;
 };
 
 export const getBlobsByIds = async (shortIds: string[]): Promise<JsonBlob[]> => {
   if (shortIds.length === 0) return [];
+  if (!isSupabaseConfigured || !supabase) {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from('json_blobs')
