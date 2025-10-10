@@ -1,10 +1,46 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    visualizer({
+      filename: 'dist/stats.html',
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   optimizeDeps: {
     exclude: ['lucide-react'],
+  },
+  build: {
+    // Enable code splitting
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          supabase: ['@supabase/supabase-js'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
+    // Optimize for mobile
+    target: 'es2015',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+    // Enable CSS code splitting
+    cssCodeSplit: true,
+    // Optimize chunk size
+    chunkSizeWarningLimit: 1000,
   },
 });
