@@ -10,6 +10,8 @@ export function Navigation() {
   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/json-formatter', label: 'JSON Formatter' },
+    { path: '/json-viewer', label: 'JSON Viewer' },
+    { path: '/json-blob-viewer', label: 'JSON Blob Viewer' },
     { path: '/json-to-excel', label: 'JSON to Excel' },
     { path: '/excel-to-json', label: 'Excel to JSON' },
     { path: '/tutorials', label: 'Tutorials' },

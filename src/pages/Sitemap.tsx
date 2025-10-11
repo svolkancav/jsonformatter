@@ -17,6 +17,18 @@ export function Sitemap() {
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://jsonformater.com/json-viewer</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jsonformater.com/json-blob-viewer</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://jsonformater.com/json-to-excel</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
