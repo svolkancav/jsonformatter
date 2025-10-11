@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, MessageSquare, Send } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -20,15 +21,22 @@ export function Contact() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          Contact Us
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">
-          Have questions or feedback? We'd love to hear from you!
-        </p>
-      </header>
+    <>
+      <SEO
+        title="Contact JSON Formatter | Get Support & Feedback"
+        description="Contact the JSON Formatter team for support, feedback, or feature requests. We're here to help with your JSON formatting and conversion needs."
+        keywords="contact json formatter, support, feedback, json tools help"
+        canonicalUrl="https://jsonformater.com/contact"
+      />
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Contact Us
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400">
+            Have questions or feedback? We'd love to hear from you!
+          </p>
+        </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
@@ -145,6 +153,7 @@ export function Contact() {
       <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
         <p>We typically respond within 24-48 hours during business days.</p>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

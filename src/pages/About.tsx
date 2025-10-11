@@ -1,16 +1,24 @@
 import { Target, Users, Heart, Code2 } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 export function About() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <header className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          About JSON Formatter
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">
-          Professional tools for developers, built by developers
-        </p>
-      </header>
+    <>
+      <SEO
+        title="About JSON Formatter | Professional Developer Tools"
+        description="Learn about JSON Formatter, the free online tool for formatting, validating, and converting JSON data. Built by developers for developers with Excel integration and C# class generation."
+        keywords="about json formatter, developer tools, json tools, free online tools, json converter"
+        canonicalUrl="https://jsonformater.com/about"
+      />
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <header className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            About JSON Formatter
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400">
+            Professional tools for developers, built by developers
+          </p>
+        </header>
 
       <div className="space-y-8">
         <section className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
@@ -124,6 +132,7 @@ export function About() {
           </div>
         </section>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
