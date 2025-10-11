@@ -96,7 +96,52 @@ export function Home() {
           {renderActiveTool()}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <Link
+            to="/json-formatter"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON Formatter</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Format and validate JSON data</p>
+          </Link>
+
+          <Link
+            to="/json-viewer"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON Viewer</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">View JSON in tree structure</p>
+          </Link>
+
+          <Link
+            to="/json-blob-viewer"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON Blob Viewer</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">View and format JSON blobs</p>
+          </Link>
+
+          <Link
+            to="/json-to-excel"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-orange-600 dark:text-orange-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to Excel</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert JSON to Excel spreadsheets</p>
+          </Link>
+
+          <Link
+            to="/excel-to-json"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-indigo-600 dark:text-indigo-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Excel to JSON</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert Excel files to JSON</p>
+          </Link>
+
           <Link
             to="/json-to-csharp"
             className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
@@ -104,24 +149,6 @@ export function Home() {
             <Code className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to C#</h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Generate C# classes from JSON</p>
-          </Link>
-
-          <Link
-            to="/json-to-typescript"
-            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
-          >
-            <Code className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to TypeScript</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Generate TypeScript interfaces</p>
-          </Link>
-
-          <Link
-            to="/json-validator"
-            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
-          >
-            <CheckCircle className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON Validator</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Validate JSON syntax</p>
           </Link>
         </div>
 

@@ -22,6 +22,8 @@ const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: 
 
 // New dedicated pages
 const JsonFormatter = lazy(() => import('./pages/JsonFormatter').then(module => ({ default: module.JsonFormatterPage })));
+const JsonViewer = lazy(() => import('./pages/JsonViewer').then(module => ({ default: module.JsonViewerPage })));
+const JsonBlobViewer = lazy(() => import('./pages/JsonBlobViewer').then(module => ({ default: module.JsonBlobViewerPage })));
 const JsonToExcel = lazy(() => import('./pages/JsonToExcel').then(module => ({ default: module.JsonToExcelPage })));
 const ExcelToJson = lazy(() => import('./pages/ExcelToJson').then(module => ({ default: module.ExcelToJsonPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
@@ -45,6 +47,8 @@ function App() {
                   
                   {/* Dedicated tool pages */}
                   <Route path="/json-formatter" element={<JsonFormatter />} />
+                  <Route path="/json-viewer" element={<JsonViewer />} />
+                  <Route path="/json-blob-viewer" element={<JsonBlobViewer />} />
                   <Route path="/json-to-excel" element={<JsonToExcel />} />
                   <Route path="/excel-to-json" element={<ExcelToJson />} />
                   

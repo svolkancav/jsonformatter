@@ -5,9 +5,9 @@ export function JsonFormatterPage() {
   return (
     <>
       <SEO
-        title="JSON Formatter | Free Online JSON Validator & Beautifier"
-        description="Format, validate, and beautify JSON data instantly. Free online JSON formatter with syntax highlighting, minification, and error detection. No registration required."
-        keywords="json formatter, json validator, json beautifier, format json online, json minifier, json syntax checker"
+        title="Free Online JSON Formatter & Validator"
+        description="Format, validate, and beautify your JSON data instantly with our free online JSON formatter tool."
+        keywords="free json formatter, online json formatter, json validator, json beautifier, format json online, json minifier, json syntax checker"
         canonicalUrl="https://jsonformater.com/json-formatter"
       />
       
@@ -15,10 +15,10 @@ export function JsonFormatterPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           <header className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              JSON Formatter & Validator
+              Free Online JSON Formatter & Validator
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Format, validate, and beautify your JSON data instantly. Professional tools for developers, completely free.
+              Format, validate, and beautify your JSON data instantly with our free online JSON formatter tool.
             </p>
           </header>
 

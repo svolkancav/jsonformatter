@@ -5,9 +5,9 @@ export function ExcelToJsonPage() {
   return (
     <>
       <SEO
-        title="Excel to JSON Converter | Free Online Tool"
-        description="Upload an Excel file and get clean JSON instantly. No signup required. Convert Excel (.xlsx, .csv) files to JSON format easily and securely."
-        keywords="excel to json converter, convert excel to json, xlsx to json, csv to json, excel json converter, spreadsheet to json"
+        title="Free Online Excel to JSON Converter"
+        description="Convert Excel (.xlsx or .csv) files to JSON instantly with our free online converter tool."
+        keywords="free excel to json converter, online excel to json, xlsx to json converter, csv to json converter, excel json converter, free online converter"
         canonicalUrl="https://jsonformater.com/excel-to-json"
       />
       
@@ -15,10 +15,10 @@ export function ExcelToJsonPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           <header className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              Excel to JSON Converter
+              Free Online Excel to JSON Converter
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Easily convert Excel or CSV files to JSON online. Upload your Excel sheet, preview JSON output, and download it instantly.
+              Convert Excel (.xlsx or .csv) files to JSON instantly with our free online converter tool.
             </p>
           </header>
 
