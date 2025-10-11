@@ -9,7 +9,9 @@ export function Navigation() {
 
   const navItems = [
     { path: '/', label: 'Home' },
-    { path: '/tools', label: 'Tools' },
+    { path: '/json-formatter', label: 'JSON Formatter' },
+    { path: '/json-to-excel', label: 'JSON to Excel' },
+    { path: '/excel-to-json', label: 'Excel to JSON' },
     { path: '/tutorials', label: 'Tutorials' },
     { path: '/blog', label: 'Blog' },
     { path: '/about', label: 'About' },

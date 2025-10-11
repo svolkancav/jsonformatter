@@ -1,87 +1,106 @@
-<?xml version="1.0" encoding="UTF-8"?>
+import { useEffect } from 'react';
+
+export function Sitemap() {
+  useEffect(() => {
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jsonformater.com/</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/json-formatter</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/json-to-excel</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/excel-to-json</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/json-to-csharp</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/json-to-typescript</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/json-validator</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/blog</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/tutorials</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/about</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/contact</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/privacy</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/privacy-policy</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jsonformater.com/terms</loc>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-</urlset>
+</urlset>`;
+
+    // Set content type to XML
+    const response = new Response(sitemap, {
+      headers: {
+        'Content-Type': 'application/xml',
+        'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
+      },
+    });
+
+    // For client-side rendering, we'll redirect to a static file
+    window.location.href = '/sitemap.xml';
+  }, []);
+
+  return null;
+}

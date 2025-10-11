@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
@@ -18,6 +18,14 @@ const JsonToCSharp = lazy(() => import('./pages/tools/JsonToCSharp').then(module
 const JsonToTypeScript = lazy(() => import('./pages/tools/JsonToTypeScript').then(module => ({ default: module.JsonToTypeScript })));
 const JsonValidator = lazy(() => import('./pages/tools/JsonValidator').then(module => ({ default: module.JsonValidator })));
 const BlobView = lazy(() => import('./pages/BlobView').then(module => ({ default: module.BlobView })));
+const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
+
+// New dedicated pages
+const JsonFormatter = lazy(() => import('./pages/JsonFormatter').then(module => ({ default: module.JsonFormatterPage })));
+const JsonToExcel = lazy(() => import('./pages/JsonToExcel').then(module => ({ default: module.JsonToExcelPage })));
+const ExcelToJson = lazy(() => import('./pages/ExcelToJson').then(module => ({ default: module.ExcelToJsonPage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 
 function App() {
   return (
@@ -31,21 +39,32 @@ function App() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           }>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/tools" element={<Tools />} />
-              <Route path="/json-to-csharp" element={<JsonToCSharp />} />
-              <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
-              <Route path="/json-validator" element={<JsonValidator />} />
-              <Route path="/blob/:shortId" element={<BlobView />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogArticle />} />
-              <Route path="/tutorials" element={<Tutorials />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-            </Routes>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/tools" element={<Navigate to="/json-formatter" replace />} />
+                  
+                  {/* Dedicated tool pages */}
+                  <Route path="/json-formatter" element={<JsonFormatter />} />
+                  <Route path="/json-to-excel" element={<JsonToExcel />} />
+                  <Route path="/excel-to-json" element={<ExcelToJson />} />
+                  
+                  {/* Legacy tool routes */}
+                  <Route path="/json-to-csharp" element={<JsonToCSharp />} />
+                  <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
+                  <Route path="/json-validator" element={<JsonValidator />} />
+                  
+                  {/* Other pages */}
+                  <Route path="/blob/:shortId" element={<BlobView />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<BlogArticle />} />
+                  <Route path="/tutorials" element={<Tutorials />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/sitemap.xml" element={<Sitemap />} />
+                </Routes>
           </Suspense>
         </main>
         <Footer />
