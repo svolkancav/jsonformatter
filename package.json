@@ -12,9 +12,13 @@
     "generate:favicon": "node generate-favicon.js"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@supabase/supabase-js": "^2.57.4",
+    "@types/nodemailer": "^7.0.2",
     "@types/papaparse": "^5.3.16",
+    "@vercel/node": "^5.3.26",
     "lucide-react": "^0.344.0",
+    "nodemailer": "^7.0.9",
     "papaparse": "^5.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
