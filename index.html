@@ -2,49 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
+
+    <!-- ✅ Favicon set -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="theme-color" content="#0f172a">
+
+    <!-- ✅ Ek öneri: rel="alternate icon" ekle -->
+    <link rel="alternate icon" href="https://jsonformater.com/favicon.ico" />
+
+    <!-- ✅ Ek öneri: manifest.json (Google favicon crawler seviyor) -->
+    <link rel="manifest" href="/site.webmanifest" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Preconnect to external domains for faster loading -->
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-    <!-- Font optimization -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
+    <!-- SEO -->
     <meta name="description" content="Format, beautify, and view JSON online for free. Instantly convert JSON to Excel or Excel to JSON, and explore JSON Blobs with our free online tool." />
     <meta name="keywords" content="free json formatter, online json formatter, json blob viewer, json to excel converter, excel to json converter, json viewer, free online json tool, json beautifier" />
+
+    <!-- OG / Twitter -->
     <meta property="og:title" content="Free Online JSON Formatter, Blob Viewer & Excel Converter | jsonformater.com" />
     <meta property="og:description" content="Format, beautify, and view JSON online for free. Instantly convert JSON to Excel or Excel to JSON, and explore JSON Blobs with our free online tool." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jsonformater.com" />
     <meta property="og:site_name" content="JSON Formatter" />
-    <meta property="og:image" content="https://jsonformater.com/favicon.svg" />
+    <meta property="og:image" content="https://jsonformater.com/favicon-512x512.png" />
     <meta property="og:image:alt" content="JSON Formatter Logo" />
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Free Online JSON Formatter, Blob Viewer & Excel Converter" />
     <meta name="twitter:description" content="Format, beautify, and view JSON online for free. Instantly convert JSON to Excel or Excel to JSON, and explore JSON Blobs with our free online tool." />
-    <meta name="twitter:image" content="https://jsonformater.com/favicon.svg" />
+    <meta name="twitter:image" content="https://jsonformater.com/favicon-512x512.png" />
+
     <title>Free Online JSON Formatter, Blob Viewer & Excel Converter | jsonformater.com</title>
+
+    <!-- Google Ads + Analytics -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5398027060352897"
      crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DBLYCS3KE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-0DBLYCS3KE');
     </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Preload critical resources -->
+
+    <!-- Preload -->
     <link rel="preload" href="/src/main.tsx" as="script" crossorigin>
     <link rel="preload" href="/src/index.css" as="style">
   </body>
