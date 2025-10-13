@@ -4,7 +4,7 @@
   ],
   "functions": {
     "api/contact.ts": {
-      "runtime": "vercel-node@5.3.26"
+      "runtime": "@vercel/node@5.3.26"
     }
   }
 }
