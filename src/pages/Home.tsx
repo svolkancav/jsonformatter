@@ -168,6 +168,15 @@ export function Home() {
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to C#</h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Generate C# classes from JSON</p>
           </Link>
+
+          <Link
+            to="/json-to-typescript"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-cyan-600 dark:text-cyan-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to TypeScript</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Generate TypeScript interfaces from JSON</p>
+          </Link>
         </div>
 
         <article className="prose prose-lg dark:prose-invert max-w-none space-y-12">
