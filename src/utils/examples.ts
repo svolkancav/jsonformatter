@@ -23,13 +23,13 @@ export const exampleJson = {
         "orderId": "ORD-001",
         "items": ["Laptop", "Mouse"],
         "total": 1299.99,
-        "date": "2024-01-15"
+        "date": "2025-01-15"
       },
       {
         "orderId": "ORD-002",
         "items": ["Keyboard"],
         "total": 79.99,
-        "date": "2024-02-20"
+        "date": "2025-02-20"
       }
     ]
   }
