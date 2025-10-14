@@ -143,6 +143,24 @@ export function Home() {
           </Link>
 
           <Link
+            to="/excel-to-xml"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-red-600 dark:text-red-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Excel to XML</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert Excel files to XML</p>
+          </Link>
+
+          <Link
+            to="/excel-to-csv"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-teal-600 dark:text-teal-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Excel to CSV</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert Excel files to CSV</p>
+          </Link>
+
+          <Link
             to="/json-to-csharp"
             className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
           >
