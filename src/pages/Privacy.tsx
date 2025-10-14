@@ -6,7 +6,7 @@ export function Privacy() {
           Privacy Policy
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
-          Last updated: January 15, 2024
+          Last updated: January 15, 2025
         </p>
       </header>
 

@@ -25,7 +25,7 @@ export const blogArticles: Record<string, BlogArticle> = {
     id: 'understanding-json-guide',
     title: 'Understanding JSON: A Complete Guide for Developers',
     excerpt: 'Learn everything about JSON from basics to advanced concepts. Understand syntax, data types, best practices, and common use cases in modern web development.',
-    date: '2024-01-15',
+    date: '2025-01-15',
     readTime: '8 min read',
     category: 'Tutorial',
     content: {
@@ -52,7 +52,7 @@ export const blogArticles: Record<string, BlogArticle> = {
     id: 'json-best-practices',
     title: 'Best Practices for JSON Data Structure Design',
     excerpt: 'Discover proven patterns and anti-patterns for designing efficient, maintainable JSON structures. Learn about naming conventions, nesting strategies, and performance optimization.',
-    date: '2024-01-20',
+    date: '2025-01-20',
     readTime: '10 min read',
     category: 'Best Practices',
     content: {
@@ -65,7 +65,7 @@ export const blogArticles: Record<string, BlogArticle> = {
   "firstName": "Jane",
   "lastName": "Smith",
   "emailAddress": "jane@example.com",
-  "accountCreatedAt": "2024-01-15T10:30:00Z"
+  "accountCreatedAt": "2025-01-15T10:30:00Z"
 }`
         },
         {
@@ -90,7 +90,7 @@ export const blogArticles: Record<string, BlogArticle> = {
   "isActive": true,
   "age": 30,
   "balance": 1234.56,
-  "createdAt": "2024-01-15T10:30:00Z",
+  "createdAt": "2025-01-15T10:30:00Z",
   "tags": ["premium", "verified"]
 }`
         },
@@ -118,7 +118,7 @@ export const blogArticles: Record<string, BlogArticle> = {
     "code": "INVALID_EMAIL",
     "message": "The email address format is invalid",
     "field": "email",
-    "timestamp": "2024-01-15T10:30:00Z"
+    "timestamp": "2025-01-15T10:30:00Z"
   }
 }`
         },
@@ -162,7 +162,7 @@ export const blogArticles: Record<string, BlogArticle> = {
     id: 'json-to-csharp-tutorial',
     title: 'How to Convert JSON to C# Classes: Step by Step Tutorial',
     excerpt: 'Complete guide to converting JSON data into C# classes. Learn about data type mapping, handling nullable values, nested objects, and arrays with practical examples.',
-    date: '2024-01-25',
+    date: '2025-01-25',
     readTime: '12 min read',
     category: 'Tutorial',
     content: {
@@ -268,7 +268,7 @@ public record User
     id: 'common-json-errors',
     title: 'Common JSON Formatting Errors and How to Fix Them',
     excerpt: 'Troubleshoot the most common JSON errors developers encounter. Learn to identify and fix syntax errors, trailing commas, quote issues, and invalid data types.',
-    date: '2024-02-01',
+    date: '2025-02-01',
     readTime: '7 min read',
     category: 'Troubleshooting',
     content: {
@@ -424,7 +424,7 @@ public record User
     id: 'nested-json-csharp',
     title: 'Working with Nested JSON Objects in C#',
     excerpt: 'Master the art of handling complex, deeply nested JSON structures in C#. Learn about deserialization, navigation, and best practices for working with hierarchical data.',
-    date: '2024-02-10',
+    date: '2025-02-10',
     readTime: '15 min read',
     category: 'Advanced',
     content: {

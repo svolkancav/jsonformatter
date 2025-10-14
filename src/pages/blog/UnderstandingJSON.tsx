@@ -19,7 +19,7 @@ export function UnderstandingJSON() {
           </span>
           <span className="flex items-center gap-1">
             <Calendar className="w-4 h-4" />
-            January 15, 2024
+            January 15, 2025
           </span>
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />

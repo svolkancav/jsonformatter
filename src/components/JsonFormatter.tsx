@@ -85,7 +85,7 @@ export function JsonFormatter() {
       "notifications": true
     }
   },
-  "timestamp": "2024-01-15T10:30:00Z"
+  "timestamp": "2025-01-15T10:30:00Z"
 }`;
     setJsonInput(example);
     setFormatted('');

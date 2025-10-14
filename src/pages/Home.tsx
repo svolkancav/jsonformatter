@@ -575,7 +575,7 @@ export function Home() {
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <strong className="text-gray-900 dark:text-white">Use ISO 8601 for Dates:</strong> Format dates as "2024-01-15T10:30:00Z" for universal compatibility.
+                  <strong className="text-gray-900 dark:text-white">Use ISO 8601 for Dates:</strong> Format dates as "2025-01-15T10:30:00Z" for universal compatibility.
                 </div>
               </div>
 
