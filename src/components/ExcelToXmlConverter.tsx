@@ -1,18 +1,41 @@
 import { useState, useCallback } from 'react';
-import { Upload, Download, Copy, CheckCircle2, AlertCircle, FileSpreadsheet, FileText } from 'lucide-react';
+import { Upload, Download, Copy, CheckCircle2, AlertCircle, FileCode } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 
-interface ExcelToJsonConverterProps {
-  onJsonGenerated?: (json: string) => void;
+interface ExcelToXmlConverterProps {
+  onXmlGenerated?: (xml: string) => void;
 }
 
-export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterProps) {
-  const [jsonOutput, setJsonOutput] = useState('');
+export function ExcelToXmlConverter({ onXmlGenerated }: ExcelToXmlConverterProps) {
+  const [xmlOutput, setXmlOutput] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [fileName, setFileName] = useState('');
+
+  const convertToXml = (data: any[]): string => {
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<root>\n';
+    
+    data.forEach((item, index) => {
+      xml += `  <item index="${index}">\n`;
+      Object.entries(item).forEach(([key, value]) => {
+        // Sanitize key to be valid XML element name
+        const sanitizedKey = key.replace(/[^a-zA-Z0-9_]/g, '_');
+        const sanitizedValue = String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&apos;');
+        xml += `    <${sanitizedKey}>${sanitizedValue}</${sanitizedKey}>\n`;
+      });
+      xml += '  </item>\n';
+    });
+    
+    xml += '</root>';
+    return xml;
+  };
 
   const handleFileUpload = useCallback(async (file: File) => {
     setLoading(true);
@@ -31,9 +54,9 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
             if (results.errors.length > 0) {
               setError(`CSV parsing error: ${results.errors[0].message}`);
             } else {
-              const jsonString = JSON.stringify(results.data, null, 2);
-              setJsonOutput(jsonString);
-              onJsonGenerated?.(jsonString);
+              const xmlString = convertToXml(results.data);
+              setXmlOutput(xmlString);
+              onXmlGenerated?.(xmlString);
             }
             setLoading(false);
           },
@@ -51,7 +74,7 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         
-        // Convert to JSON
+        // Convert to JSON first
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
         
         // Convert to array of objects (first row as headers)
@@ -67,9 +90,9 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
             return obj;
           });
           
-          const jsonString = JSON.stringify(objectsArray, null, 2);
-          setJsonOutput(jsonString);
-          onJsonGenerated?.(jsonString);
+          const xmlString = convertToXml(objectsArray);
+          setXmlOutput(xmlString);
+          onXmlGenerated?.(xmlString);
         } else {
           setError('The Excel file appears to be empty');
         }
@@ -82,7 +105,7 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
       setError(`Error processing file: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setLoading(false);
     }
-  }, [onJsonGenerated]);
+  }, [onXmlGenerated]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -97,20 +120,20 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
   }, []);
 
   const handleCopy = async () => {
-    if (jsonOutput) {
-      await navigator.clipboard.writeText(jsonOutput);
+    if (xmlOutput) {
+      await navigator.clipboard.writeText(xmlOutput);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
   };
 
   const handleDownload = () => {
-    if (jsonOutput) {
-      const blob = new Blob([jsonOutput], { type: 'application/json' });
+    if (xmlOutput) {
+      const blob = new Blob([xmlOutput], { type: 'application/xml' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${fileName.split('.')[0] || 'converted'}.json`;
+      a.download = `${fileName.split('.')[0] || 'converted'}.xml`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -158,10 +181,10 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
                 if (file) handleFileUpload(file);
               }}
               className="hidden"
-              id="file-upload"
+              id="file-upload-xml"
             />
             <label
-              htmlFor="file-upload"
+              htmlFor="file-upload-xml"
               className={`px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors cursor-pointer ${
                 loading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
@@ -182,17 +205,17 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
         </div>
       )}
 
-      {/* JSON Output */}
-      {jsonOutput && (
+      {/* XML Output */}
+      {xmlOutput && (
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-3">
-              <FileText className="w-5 h-5 text-green-600" />
+              <FileCode className="w-5 h-5 text-green-600" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                JSON Output
+                XML Output
               </h3>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {jsonOutput.split('\n').length} lines
+                {xmlOutput.split('\n').length} lines
               </span>
             </div>
             
@@ -209,16 +232,17 @@ export function ExcelToJsonConverter({ onJsonGenerated }: ExcelToJsonConverterPr
                 className="flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
                 <Download className="w-4 h-4" />
-                Download JSON
+                Download XML
               </button>
             </div>
           </div>
           
           <pre className="p-4 overflow-x-auto text-sm font-mono text-gray-900 dark:text-gray-100 max-h-[400px] bg-gray-50 dark:bg-gray-900">
-            {jsonOutput}
+            {xmlOutput}
           </pre>
         </div>
       )}
     </div>
   );
 }
+

@@ -14,6 +14,8 @@ export function Navigation() {
     { path: '/json-blob-viewer', label: 'JSON Blob Viewer' },
     { path: '/json-to-excel', label: 'JSON to Excel' },
     { path: '/excel-to-json', label: 'Excel to JSON' },
+    { path: '/excel-to-xml', label: 'Excel to XML' },
+    { path: '/excel-to-csv', label: 'Excel to CSV' },
     { path: '/tutorials', label: 'Tutorials' },
     { path: '/blog', label: 'Blog' },
     { path: '/about', label: 'About' },

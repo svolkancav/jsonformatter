@@ -26,6 +26,8 @@ const JsonViewer = lazy(() => import('./pages/JsonViewer').then(module => ({ def
 const JsonBlobViewer = lazy(() => import('./pages/JsonBlobViewer').then(module => ({ default: module.JsonBlobViewerPage })));
 const JsonToExcel = lazy(() => import('./pages/JsonToExcel').then(module => ({ default: module.JsonToExcelPage })));
 const ExcelToJson = lazy(() => import('./pages/ExcelToJson').then(module => ({ default: module.ExcelToJsonPage })));
+const ExcelToXml = lazy(() => import('./pages/ExcelToXml').then(module => ({ default: module.ExcelToXmlPage })));
+const ExcelToCsv = lazy(() => import('./pages/ExcelToCsv').then(module => ({ default: module.ExcelToCsvPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 
@@ -51,6 +53,8 @@ function App() {
                   <Route path="/json-blob-viewer" element={<JsonBlobViewer />} />
                   <Route path="/json-to-excel" element={<JsonToExcel />} />
                   <Route path="/excel-to-json" element={<ExcelToJson />} />
+                  <Route path="/excel-to-xml" element={<ExcelToXml />} />
+                  <Route path="/excel-to-csv" element={<ExcelToCsv />} />
                   
                   {/* Legacy tool routes */}
                   <Route path="/json-to-csharp" element={<JsonToCSharp />} />

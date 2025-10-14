@@ -14,7 +14,8 @@ export default defineConfig({
     }),
   ],
   optimizeDeps: {
-    exclude: ['lucide-react', 'xlsx', 'papaparse'],
+    exclude: ['lucide-react'],
+    include: ['papaparse', 'xlsx'],
   },
   build: {
     // Enable code splitting
