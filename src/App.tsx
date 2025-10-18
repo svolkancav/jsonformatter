@@ -6,11 +6,9 @@ import { SEO } from './components/SEO';
 
 // Lazy load all page components for code splitting
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
-const Tools = lazy(() => import('./pages/Tools').then(module => ({ default: module.Tools })));
 const Blog = lazy(() => import('./pages/Blog').then(module => ({ default: module.Blog })));
 const BlogArticle = lazy(() => import('./pages/BlogArticle').then(module => ({ default: module.BlogArticle })));
 const Tutorials = lazy(() => import('./pages/Tutorials').then(module => ({ default: module.Tutorials })));
-const About = lazy(() => import('./pages/About').then(module => ({ default: module.About })));
 const Contact = lazy(() => import('./pages/Contact').then(module => ({ default: module.Contact })));
 const Privacy = lazy(() => import('./pages/Privacy').then(module => ({ default: module.Privacy })));
 const Terms = lazy(() => import('./pages/Terms').then(module => ({ default: module.Terms })));
