@@ -72,6 +72,21 @@ export function Footer() {
                   Terms of Service
                 </Link>
               </li>
+              <li>
+                <Link to="/cookie-policy" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/disclaimer" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link to="/sitemap" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  HTML Sitemap
+                </Link>
+              </li>
             </ul>
           </div>
 

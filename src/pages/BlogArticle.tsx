@@ -1,6 +1,8 @@
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import { blogArticles } from '../data/blogArticles';
+import { AdSlot } from '../components/AdSlot';
+import { SocialShare } from '../components/SocialShare';
 
 export function BlogArticle() {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +22,7 @@ export function BlogArticle() {
         Back to Blog
       </Link>
 
-      <header className="mb-8">
+      <header className="mb-4">
         <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
           <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full font-medium">
             {article.category}
@@ -43,6 +45,10 @@ export function BlogArticle() {
           {article.excerpt}
         </p>
       </header>
+      <AdSlot slotId="article_header" format="horizontal" />
+      <div className="mb-6">
+        <SocialShare title={article.title} url={window.location.href} />
+      </div>
 
       <div className="space-y-8">
         {article.content.sections.map((section, index) => (
@@ -76,6 +82,8 @@ export function BlogArticle() {
           </div>
         ))}
       </div>
+
+      <AdSlot slotId="article_footer" />
 
       {article.relatedArticles.length > 0 && (
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">

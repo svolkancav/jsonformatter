@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { AdSlot } from '../components/AdSlot';
 
 export function Blog() {
   const articles = [
@@ -45,9 +46,15 @@ export function Blog() {
     }
   ];
 
+  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  const query = (params.get('q') || '').toLowerCase();
+  const filtered = query
+    ? articles.filter(a => a.title.toLowerCase().includes(query) || a.excerpt.toLowerCase().includes(query) || a.category.toLowerCase().includes(query))
+    : articles;
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <header className="mb-12">
+      <header className="mb-4">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
           Blog
         </h1>
@@ -55,9 +62,17 @@ export function Blog() {
           Tutorials, guides, and best practices for working with JSON and C#
         </p>
       </header>
+      <AdSlot slotId="blog_header" format="horizontal" />
+
+      <div className="mb-6">
+        <form action="/blog" method="get" className="flex gap-2">
+          <input name="q" defaultValue={query} placeholder="Search blog..." className="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+          <button className="px-4 py-2 rounded-lg bg-blue-600 text-white">Search</button>
+        </form>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {articles.map((article) => (
+        {filtered.map((article) => (
           <Link
             key={article.id}
             to={`/blog/${article.id}`}
@@ -94,6 +109,7 @@ export function Blog() {
           </Link>
         ))}
       </div>
+      <AdSlot slotId="blog_footer" />
     </div>
   );
 }

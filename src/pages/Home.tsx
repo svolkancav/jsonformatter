@@ -6,6 +6,7 @@ import { ToolNavigation, ToolType } from '../components/ToolNavigation';
 import { Book, Code, Zap, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { AdSlot } from '../components/AdSlot';
 
 export function Home() {
   const [activeTool, setActiveTool] = useState<ToolType>('formatter');
@@ -73,7 +74,7 @@ export function Home() {
       />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <header className="text-center mb-8">
+        <header className="text-center mb-4">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             {activeTool === 'formatter' && 'JSON Formatter & Validator'}
             {activeTool === 'excel-to-json' && 'Excel to JSON Converter'}
@@ -85,6 +86,7 @@ export function Home() {
             {activeTool === 'json-to-excel' && 'Convert JSON data to Excel (.xlsx) instantly. Paste JSON, validate it, and download as Excel file — simple, secure, and free.'}
           </p>
         </header>
+        <AdSlot slotId="home_header" format="horizontal" />
 
         {/* Tool Navigation */}
         <div className="mb-8">
@@ -92,11 +94,12 @@ export function Home() {
         </div>
 
         {/* Main Tool Area */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-12">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-6">
           {renderActiveTool()}
         </div>
+        <AdSlot slotId="home_in_content_1" format="rectangle" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <Link
             to="/json-formatter"
             className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
@@ -227,6 +230,8 @@ export function Home() {
               </div>
             </div>
           </section>
+
+          <AdSlot slotId="home_in_content_2" />
 
           <section className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-3 mb-6">
