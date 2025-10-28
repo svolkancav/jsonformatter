@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>JSON Formatter Blog</title>
+    <link>https://jsonformater.com/blog</link>
+    <description>Tutorials, guides, and best practices for JSON</description>
+    <language>en-us</language>
+    <item>
+      <title>Understanding JSON: A Complete Guide for Developers</title>
+      <link>https://jsonformater.com/blog/understanding-json-guide</link>
+      <guid>https://jsonformater.com/blog/understanding-json-guide</guid>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Learn everything about JSON from basics to advanced concepts.</description>
+    </item>
+  </channel>
+</rss>
+

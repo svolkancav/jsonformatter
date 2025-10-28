@@ -62,7 +62,31 @@ export function SEO({
     canonicalLink.setAttribute('href', fullUrl);
 
     // Enhanced structured data
-    const structuredData = {
+    const pathname = location.pathname;
+    const isArticle = pathname.startsWith('/blog/');
+
+    // Primary page schema
+    const primarySchema = isArticle ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      mainEntityOfPage: fullUrl,
+      author: {
+        '@type': 'Person',
+        name: 'JSON Formatter Editorial'
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'JSON Formatter',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${baseUrl}/json-formatter-favicon.svg`
+        }
+      },
+      datePublished: new Date().toISOString(),
+      dateModified: new Date().toISOString()
+    } : {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
       name: title.split(' - ')[0],
@@ -89,13 +113,57 @@ export function SEO({
       ]
     };
 
+    // Organization & WebSite schema
+    const organizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'JSON Formatter',
+      url: baseUrl,
+      logo: `${baseUrl}/json-formatter-favicon.svg`,
+      sameAs: [] as string[]
+    };
+
+    const websiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'JSON Formatter',
+      url: baseUrl,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${baseUrl}/blog?q={search_term_string}`,
+        'query-input': 'required name=search_term_string'
+      }
+    };
+
+    // Breadcrumb schema
+    const segments = pathname.split('/').filter(Boolean);
+    const itemListElements = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl }
+    ];
+    segments.forEach((seg, idx) => {
+      const path = `${baseUrl}/` + segments.slice(0, idx + 1).join('/');
+      itemListElements.push({
+        '@type': 'ListItem',
+        position: idx + 2,
+        name: decodeURIComponent(seg).replace(/-/g, ' '),
+        item: path
+      });
+    });
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: itemListElements
+    };
+
+    const schemas = [primarySchema, organizationSchema, websiteSchema, breadcrumbSchema];
+
     let scriptTag = document.querySelector('script[type="application/ld+json"]');
     if (!scriptTag) {
       scriptTag = document.createElement('script');
       scriptTag.setAttribute('type', 'application/ld+json');
       document.head.appendChild(scriptTag);
     }
-    scriptTag.textContent = JSON.stringify(structuredData);
+    scriptTag.textContent = JSON.stringify(schemas);
   }, [title, description, keywords, ogType, fullUrl]);
 
   return null;

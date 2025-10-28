@@ -3,6 +3,9 @@ import { Suspense, lazy } from 'react';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import { SEO } from './components/SEO';
+import { CookieConsent } from './components/CookieConsent';
+import { Analytics } from './components/Analytics';
+import { Breadcrumbs } from './components/Breadcrumbs';
 
 // Lazy load all page components for code splitting
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
@@ -28,13 +31,19 @@ const ExcelToXml = lazy(() => import('./pages/ExcelToXml').then(module => ({ def
 const ExcelToCsv = lazy(() => import('./pages/ExcelToCsv').then(module => ({ default: module.ExcelToCsvPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
+const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
+const Disclaimer = lazy(() => import('./pages/Disclaimer').then(module => ({ default: module.Disclaimer })));
+const SitemapHtml = lazy(() => import('./pages/SitemapHtml').then(module => ({ default: module.SitemapHtml })));
+const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
 
 function App() {
   return (
     <Router>
       <SEO />
+      <Analytics />
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors flex flex-col">
         <Navigation />
+        <Breadcrumbs />
         <main className="flex-1">
           <Suspense fallback={
             <div className="flex items-center justify-center min-h-[400px]">
@@ -69,12 +78,17 @@ function App() {
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<Terms />} />
+                  <Route path="/cookie-policy" element={<CookiePolicy />} />
+                  <Route path="/disclaimer" element={<Disclaimer />} />
+                  <Route path="/sitemap" element={<SitemapHtml />} />
                   <Route path="/sitemap.xml" element={<Sitemap />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
           </Suspense>
         </main>
         <Footer />
       </div>
+      <CookieConsent />
     </Router>
   );
 }
