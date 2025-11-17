@@ -18,7 +18,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['lucide-react'],
-    include: ['papaparse', 'xlsx', 'toml', 'tomlify-j0.4'],
+    include: ['papaparse', 'xlsx', 'toml', 'tomlify-j0.4', '@toon-format/toon'],
   },
   build: {
     // Enable code splitting

@@ -182,6 +182,24 @@ export function Home() {
           </Link>
 
           <Link
+            to="/json-to-toon"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-violet-600 dark:text-violet-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to TOON</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert JSON to TOON format</p>
+          </Link>
+
+          <Link
+            to="/toon-to-json"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-fuchsia-600 dark:text-fuchsia-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">TOON to JSON</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert TOON to JSON format</p>
+          </Link>
+
+          <Link
             to="/json-to-csharp"
             className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
           >
