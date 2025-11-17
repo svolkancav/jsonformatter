@@ -11,6 +11,8 @@ export function SitemapHtml() {
     { path: '/excel-to-json', label: 'Excel to JSON' },
     { path: '/excel-to-xml', label: 'Excel to XML' },
     { path: '/excel-to-csv', label: 'Excel to CSV' },
+    { path: '/json-to-toml', label: 'JSON to TOML' },
+    { path: '/toml-to-json', label: 'TOML to JSON' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/json-validator', label: 'JSON Validator' },

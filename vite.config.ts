@@ -13,9 +13,12 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  define: {
+    global: 'globalThis',
+  },
   optimizeDeps: {
     exclude: ['lucide-react'],
-    include: ['papaparse', 'xlsx'],
+    include: ['papaparse', 'xlsx', 'toml', 'tomlify-j0.4'],
   },
   build: {
     // Enable code splitting
