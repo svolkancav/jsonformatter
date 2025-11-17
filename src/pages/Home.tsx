@@ -164,6 +164,24 @@ export function Home() {
           </Link>
 
           <Link
+            to="/json-to-toml"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-pink-600 dark:text-pink-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">JSON to TOML</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert JSON to TOML format</p>
+          </Link>
+
+          <Link
+            to="/toml-to-json"
+            className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+          >
+            <Code className="w-8 h-8 text-rose-600 dark:text-rose-400 mb-3" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">TOML to JSON</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Convert TOML to JSON format</p>
+          </Link>
+
+          <Link
             to="/json-to-csharp"
             className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
           >

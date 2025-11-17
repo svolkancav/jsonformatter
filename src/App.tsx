@@ -29,6 +29,8 @@ const JsonToExcel = lazy(() => import('./pages/JsonToExcel').then(module => ({ d
 const ExcelToJson = lazy(() => import('./pages/ExcelToJson').then(module => ({ default: module.ExcelToJsonPage })));
 const ExcelToXml = lazy(() => import('./pages/ExcelToXml').then(module => ({ default: module.ExcelToXmlPage })));
 const ExcelToCsv = lazy(() => import('./pages/ExcelToCsv').then(module => ({ default: module.ExcelToCsvPage })));
+const JsonToToml = lazy(() => import('./pages/JsonToToml').then(module => ({ default: module.JsonToTomlPage })));
+const TomlToJson = lazy(() => import('./pages/TomlToJson').then(module => ({ default: module.TomlToJsonPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
@@ -62,6 +64,8 @@ function App() {
                   <Route path="/excel-to-json" element={<ExcelToJson />} />
                   <Route path="/excel-to-xml" element={<ExcelToXml />} />
                   <Route path="/excel-to-csv" element={<ExcelToCsv />} />
+                  <Route path="/json-to-toml" element={<JsonToToml />} />
+                  <Route path="/toml-to-json" element={<TomlToJson />} />
                   
                   {/* Legacy tool routes */}
                   <Route path="/json-to-csharp" element={<JsonToCSharp />} />
