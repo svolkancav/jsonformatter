@@ -39,6 +39,7 @@ const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({
 const Disclaimer = lazy(() => import('./pages/Disclaimer').then(module => ({ default: module.Disclaimer })));
 const SitemapHtml = lazy(() => import('./pages/SitemapHtml').then(module => ({ default: module.SitemapHtml })));
 const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
+const CharacterCounter = lazy(() => import('./pages/tools/CharacterCounter').then(module => ({ default: module.CharacterCounter })));
 
 function App() {
   return (
@@ -71,6 +72,9 @@ function App() {
                   <Route path="/json-to-toon" element={<JsonToToon />} />
                   <Route path="/toon-to-json" element={<ToonToJson />} />
                   
+                  {/* Text tools */}
+                  <Route path="/character-counter" element={<CharacterCounter />} />
+
                   {/* Legacy tool routes */}
                   <Route path="/json-to-csharp" element={<JsonToCSharp />} />
                   <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
