@@ -35,12 +35,12 @@ export function CharacterCounter() {
   };
 
   const statCards = [
-    { label: 'Karakterler', value: stats.chars, icon: Type, color: 'blue' },
-    { label: 'Boşluksuz', value: stats.charsNoSpaces, icon: Hash, color: 'purple' },
-    { label: 'Kelimeler', value: stats.words, icon: AlignLeft, color: 'green' },
-    { label: 'Satırlar', value: stats.lines, icon: FileText, color: 'orange' },
-    { label: 'Cümleler', value: stats.sentences, icon: BarChart2, color: 'red' },
-    { label: 'Paragraflar', value: stats.paragraphs, icon: FileText, color: 'teal' },
+    { label: 'Characters', value: stats.chars, icon: Type, color: 'blue' },
+    { label: 'No Spaces', value: stats.charsNoSpaces, icon: Hash, color: 'purple' },
+    { label: 'Words', value: stats.words, icon: AlignLeft, color: 'green' },
+    { label: 'Lines', value: stats.lines, icon: FileText, color: 'orange' },
+    { label: 'Sentences', value: stats.sentences, icon: BarChart2, color: 'red' },
+    { label: 'Paragraphs', value: stats.paragraphs, icon: FileText, color: 'teal' },
   ];
 
   const colorMap: Record<string, string> = {
@@ -55,25 +55,25 @@ export function CharacterCounter() {
   return (
     <>
       <SEO
-        title="Karakter Sayacı - Online Ücretsiz Metin Analizi"
-        description="Ücretsiz online karakter sayacı. Karakter, kelime, satır, cümle sayısını ve daha fazlasını anında hesaplayın."
-        keywords="karakter sayacı, kelime sayacı, metin analizi, character counter, word counter"
+        title="Character Counter - Free Online Word & Character Count Tool"
+        description="Free online character counter. Count characters, words, lines, sentences and more instantly. Perfect for social media, SEO, and writing."
+        keywords="character counter, word counter, text analyzer, character count, word count"
       />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <header className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Karakter Sayacı
+            Character Counter
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400">
-            Metninizi yapıştırın veya yazın — karakter, kelime, satır ve daha fazlası anında hesaplanır.
+            Paste or type your text — characters, words, lines and more are counted instantly.
           </p>
         </header>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-8">
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Metin Girişi
+              Text Input
             </label>
             <div className="flex gap-2">
               <button
@@ -82,7 +82,7 @@ export function CharacterCounter() {
                 className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-40 transition-colors"
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                {copied ? 'Kopyalandı' : 'Kopyala'}
+                {copied ? 'Copied' : 'Copy'}
               </button>
               <button
                 onClick={() => setText('')}
@@ -90,7 +90,7 @@ export function CharacterCounter() {
                 className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-40 transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
-                Temizle
+                Clear
               </button>
             </div>
           </div>
@@ -98,10 +98,10 @@ export function CharacterCounter() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             className="w-full h-56 px-4 py-3 font-mono text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white resize-none transition-colors"
-            placeholder="Metninizi buraya yazın veya yapıştırın..."
+            placeholder="Type or paste your text here..."
           />
           <p className="mt-1 text-right text-xs text-gray-400 dark:text-gray-500">
-            {stats.chars} / ∞ karakter
+            {stats.chars} characters
           </p>
         </div>
 
@@ -122,17 +122,17 @@ export function CharacterCounter() {
         {/* Extra stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ort. Kelime Uzunluğu</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Avg. Word Length</p>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.avgWordLength}</p>
-            <p className="text-xs text-gray-400 mt-1">karakter / kelime</p>
+            <p className="text-xs text-gray-400 mt-1">characters per word</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Tahmini Okuma Süresi</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Reading Time</p>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.readingTime}</p>
-            <p className="text-xs text-gray-400 mt-1">dakika (200 kelime/dk)</p>
+            <p className="text-xs text-gray-400 mt-1">minutes (200 wpm)</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">En Sık Harfler</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Top Letters</p>
             {stats.topChars.length === 0 ? (
               <p className="text-sm text-gray-400">—</p>
             ) : (
@@ -153,18 +153,18 @@ export function CharacterCounter() {
 
         <article className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Neden Karakter Sayacı Kullanmalısınız?
+            Why Use a Character Counter?
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Sosyal medya paylaşımları, SEO meta açıklamaları, SMS mesajları veya akademik yazılar için
-            karakter ve kelime sınırlarını takip etmek kritik önem taşır. Bu araç metninizi anında analiz ederek
-            içerik üretim sürecinizi hızlandırır.
+            Tracking character and word limits is essential for social media posts, SEO meta descriptions,
+            SMS messages, and academic writing. This tool analyzes your text instantly so you can stay
+            within the required limits.
           </p>
           <ul className="space-y-2 text-gray-600 dark:text-gray-400 list-disc list-inside">
-            <li>Twitter/X: 280 karakter sınırı</li>
-            <li>Meta açıklaması: 150-160 karakter önerilir</li>
-            <li>SMS: 160 karakter / mesaj</li>
-            <li>LinkedIn özeti: 2.000 karakter sınırı</li>
+            <li>Twitter / X: 280 character limit</li>
+            <li>Meta description: 150–160 characters recommended</li>
+            <li>SMS: 160 characters per message</li>
+            <li>LinkedIn summary: 2,000 character limit</li>
           </ul>
         </article>
       </div>

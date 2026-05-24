@@ -31,7 +31,7 @@ export function Navigation() {
     { path: '/toon-to-json', label: 'TOON to JSON' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
-    { path: '/character-counter', label: 'Karakter Sayacı' }
+    { path: '/character-counter', label: 'Character Counter' }
   ];
 
   const isActive = (path: string) => location.pathname === path;
