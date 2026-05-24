@@ -18,6 +18,7 @@ export function SitemapHtml() {
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/json-validator', label: 'JSON Validator' },
+    { path: '/character-counter', label: 'Character Counter' },
     { path: '/blog', label: 'Blog' },
     { path: '/tutorials', label: 'Tutorials' },
     { path: '/about', label: 'About' },

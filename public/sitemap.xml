@@ -55,6 +55,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://jsonformater.com/character-counter</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://jsonformater.com/blog</loc>
     <lastmod>2024-01-10</lastmod>
     <changefreq>weekly</changefreq>
