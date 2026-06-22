@@ -1,5 +1,6 @@
 import { ExcelToCsvConverter } from '../components/ExcelToCsvConverter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function ExcelToCsvPage() {
   return (
@@ -221,6 +222,7 @@ export function ExcelToCsvPage() {
               </div>
             </div>
           </section>
+        <ToolContent slug="excel-to-csv" />
         </div>
       </div>
     </>

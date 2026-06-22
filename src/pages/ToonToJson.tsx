@@ -1,5 +1,6 @@
 import { ToonToJsonConverter } from '../components/ToonToJsonConverter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 import { AdSlot } from '../components/AdSlot';
 
 export function ToonToJsonPage() {
@@ -65,6 +66,7 @@ export function ToonToJsonPage() {
               </div>
             </div>
           </div>
+        <ToolContent slug="toon-to-json" />
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import { JsonFormatter } from '../components/JsonFormatter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function JsonBlobViewerPage() {
   return (
@@ -130,6 +131,7 @@ export function JsonBlobViewerPage() {
               </div>
             </div>
           </section>
+        <ToolContent slug="json-blob-viewer" />
         </div>
       </div>
     </>

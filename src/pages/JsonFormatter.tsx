@@ -1,5 +1,6 @@
 import { JsonFormatter } from '../components/JsonFormatter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function JsonFormatterPage() {
   return (
@@ -64,6 +65,8 @@ export function JsonFormatterPage() {
               </p>
             </div>
           </section>
+
+          <ToolContent slug="json-formatter" />
         </div>
       </div>
     </>

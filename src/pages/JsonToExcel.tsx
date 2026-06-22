@@ -1,5 +1,6 @@
 import { JsonToExcelConverter } from '../components/JsonToExcelConverter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function JsonToExcelPage() {
   return (
@@ -98,6 +99,7 @@ export function JsonToExcelPage() {
               </div>
             </div>
           </section>
+        <ToolContent slug="json-to-excel" />
         </div>
       </div>
     </>

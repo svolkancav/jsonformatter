@@ -1,5 +1,6 @@
 import { TomlToJsonConverter } from '../components/TomlToJsonConverter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 import { AdSlot } from '../components/AdSlot';
 
 export function TomlToJsonPage() {
@@ -55,6 +56,7 @@ serde = "1.0"
 tokio = { version = "1.0", features = ["full"] }`}
             </pre>
           </div>
+        <ToolContent slug="toml-to-json" />
         </div>
       </div>
     </>

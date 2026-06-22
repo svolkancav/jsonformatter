@@ -571,5 +571,334 @@ catch (InvalidDataException ex)
       ]
     },
     relatedArticles: ['json-to-csharp-tutorial', 'common-json-errors']
+  },
+  'json-vs-xml-yaml': {
+    id: 'json-vs-xml-yaml',
+    title: 'JSON vs XML vs YAML: Choosing the Right Data Format',
+    excerpt: 'A practical comparison of JSON, XML, and YAML covering syntax, readability, performance, and the situations where each format is the best choice.',
+    date: '2025-02-18',
+    readTime: '9 min read',
+    category: 'Comparison',
+    content: {
+      sections: [
+        {
+          title: 'Three Formats, Three Philosophies',
+          content: 'JSON, XML, and YAML all solve the same fundamental problem: representing structured data as text that both humans and machines can work with. But they were designed with different priorities. JSON optimizes for simplicity and direct mapping to programming data structures. XML optimizes for document markup, extensibility, and rigorous validation. YAML optimizes for human readability and hand-editing.\n\nChoosing the wrong format rarely makes a project fail, but choosing the right one removes friction. The goal of this guide is to help you match the format to the job rather than defaulting to whatever you used last time.'
+        },
+        {
+          title: 'Syntax Side by Side',
+          content: 'The same data looks very different in each format. Notice how JSON uses braces and quotes, XML uses opening and closing tags, and YAML uses indentation with almost no punctuation:',
+          code: `// JSON
+{ "user": { "name": "Ada", "active": true } }
+
+<!-- XML -->
+<user>
+  <name>Ada</name>
+  <active>true</active>
+</user>
+
+# YAML
+user:
+  name: Ada
+  active: true`
+        },
+        {
+          title: 'When to Use JSON',
+          content: 'JSON is the right default for almost all web APIs and for data exchanged between services. It maps directly onto objects and arrays in every mainstream language, parses extremely fast, and has near-universal library support. Its lack of comments and strict syntax are actually advantages for machine-to-machine communication, where predictability matters more than annotation.\n\nReach for JSON when you are building or consuming REST APIs, storing structured data in a database column, or passing data between a frontend and backend.'
+        },
+        {
+          title: 'When to Use XML',
+          content: 'XML still dominates in domains that need rich document structure, namespaces, attributes, and formal schema validation. SOAP web services, office document formats, RSS feeds, and many enterprise and government systems are built on XML. If you need to validate documents against a strict schema (XSD) or mix structured data with free-form markup, XML remains a strong choice.'
+        },
+        {
+          title: 'When to Use YAML',
+          content: 'YAML shines for configuration files that humans edit by hand. Its clean, indentation-based syntax makes files like CI pipelines, Kubernetes manifests, and application config pleasant to read and write. The trade-off is that YAML is whitespace-sensitive and has subtle parsing rules, so it is less suited to machine-generated data or high-volume data exchange.'
+        },
+        {
+          title: 'Quick Decision Guide',
+          content: '• Building an API or exchanging data between services? Use JSON.\n• Need document markup, namespaces, or strict schema validation? Use XML.\n• Writing configuration that people edit by hand? Use YAML.\n\nBecause these formats are interconvertible, you can also use the right one at each layer — for example, edit configuration in YAML but serve data over an API in JSON.'
+        }
+      ]
+    },
+    relatedArticles: ['understanding-json-guide', 'json-vs-toml-config']
+  },
+  'understanding-toon-llm': {
+    id: 'understanding-toon-llm',
+    title: 'What Is TOON? Cutting LLM Token Costs with Token-Oriented Notation',
+    excerpt: 'Learn how TOON (Token-Oriented Object Notation) represents structured data in fewer tokens than JSON, lowering cost and saving context when working with large language models.',
+    date: '2025-02-25',
+    readTime: '8 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'Why Tokens Matter for LLMs',
+          content: 'Large language models do not read characters or words — they read tokens, chunks of text that the model bills and budgets by. Every prompt you send and every response you receive is measured in tokens, and both your costs and the model’s limited context window are denominated in them.\n\nWhen you feed structured data into a prompt — a product catalog, a set of records, a configuration — the way that data is serialized directly affects how many tokens it consumes. JSON is convenient but verbose: every key is repeated for every object, and braces, quotes, and commas all cost tokens. TOON was created to address exactly this overhead.'
+        },
+        {
+          title: 'How TOON Saves Tokens',
+          content: 'TOON (Token-Oriented Object Notation) represents the same logical data as JSON but strips away repetition and redundant punctuation. For arrays of uniform objects, instead of repeating each key in every element, it can declare the keys once and then list the values. The result is a denser document that encodes the same information in noticeably fewer tokens.\n\nThe savings grow with the size and regularity of your data. A handful of fields makes little difference, but a large array of similarly shaped records can shrink substantially — which translates directly into lower API costs and more room in the context window for reasoning.'
+        },
+        {
+          title: 'A Practical Round Trip',
+          content: 'The typical workflow is to keep your data in JSON everywhere in your application, convert it to TOON only at the moment you build a prompt, and convert any TOON the model returns back into JSON for the rest of your system to consume. This keeps the token savings localized to the model boundary without forcing your whole stack to understand a new format.',
+          code: `// Application data (JSON)
+[
+  { "id": 1, "name": "Ada", "role": "admin" },
+  { "id": 2, "name": "Linus", "role": "editor" }
+]
+
+// Converted to TOON for the prompt — keys declared once,
+// values listed compactly, fewer tokens overall.`
+        },
+        {
+          title: 'When TOON Is Worth It',
+          content: 'TOON is most valuable when you are sending sizable, repetitive structured data into a model and you are sensitive to cost or bumping against context limits. For small payloads the overhead of converting is not worth it, and for normal application or API work plain JSON remains the right choice. Think of TOON as an optimization you apply at the LLM boundary, not a wholesale replacement for JSON.'
+        },
+        {
+          title: 'Trying It Yourself',
+          content: 'The easiest way to understand TOON is to convert a real dataset and compare. Paste a JSON array into our JSON to TOON converter, look at the compact result, and then convert it back with the TOON to JSON tool to confirm the round trip is lossless. Seeing the difference on your own data makes the token savings concrete.'
+        }
+      ]
+    },
+    relatedArticles: ['understanding-json-guide', 'json-vs-xml-yaml']
+  },
+  'json-vs-toml-config': {
+    id: 'json-vs-toml-config',
+    title: 'JSON vs TOML for Configuration Files',
+    excerpt: 'When should you use JSON and when should you reach for TOML in your configuration files? A clear breakdown of readability, comments, data types, and tooling.',
+    date: '2025-03-04',
+    readTime: '7 min read',
+    category: 'Comparison',
+    content: {
+      sections: [
+        {
+          title: 'Configuration Is Read by Humans',
+          content: 'Unlike data exchanged between services, configuration files are usually written and edited by people. That changes the priorities: readability, the ability to leave comments, and forgiving syntax matter more than parsing speed or compactness. This is the context in which TOML was designed, and where it often beats JSON.'
+        },
+        {
+          title: 'The Comment Problem',
+          content: 'Standard JSON does not allow comments. For a configuration file this is a real limitation — you cannot explain why a value is set the way it is, or temporarily disable a setting by commenting it out. TOML supports comments natively with the # character, which makes config files self-documenting.',
+          code: `# TOML — comments are allowed
+[server]
+port = 8080      # default development port
+debug = true
+
+{
+  "server": {
+    "port": 8080,
+    "debug": true
+  }
+}
+// JSON has no place for that explanatory note`
+        },
+        {
+          title: 'Readability of Nested Data',
+          content: 'TOML uses named tables (sections in square brackets) that read naturally for grouped settings, whereas deeply nested JSON quickly becomes a thicket of braces. For flat or shallow configuration, TOML tends to be easier to scan. That said, for deeply nested or highly dynamic structures, JSON’s explicit nesting can actually be clearer than TOML’s table syntax.'
+        },
+        {
+          title: 'Tooling and Ecosystem',
+          content: 'JSON has the broadest support of any format — every language parses it out of the box. TOML is the configuration standard for modern toolchains like Rust’s Cargo and Python’s packaging (pyproject.toml), and has solid library support, though not quite JSON’s ubiquity. If your ecosystem already expects one format, follow that convention rather than fighting it.'
+        },
+        {
+          title: 'Choosing Between Them',
+          content: 'Use TOML when humans edit the file regularly and benefit from comments and clear sections — application config, tool settings, project metadata. Use JSON when the file is generated or consumed by code, when you need maximum tooling compatibility, or when the structure is deeply nested. And remember you can convert between them at any time: edit in TOML, then convert to JSON for your build pipeline if needed.'
+        }
+      ]
+    },
+    relatedArticles: ['json-vs-xml-yaml', 'json-best-practices']
+  },
+  'parsing-large-json-files': {
+    id: 'parsing-large-json-files',
+    title: 'How to Parse and Process Large JSON Files Efficiently',
+    excerpt: 'Strategies for handling JSON files too big to fit comfortably in memory, including streaming parsers, chunking, and practical performance tips.',
+    date: '2025-03-12',
+    readTime: '10 min read',
+    category: 'Advanced',
+    content: {
+      sections: [
+        {
+          title: 'When JSON Gets Too Big',
+          content: 'Most JSON is small enough that you can read the whole file, parse it into memory, and work with the result. But once files reach hundreds of megabytes or gigabytes — export dumps, logs, large datasets — loading everything at once can exhaust memory and freeze your application. Handling large JSON well requires a different approach: process the data as it streams in, rather than all at once.'
+        },
+        {
+          title: 'The Problem with JSON.parse',
+          content: 'A call like JSON.parse(hugeString) must hold the entire input string and the entire resulting object in memory simultaneously. For a 2 GB file that can mean needing several gigabytes of RAM, and the parse blocks your thread until it finishes. This is fine for typical payloads and fatal for very large ones.'
+        },
+        {
+          title: 'Streaming Parsers',
+          content: 'A streaming parser reads the input incrementally and emits events or values as it encounters them, so you never hold the whole document in memory. In Node.js, libraries like stream-json or clarinet let you process one record at a time as it arrives. The key insight is that most large JSON files are an array of many similar objects, and you rarely need them all in memory at once — you need to do something with each one and move on.',
+          code: `// Node.js: process a huge array one item at a time
+const { parser } = require('stream-json');
+const { streamArray } = require('stream-json/streamers/StreamArray');
+const fs = require('fs');
+
+fs.createReadStream('huge.json')
+  .pipe(parser())
+  .pipe(streamArray())
+  .on('data', ({ value }) => {
+    // handle one record; it is garbage-collected after
+    processRecord(value);
+  });`
+        },
+        {
+          title: 'Newline-Delimited JSON (NDJSON)',
+          content: 'If you control how the data is produced, consider NDJSON — one JSON object per line. It is trivially streamable: read the file line by line and parse each line independently, with no special parser required. Many data pipelines and logging systems use this format precisely because it scales to enormous sizes while staying simple.',
+          code: `{"id":1,"name":"Ada"}
+{"id":2,"name":"Linus"}
+{"id":3,"name":"Grace"}
+// Each line is independent valid JSON`
+        },
+        {
+          title: 'Practical Tips',
+          content: '• Process and discard each record as you go; do not accumulate everything in an array.\n• Prefer streaming or NDJSON over loading the full document for files above a few hundred megabytes.\n• If you only need part of the data, filter during the stream so you keep just what matters.\n• For one-off inspection of a large but not enormous file, our online viewer can format multi-megabyte JSON directly in the browser.\n• Move heavy parsing off the main thread (a worker) so your UI or server stays responsive.'
+        }
+      ]
+    },
+    relatedArticles: ['understanding-json-guide', 'json-best-practices']
+  },
+  'json-schema-validation-guide': {
+    id: 'json-schema-validation-guide',
+    title: 'JSON Schema: Validating Your Data Structure',
+    excerpt: 'An introduction to JSON Schema — how to describe the shape of your JSON, enforce required fields and types, and catch bad data before it causes bugs.',
+    date: '2025-03-20',
+    readTime: '11 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'Why Validation Matters',
+          content: 'Valid JSON syntax only guarantees that your data parses — not that it contains the right fields, types, or values. An API might return perfectly valid JSON that is missing a required field or has a string where your code expects a number. JSON Schema lets you describe what correct data looks like and automatically check real data against that description, turning a whole class of runtime bugs into clear, early validation errors.'
+        },
+        {
+          title: 'A Basic Schema',
+          content: 'A JSON Schema is itself a JSON document. It describes the expected type of each field, which fields are required, and constraints on their values. Here is a schema for a simple user object:',
+          code: `{
+  "type": "object",
+  "properties": {
+    "id":    { "type": "integer" },
+    "name":  { "type": "string", "minLength": 1 },
+    "email": { "type": "string", "format": "email" },
+    "age":   { "type": "integer", "minimum": 0 }
+  },
+  "required": ["id", "name", "email"]
+}`
+        },
+        {
+          title: 'Common Keywords',
+          content: '• type — the expected data type (string, number, integer, boolean, object, array, null).\n• required — the list of properties that must be present.\n• properties — the schema for each named field.\n• minimum / maximum — numeric bounds.\n• minLength / maxLength / pattern — string constraints, including regular expressions.\n• enum — restricts a value to a fixed set of options.\n• items — the schema each element of an array must satisfy.'
+        },
+        {
+          title: 'Validating in Code',
+          content: 'You do not validate by hand — you use a validator library that takes your schema and your data and reports any violations. In JavaScript, Ajv is the de facto standard; most languages have an equivalent. The validator returns either success or a list of precise errors describing what failed and where.',
+          code: `import Ajv from 'ajv';
+const ajv = new Ajv();
+const validate = ajv.compile(schema);
+
+if (!validate(data)) {
+  console.log(validate.errors); // exactly what is wrong
+}`
+        },
+        {
+          title: 'Where to Use It',
+          content: 'JSON Schema is most valuable at the boundaries of your system: validating incoming API request bodies, checking configuration files at startup, verifying responses from third-party services, and documenting the contract between a frontend and backend. By rejecting malformed data at the edge, you keep the inside of your application clean and prevent bad data from spreading into bugs that are hard to trace.'
+        }
+      ]
+    },
+    relatedArticles: ['json-best-practices', 'common-json-errors']
+  },
+  'json-rest-api-design': {
+    id: 'json-rest-api-design',
+    title: 'Designing JSON REST API Responses: Patterns and Conventions',
+    excerpt: 'Proven conventions for structuring JSON responses in REST APIs — consistent envelopes, error formats, pagination, and naming that clients can rely on.',
+    date: '2025-03-28',
+    readTime: '10 min read',
+    category: 'Best Practices',
+    content: {
+      sections: [
+        {
+          title: 'Consistency Is the Whole Game',
+          content: 'The single most important property of a good API is consistency. When every endpoint shapes its responses the same way — the same envelope, the same error format, the same naming convention — clients can write generic handling code and developers can predict the response without reading the docs every time. Most API design debates matter far less than simply picking conventions and applying them everywhere.'
+        },
+        {
+          title: 'A Predictable Response Envelope',
+          content: 'Many APIs wrap their payload in a consistent envelope so that data, metadata, and errors always live in known places. A common pattern returns the resource under a data key, with optional meta for things like pagination:',
+          code: `{
+  "data": [
+    { "id": 1, "title": "First" },
+    { "id": 2, "title": "Second" }
+  ],
+  "meta": {
+    "page": 1,
+    "perPage": 20,
+    "total": 137
+  }
+}`
+        },
+        {
+          title: 'A Standard Error Format',
+          content: 'Errors deserve as much design attention as success responses. A good error body includes a stable machine-readable code, a human-readable message, and ideally a pointer to the offending field. Pair this with correct HTTP status codes — 400 for bad input, 401/403 for auth, 404 for missing resources, 422 for validation failures, 500 for server errors.',
+          code: `{
+  "error": {
+    "code": "validation_failed",
+    "message": "The email field is required.",
+    "field": "email"
+  }
+}`
+        },
+        {
+          title: 'Naming and Types',
+          content: 'Pick one casing convention and never mix: camelCase suits JavaScript clients, snake_case is common in many backends — either works, consistency is what matters. Use real JSON types rather than stringifying everything: numbers as numbers, booleans as true/false, and ISO 8601 strings for dates (for example 2025-03-28T10:00:00Z). Avoid returning null and an absent key interchangeably; decide what each means and be consistent.'
+        },
+        {
+          title: 'Pagination and Evolution',
+          content: 'For collections, always paginate from the start — returning unbounded arrays will eventually break under real data volumes. Expose page size and total counts in the meta section so clients can build navigation. Finally, design for change: add new fields rather than repurposing old ones, and treat removing or renaming a field as a breaking change that warrants a new API version.'
+        }
+      ]
+    },
+    relatedArticles: ['json-best-practices', 'json-schema-validation-guide']
+  },
+  'convert-json-to-excel-guide': {
+    id: 'convert-json-to-excel-guide',
+    title: 'How to Convert JSON to Excel: A Complete Guide',
+    excerpt: 'Turn JSON data into clean Excel spreadsheets your whole team can use. Learn how arrays map to rows, how to flatten nested data, and how to avoid common pitfalls.',
+    date: '2025-04-05',
+    readTime: '8 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'Why Convert JSON to Excel',
+          content: 'JSON is the language of APIs and code, but spreadsheets are the language of business. When you need to hand a dataset to an analyst, a manager, or a client, an Excel file they can sort, filter, and chart is far more useful than a block of JSON. Converting JSON to Excel bridges the gap between your technical data and the people who need to read it.'
+        },
+        {
+          title: 'How Arrays Become Rows',
+          content: 'The cleanest JSON to convert is an array of flat objects. Each object becomes a row, and each property name becomes a column header. Given the array below, you get a two-column sheet with a header row and one row per object:',
+          code: `[
+  { "name": "Ada",   "age": 36 },
+  { "name": "Linus", "age": 54 },
+  { "name": "Grace", "age": 41 }
+]
+// becomes:
+// name  | age
+// Ada   | 36
+// Linus | 54
+// Grace | 41`
+        },
+        {
+          title: 'Handling Nested Data',
+          content: 'Real JSON is often nested, and spreadsheets are flat. The common solution is to flatten nested objects into dotted column names — an address object with a city field becomes an address.city column. Arrays of values can be joined into a single cell, or, if they represent separate records, broken out into their own sheet. Deciding how to flatten is the main design choice when converting complex JSON.'
+        },
+        {
+          title: 'Step by Step',
+          content: '1. Make sure your JSON is an array of objects with consistent keys.\n2. Paste it into our JSON to Excel converter.\n3. Review the detected columns to confirm the mapping looks right.\n4. Download the generated .xlsx file.\n5. Open it in Excel, Google Sheets, or Numbers and verify the data.\n\nBecause the conversion runs entirely in your browser, even confidential data never leaves your device.'
+        },
+        {
+          title: 'Common Pitfalls',
+          content: '• Inconsistent keys across objects produce sparse columns — normalize your data first so every object has the same fields.\n• Deeply nested structures may need flattening or splitting into multiple sheets to stay readable.\n• Numbers stored as strings in JSON will arrive as text in Excel; convert them to real numbers if you plan to do math.\n• Very large datasets can be slow to open in a spreadsheet; consider CSV for bulk imports instead. You can also convert Excel back to JSON when you need to bring edited data back into your application.'
+        }
+      ]
+    },
+    relatedArticles: ['understanding-json-guide', 'json-best-practices']
   }
 };
