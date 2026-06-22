@@ -1,5 +1,6 @@
 import { JsonFormatter } from '../components/JsonFormatter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function JsonViewerPage() {
   return (
@@ -99,6 +100,7 @@ export function JsonViewerPage() {
               </div>
             </div>
           </section>
+        <ToolContent slug="json-viewer" />
         </div>
       </div>
     </>

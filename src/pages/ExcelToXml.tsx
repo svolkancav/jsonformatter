@@ -1,5 +1,6 @@
 import { ExcelToXmlConverter } from '../components/ExcelToXmlConverter';
 import { SEO } from '../components/SEO';
+import { ToolContent } from '../components/ToolContent';
 
 export function ExcelToXmlPage() {
   return (
@@ -199,6 +200,7 @@ export function ExcelToXmlPage() {
               </div>
             </div>
           </section>
+        <ToolContent slug="excel-to-xml" />
         </div>
       </div>
     </>
