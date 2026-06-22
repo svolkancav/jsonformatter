@@ -38,16 +38,12 @@
 
     <title>Free Online JSON Formatter, Blob Viewer & Excel Converter | jsonformater.com</title>
 
-    <!-- Google Ads + Analytics -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5398027060352897"
-     crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DBLYCS3KE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-0DBLYCS3KE');
-    </script>
+    <!--
+      Google Analytics and AdSense are intentionally NOT loaded here.
+      For GDPR compliance they load only after the user grants the matching
+      consent, via src/components/Analytics.tsx (analytics) and
+      src/components/AdSense.tsx (advertising).
+    -->
   </head>
   <body>
     <div id="root"></div>
