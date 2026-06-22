@@ -7,7 +7,11 @@ declare global {
   }
 }
 
-const GA_ID = import.meta.env.VITE_GA_ID as string | undefined;
+// Falls back to the site's public GA id when no env override is set.
+const GA_ID = (import.meta.env.VITE_GA_ID as string | undefined) || 'G-0DBLYCS3KE';
+
+// Module-level guard so GA is loaded at most once, even if consent changes.
+let gaLoaded = false;
 
 function loadScript(src: string, attrs: Record<string, string> = {}) {
   const s = document.createElement('script');
@@ -30,13 +34,17 @@ export function Analytics() {
   }, []);
 
   useEffect(() => {
-    if (!GA_ID) return;
+    if (!GA_ID || gaLoaded) return;
 
-    const raw = localStorage.getItem('jf_cookie_consent_v1');
-    const parsed = raw ? JSON.parse(raw) as { analytics: boolean; ads: boolean } : null;
-    const allowAnalytics = !!parsed?.analytics;
-
-    if (!allowAnalytics) return;
+    let parsed: { analytics?: boolean } | null = null;
+    try {
+      const raw = localStorage.getItem('jf_cookie_consent_v1');
+      parsed = raw ? JSON.parse(raw) : null;
+    } catch {
+      parsed = null;
+    }
+    if (!parsed?.analytics) return;
+    gaLoaded = true;
 
     // Load GA with IP anonymization
     window.dataLayer = window.dataLayer || [];

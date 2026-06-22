@@ -69,10 +69,14 @@ export function AdSlot({ slotId, format = 'responsive' }: AdSlotProps) {
   const insRef = useRef<HTMLModElement | null>(null);
   const pushed = useRef(false);
 
-  // Read consent once on mount (client-only SPA, so localStorage is available).
+  // Read consent on mount, then react to changes so ads can appear right after
+  // the user accepts cookies, without requiring a page reload.
   const [consent, setConsent] = useState(false);
   useEffect(() => {
     setConsent(hasAdsConsent());
+    const handler = () => setConsent(hasAdsConsent());
+    window.addEventListener('cookie-consent-changed', handler);
+    return () => window.removeEventListener('cookie-consent-changed', handler);
   }, []);
 
   const adSlot = AD_SLOTS[slotId];
