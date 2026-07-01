@@ -655,4 +655,132 @@ name = "Ada"`,
       { question: 'How do I know if a token is expired?', answer: 'The decoder reads the exp claim, converts it to a readable date, and flags whether the token has already expired.' },
     ],
   },
+
+  'base64': {
+    intro: {
+      heading: 'What Is Base64 Encoding?',
+      paragraphs: [
+        'Base64 is a way of representing binary or text data using only 64 printable ASCII characters (A–Z, a–z, 0–9, + and /). It exists so that data can travel safely through systems that were designed for text — email bodies, URLs, JSON fields, HTTP headers, and data URIs — without special bytes getting corrupted along the way.',
+        'Encoding does not compress or encrypt anything: Base64 output is actually about a third larger than the input, and anyone can decode it. It is purely a safe transport format, not a security measure. This tool encodes text to Base64 and decodes Base64 back to text, handling full UTF-8 so accented characters and emoji survive the round trip.',
+        'Everything happens in your browser — nothing you paste is uploaded, so it is safe for tokens or private data.',
+      ],
+    },
+    steps: {
+      heading: 'How to Encode or Decode Base64',
+      items: [
+        'Choose Encode to Base64 or Decode from Base64 with the toggle.',
+        'Paste your text (to encode) or your Base64 string (to decode).',
+        'Click the button to convert.',
+        'Copy or download the result.',
+      ],
+    },
+    example: {
+      heading: 'Text ↔ Base64',
+      description: 'Encoding turns readable text into a Base64 string; decoding reverses it exactly.',
+      input: 'Hello, world!',
+      output: 'SGVsbG8sIHdvcmxkIQ==',
+      inputLabel: 'Text',
+      outputLabel: 'Base64',
+    },
+    faqs: [
+      { question: 'Is Base64 encryption?', answer: 'No. Base64 is encoding, not encryption. It is fully reversible by anyone and provides no security — never use it to protect secrets.' },
+      { question: 'Why is my Base64 longer than the original?', answer: 'Base64 represents every 3 bytes as 4 characters, so the output is roughly 33% larger than the input. That is expected.' },
+      { question: 'Does it handle emoji and accented characters?', answer: 'Yes. This tool encodes and decodes full UTF-8, so non-ASCII characters round-trip correctly.' },
+      { question: 'Is my data private?', answer: 'Yes — encoding and decoding run entirely in your browser with no uploads.' },
+    ],
+  },
+
+  'timestamp-converter': {
+    intro: {
+      heading: 'What Is a Unix Timestamp?',
+      paragraphs: [
+        'A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since 00:00:00 UTC on 1 January 1970. It is the most common way computers store and exchange points in time because it is just a single number, free of time zones and formatting ambiguity.',
+        'Timestamps appear everywhere in development — JWT exp/iat claims, database records, API responses, log files. This converter turns an epoch value into human-readable dates (ISO 8601, UTC, and your local time) and turns a date back into a timestamp. It automatically detects whether your number is in seconds or milliseconds.',
+        'All conversion happens in your browser; nothing is sent anywhere.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert Timestamps',
+      items: [
+        'Pick Timestamp → Date or Date → Timestamp.',
+        'Paste a Unix timestamp (seconds or milliseconds) or a date.',
+        'Click convert to see the result in multiple formats.',
+        'Copy whichever representation you need.',
+      ],
+    },
+    example: {
+      heading: 'Epoch to Date',
+      description: 'The timestamp 1700000000 (seconds) converts to a readable UTC date.',
+      input: '1700000000',
+      output: 'ISO 8601 (UTC): 2023-11-14T22:13:20.000Z',
+      inputLabel: 'Unix timestamp',
+      outputLabel: 'Date',
+    },
+    faqs: [
+      { question: 'Seconds or milliseconds?', answer: 'Both work. The converter detects the magnitude — long numbers are treated as milliseconds, shorter ones as seconds — and shows you both.' },
+      { question: 'What time zone is used?', answer: 'It shows ISO 8601 and UTC (time-zone independent) plus your browser’s local time, so you can pick what you need.' },
+      { question: 'What date formats can I input?', answer: 'Standard formats like 2026-07-01 or full ISO 8601 such as 2026-07-01T10:00:00Z parse reliably.' },
+      { question: 'Is my data private?', answer: 'Yes — everything runs locally in your browser.' },
+    ],
+  },
+
+  'uuid-generator': {
+    intro: {
+      heading: 'What Is a UUID?',
+      paragraphs: [
+        'A UUID (Universally Unique Identifier), also called a GUID, is a 128-bit value written as 36 characters like 550e8400-e29b-41d4-a716-446655440000. UUIDs let independent systems create identifiers that are virtually guaranteed never to collide, without needing a central authority — which is why they are everywhere in databases, APIs, message queues, and distributed systems.',
+        'This generator produces version 4 UUIDs, which are randomly generated. It uses the browser’s cryptographically secure random source, so the values are suitable for real identifiers, not just placeholders. You can generate anywhere from one to a thousand at once and copy them all with a click.',
+        'Generation happens entirely in your browser — the values are created on your device and never transmitted.',
+      ],
+    },
+    steps: {
+      heading: 'How to Generate UUIDs',
+      items: [
+        'Enter how many UUIDs you need (1–1000).',
+        'Click Generate.',
+        'Click Copy all to copy the whole list, or select individual values.',
+        'Regenerate any time for a fresh batch.',
+      ],
+    },
+    faqs: [
+      { question: 'What version of UUID is this?', answer: 'These are UUID v4 (random) values, generated using the browser’s cryptographically secure random number generator.' },
+      { question: 'Are they truly unique?', answer: 'Version 4 UUIDs have 122 random bits, so the odds of a collision are astronomically small — safe to use as unique identifiers in practice.' },
+      { question: 'Can I generate many at once?', answer: 'Yes — up to 1000 at a time. Enter the count and click Generate.' },
+      { question: 'Are the UUIDs sent to a server?', answer: 'No. They are generated locally in your browser and never leave your device.' },
+    ],
+  },
+
+  'json-diff': {
+    intro: {
+      heading: 'Compare Two JSON Documents',
+      paragraphs: [
+        'When two JSON payloads should be the same but behave differently — an API response before and after a change, two config files, an expected vs. actual test fixture — spotting the difference by eye is slow and error-prone. A JSON diff parses both documents and tells you exactly what changed, by key path, ignoring irrelevant formatting like whitespace and key order.',
+        'This tool reports three kinds of change: values added on the right, values removed on the right, and values that changed between the two. Because it compares the parsed structure rather than the raw text, reformatting or reordering keys will not show up as false differences — only real data changes do.',
+        'Both documents are compared in your browser; nothing is uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Diff JSON',
+      items: [
+        'Paste the original JSON in the left box.',
+        'Paste the changed JSON in the right box.',
+        'Click Compare JSON.',
+        'Read the list of differences, each labeled with its key path and whether it was added, removed, or changed.',
+      ],
+    },
+    example: {
+      heading: 'What a Diff Looks Like',
+      description: 'Only the real change is reported, with its exact path.',
+      input: 'Left:  {"name":"Ada","age":36}\nRight: {"name":"Ada","age":37}',
+      output: '~ age: 36 → 37',
+      inputLabel: 'Inputs',
+      outputLabel: 'Difference',
+    },
+    faqs: [
+      { question: 'Does key order or formatting matter?', answer: 'No. The tool compares the parsed structure, so reordering keys or reformatting whitespace will not appear as a difference — only actual value changes do.' },
+      { question: 'What do +, - and ~ mean?', answer: 'Plus means a value present only on the right (added), minus means present only on the left (removed), and tilde means the value changed between the two.' },
+      { question: 'Can it compare nested objects and arrays?', answer: 'Yes. It walks the full structure and reports differences with their complete key path, including inside nested objects and arrays.' },
+      { question: 'Is my data private?', answer: 'Yes — both documents are compared entirely in your browser with no uploads.' },
+    ],
+  },
 };

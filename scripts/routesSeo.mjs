@@ -123,6 +123,30 @@ export const staticRoutes = [
     keywords: 'jwt decoder, decode jwt, json web token decoder, jwt parser, jwt debugger, decode json web token, free online jwt',
   },
   {
+    path: '/base64',
+    title: 'Base64 Encode & Decode | Free Online Base64 Converter',
+    description: 'Free online Base64 encoder and decoder. Encode text to Base64 or decode Base64 to text instantly. UTF-8 safe, runs entirely in your browser.',
+    keywords: 'base64, base64 encode, base64 decode, base64 converter, base64 encoder, base64 decoder, encode decode base64 online',
+  },
+  {
+    path: '/uuid-generator',
+    title: 'UUID Generator | Free Online UUID v4 Generator',
+    description: 'Free online UUID generator. Instantly generate one or many random UUID (v4) values. Cryptographically random, runs entirely in your browser.',
+    keywords: 'uuid generator, guid generator, uuid v4, generate uuid, random uuid, online uuid, unique id generator',
+  },
+  {
+    path: '/timestamp-converter',
+    title: 'Unix Timestamp Converter | Epoch to Date & Date to Epoch',
+    description: 'Free online Unix timestamp converter. Convert an epoch timestamp to a readable date, or a date back to a Unix timestamp. Handles seconds and milliseconds.',
+    keywords: 'unix timestamp converter, epoch converter, timestamp to date, date to timestamp, epoch to date, unix time, convert timestamp',
+  },
+  {
+    path: '/json-diff',
+    title: 'JSON Diff | Free Online JSON Compare Tool',
+    description: 'Free online JSON diff tool. Compare two JSON documents and see exactly what was added, removed, or changed. Runs entirely in your browser.',
+    keywords: 'json diff, json compare, compare json, json difference, diff json online, json comparison tool',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',
