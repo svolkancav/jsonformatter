@@ -175,6 +175,36 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://jsonformater.com/blog/json-parse-error-unexpected-token</loc>
+    <lastmod>2025-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jsonformater.com/blog/json-array-to-csv</loc>
+    <lastmod>2025-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jsonformater.com/blog/flatten-nested-json</loc>
+    <lastmod>2025-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jsonformater.com/blog/minify-json-guide</loc>
+    <lastmod>2025-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jsonformater.com/blog/json-vs-jsonl-ndjson</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://jsonformater.com/tutorials</loc>
     <lastmod>2024-01-10</lastmod>
     <changefreq>weekly</changefreq>

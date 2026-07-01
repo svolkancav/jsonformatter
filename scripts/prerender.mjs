@@ -82,23 +82,35 @@ function writeRoute(template, route) {
   writeFileSync(join(outDir, 'index.html'), html);
 }
 
-// Parse top-level blog articles from the data file (id/title/excerpt) so new
-// posts are prerendered automatically without editing routesSeo.mjs.
+// Read a quoted field value (single- or double-quoted, with escapes) by name.
+function matchField(text, name) {
+  const re = new RegExp(`${name}:\\s*(['"])((?:\\\\.|(?!\\1).)*)\\1`);
+  const m = text.match(re);
+  return m ? m[2].replace(/\\(['"\\])/g, '$1') : null;
+}
+
+// Parse top-level blog articles from the data file so new posts are prerendered
+// automatically without editing routesSeo.mjs. Robust to quote style: for each
+// entry we read only the header (before `content:`) so section titles inside
+// content are never mistaken for the article title.
 function parseBlogRoutes() {
   const src = readFileSync(join(root, 'src/data/blogArticles.ts'), 'utf8');
-  const routes = [];
-  // Match top-level entries:  'slug': {\n id: '...', title: '...', excerpt: '...'
-  const re = /^ {2}'([a-z0-9-]+)':\s*\{[\s\S]*?id:\s*'((?:[^'\\]|\\.)*)'[\s\S]*?title:\s*'((?:[^'\\]|\\.)*)'[\s\S]*?excerpt:\s*'((?:[^'\\]|\\.)*)'/gm;
+  const entryRe = /^ {2}'([a-z0-9-]+)':\s*\{/gm;
+  const starts = [];
   let m;
-  while ((m = re.exec(src)) !== null) {
-    const id = m[2];
-    const unescape = (s) => s.replace(/\\'/g, "'").replace(/\\\\/g, '\\');
-    const title = unescape(m[3]);
-    const excerpt = unescape(m[4]);
+  while ((m = entryRe.exec(src)) !== null) starts.push({ slug: m[1], index: m.index });
+
+  const routes = [];
+  for (let i = 0; i < starts.length; i++) {
+    const block = src.slice(starts[i].index, i + 1 < starts.length ? starts[i + 1].index : src.length);
+    const header = block.split(/\n {4}content:/)[0];
+    const title = matchField(header, 'title');
+    if (!title) continue;
+    const excerpt = matchField(header, 'excerpt');
     routes.push({
-      path: `/blog/${id}`,
+      path: `/blog/${starts[i].slug}`,
       title: `${title} | JSON Formatter Blog`,
-      description: excerpt,
+      description: excerpt || title,
       keywords: '',
     });
   }
