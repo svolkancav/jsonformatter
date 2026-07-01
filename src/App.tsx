@@ -24,6 +24,13 @@ const SampleJsonHub = lazy(() => import('./pages/SampleJson').then(module => ({ 
 const SampleJsonDetail = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonDetail })));
 const JsonErrorsHub = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorsHub })));
 const JsonErrorDetail = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorDetail })));
+const TrHub = lazy(() => import('./pages/tr/TrHub').then(module => ({ default: module.TrHub })));
+const TrJsonFormatlayici = lazy(() => import('./pages/tr/TrJsonFormatlayici').then(module => ({ default: module.TrJsonFormatlayici })));
+const TrJsonGoruntuleyici = lazy(() => import('./pages/tr/TrJsonGoruntuleyici').then(module => ({ default: module.TrJsonGoruntuleyici })));
+const TrJsonDogrulayici = lazy(() => import('./pages/tr/TrJsonDogrulayici').then(module => ({ default: module.TrJsonDogrulayici })));
+const TrJsonExcel = lazy(() => import('./pages/tr/TrJsonExcel').then(module => ({ default: module.TrJsonExcel })));
+const TrExcelJson = lazy(() => import('./pages/tr/TrExcelJson').then(module => ({ default: module.TrExcelJson })));
+const TrJsonCsv = lazy(() => import('./pages/tr/TrJsonCsv').then(module => ({ default: module.TrJsonCsv })));
 const JsonValidator = lazy(() => import('./pages/tools/JsonValidator').then(module => ({ default: module.JsonValidator })));
 const BlobView = lazy(() => import('./pages/BlobView').then(module => ({ default: module.BlobView })));
 const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
@@ -115,6 +122,13 @@ function App() {
                   <Route path="/sample-json/:slug" element={<SampleJsonDetail />} />
                   <Route path="/json-errors" element={<JsonErrorsHub />} />
                   <Route path="/json-errors/:slug" element={<JsonErrorDetail />} />
+                  <Route path="/tr" element={<TrHub />} />
+                  <Route path="/tr/json-formatlayici" element={<TrJsonFormatlayici />} />
+                  <Route path="/tr/json-goruntuleyici" element={<TrJsonGoruntuleyici />} />
+                  <Route path="/tr/json-dogrulayici" element={<TrJsonDogrulayici />} />
+                  <Route path="/tr/json-excel-cevirici" element={<TrJsonExcel />} />
+                  <Route path="/tr/excel-json-cevirici" element={<TrExcelJson />} />
+                  <Route path="/tr/json-csv-cevirici" element={<TrJsonCsv />} />
                   <Route path="/json-validator" element={<JsonValidator />} />
                   
                   {/* Other pages */}

@@ -336,4 +336,11 @@
   <url><loc>https://jsonformater.com/json-errors/expecting-delimiter</loc><lastmod>2026-07-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://jsonformater.com/json-errors/extra-data</loc><lastmod>2026-07-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://jsonformater.com/json-errors/expecting-property-name</loc><lastmod>2026-07-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://jsonformater.com/tr</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/json-formatlayici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/json-goruntuleyici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/json-dogrulayici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/json-excel-cevirici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/excel-json-cevirici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jsonformater.com/tr/json-csv-cevirici</loc><lastmod>2026-07-01</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
