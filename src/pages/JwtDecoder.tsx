@@ -33,6 +33,8 @@ export function JwtDecoderPage() {
             convertLabel="Decode JWT"
             downloadName="jwt-decoded.json"
             uploadAccept=".txt,.jwt"
+            inputLanguage="text"
+            outputLanguage="json"
             convert={decodeJwt}
           />
         </div>

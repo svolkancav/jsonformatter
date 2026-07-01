@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { SEO } from '../../components/SEO';
+import { CodeEditor } from '../../components/CodeHighlight';
 
 export function JsonValidator() {
   const [input, setInput] = useState('');
@@ -57,11 +58,12 @@ export function JsonValidator() {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               JSON Input
             </label>
-            <textarea
+            <CodeEditor
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="w-full h-96 px-4 py-3 font-mono text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white resize-none"
-              placeholder='Enter your JSON here...'
+              onChange={setInput}
+              language="json"
+              placeholder="Enter your JSON here..."
+              minHeight="28rem"
             />
           </div>
 

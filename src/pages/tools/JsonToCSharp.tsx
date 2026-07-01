@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Code2, Copy, Download, CheckCircle } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import { generateCSharpClasses } from '../../utils/generators';
+import { CodeEditor, CodeBlock } from '../../components/CodeHighlight';
 
 export function JsonToCSharp() {
   const [input, setInput] = useState('');
@@ -85,11 +86,12 @@ export function JsonToCSharp() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 JSON Input
               </label>
-              <textarea
+              <CodeEditor
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="w-full h-96 px-4 py-3 font-mono text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white resize-none"
+                onChange={setInput}
+                language="json"
                 placeholder='{"name": "John", "age": 30}'
+                minHeight="28rem"
               />
             </div>
 
@@ -117,12 +119,7 @@ export function JsonToCSharp() {
                   </div>
                 )}
               </div>
-              <textarea
-                value={output}
-                readOnly
-                className="w-full h-96 px-4 py-3 font-mono text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white resize-none"
-                placeholder="C# classes will appear here..."
-              />
+              <CodeBlock code={output} language="csharp" minHeight="28rem" />
             </div>
           </div>
 

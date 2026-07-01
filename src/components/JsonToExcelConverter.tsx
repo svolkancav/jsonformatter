@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Upload, Download, FileSpreadsheet, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
 import * as XLSX from 'xlsx';
+import { CodeEditor } from './CodeHighlight';
 
 interface JsonToExcelConverterProps {
   initialJson?: string;
@@ -176,14 +177,15 @@ export function JsonToExcelConverter({ initialJson = '' }: JsonToExcelConverterP
         </div>
 
         {/* JSON Textarea */}
-        <textarea
+        <CodeEditor
           value={jsonInput}
-          onChange={(e) => {
-            setJsonInput(e.target.value);
+          onChange={(value) => {
+            setJsonInput(value);
             setError('');
           }}
+          language="json"
           placeholder="Paste your JSON data here or upload a JSON file..."
-          className="w-full h-64 p-4 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm resize-none"
+          minHeight="24rem"
         />
       </div>
 

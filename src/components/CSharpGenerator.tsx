@@ -3,6 +3,7 @@ import { Copy, CheckCircle2, Wand2 } from 'lucide-react';
 import { processJson } from '../services/api';
 import type { GenerateResponse } from '../types';
 import { getExampleJsonString } from '../utils/examples';
+import { CodeEditor } from './CodeHighlight';
 
 export function CSharpGenerator() {
   const [jsonInput, setJsonInput] = useState('');
@@ -92,11 +93,12 @@ export function CSharpGenerator() {
             Load Example
           </button>
         </div>
-        <textarea
+        <CodeEditor
           value={jsonInput}
-          onChange={(e) => setJsonInput(e.target.value)}
+          onChange={setJsonInput}
+          language="json"
           placeholder='Enter your JSON here, e.g., {"name": "John", "age": 30}'
-          className="w-full h-64 px-4 py-3 font-mono text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent resize-none text-gray-900 dark:text-gray-100"
+          minHeight="24rem"
         />
       </div>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Copy, CheckCircle2, Wand2, Share2, Download } from 'lucide-react';
 import { ShareModal } from './ShareModal';
+import { CodeEditor, CodeBlock } from './CodeHighlight';
 
 export function JsonFormatter() {
   const [jsonInput, setJsonInput] = useState('');
@@ -135,11 +136,12 @@ export function JsonFormatter() {
               Load Example
             </button>
           </div>
-          <textarea
+          <CodeEditor
             value={jsonInput}
-            onChange={(e) => setJsonInput(e.target.value)}
+            onChange={setJsonInput}
+            language="json"
             placeholder='Enter your JSON here, e.g., {"name": "John", "age": 30}'
-            className="w-full h-64 px-4 py-3 font-mono text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent resize-none text-gray-900 dark:text-gray-100"
+            minHeight="26rem"
           />
         </div>
 
@@ -215,9 +217,7 @@ export function JsonFormatter() {
                   )}
                 </button>
               </div>
-              <pre className="w-full h-96 px-4 py-3 font-mono text-xs bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg overflow-auto text-gray-900 dark:text-gray-100">
-                {formatted}
-              </pre>
+              <CodeBlock code={formatted} language="json" minHeight="28rem" />
             </div>
 
             <div className="space-y-3">
@@ -240,9 +240,7 @@ export function JsonFormatter() {
                   )}
                 </button>
               </div>
-              <pre className="w-full h-96 px-4 py-3 font-mono text-xs bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg overflow-auto text-gray-900 dark:text-gray-100 break-all">
-                {minified}
-              </pre>
+              <CodeBlock code={minified} language="json" minHeight="28rem" />
             </div>
           </div>
         )}

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Upload, Download, FileText, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
 import * as toml from 'toml';
+import { CodeEditor, CodeBlock } from './CodeHighlight';
 
 interface TomlToJsonConverterProps {
   onJsonGenerated?: (json: string) => void;
@@ -139,17 +140,16 @@ export function TomlToJsonConverter({ onJsonGenerated }: TomlToJsonConverterProp
             </label>
           </div>
         </div>
-        <textarea
+        <CodeEditor
           value={tomlInput}
-          onChange={(e) => {
-            setTomlInput(e.target.value);
+          onChange={(value) => {
+            setTomlInput(value);
             setError('');
             setJsonOutput('');
           }}
-          placeholder='name = "John"
-age = 30
-city = "New York"'
-          className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
+          language="toml"
+          placeholder={'name = "John"\nage = 30\ncity = "New York"'}
+          minHeight="24rem"
         />
       </div>
 
@@ -230,11 +230,7 @@ city = "New York"'
               </button>
             </div>
           </div>
-          <textarea
-            value={jsonOutput}
-            readOnly
-            className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
-          />
+          <CodeBlock code={jsonOutput} language="json" minHeight="24rem" />
         </div>
       )}
 

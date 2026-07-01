@@ -33,6 +33,8 @@ export function JsonToYamlPage() {
             convertLabel="Convert JSON to YAML"
             downloadName="converted.yaml"
             uploadAccept=".json,application/json"
+            inputLanguage="json"
+            outputLanguage="yaml"
             convert={jsonToYaml}
           />
         </div>

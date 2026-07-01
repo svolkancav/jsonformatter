@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Upload, Download, FileText, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
 import { encode } from '@toon-format/toon';
+import { CodeEditor, CodeBlock } from './CodeHighlight';
 
 interface JsonToToonConverterProps {
   initialJson?: string;
@@ -130,15 +131,16 @@ export function JsonToToonConverter({ initialJson = '' }: JsonToToonConverterPro
             </label>
           </div>
         </div>
-        <textarea
+        <CodeEditor
           value={jsonInput}
-          onChange={(e) => {
-            setJsonInput(e.target.value);
+          onChange={(value) => {
+            setJsonInput(value);
             setError('');
             setToonOutput('');
           }}
+          language="json"
           placeholder='{"users": [{"id": 1, "name": "Alice", "role": "admin"}]}'
-          className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
+          minHeight="24rem"
         />
       </div>
 
@@ -206,11 +208,7 @@ export function JsonToToonConverter({ initialJson = '' }: JsonToToonConverterPro
               </button>
             </div>
           </div>
-          <textarea
-            value={toonOutput}
-            readOnly
-            className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
-          />
+          <CodeBlock code={toonOutput} language="text" minHeight="24rem" />
         </div>
       )}
 
