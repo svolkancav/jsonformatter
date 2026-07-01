@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Upload, Download, FileText, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
+import { CodeEditor, CodeBlock, type CodeLang } from './CodeHighlight';
 
 interface TextConverterProps {
   inputLabel: string;
@@ -8,6 +9,9 @@ interface TextConverterProps {
   convertLabel: string;
   downloadName: string;
   uploadAccept?: string;
+  /** Syntax-highlighting language for the input / output panes. */
+  inputLanguage?: CodeLang;
+  outputLanguage?: CodeLang;
   /** Transforms input to output; throw an Error with a helpful message on bad input. */
   convert: (input: string) => string;
 }
@@ -23,6 +27,8 @@ export function TextConverter({
   convertLabel,
   downloadName,
   uploadAccept = '.txt',
+  inputLanguage = 'json',
+  outputLanguage = 'json',
   convert,
 }: TextConverterProps) {
   const [input, setInput] = useState('');
@@ -121,15 +127,16 @@ export function TextConverter({
             </label>
           </div>
         </div>
-        <textarea
+        <CodeEditor
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
+          onChange={(value) => {
+            setInput(value);
             setError('');
             setOutput('');
           }}
+          language={inputLanguage}
           placeholder={placeholder}
-          className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
+          minHeight="26rem"
         />
       </div>
 
@@ -185,11 +192,7 @@ export function TextConverter({
               </button>
             </div>
           </div>
-          <textarea
-            value={output}
-            readOnly
-            className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
-          />
+          <CodeBlock code={output} language={outputLanguage} minHeight="30rem" />
         </div>
       )}
     </div>

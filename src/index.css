@@ -86,3 +86,91 @@
 
 /* Non-critical styles loaded asynchronously */
 @tailwind utilities;
+
+/* ---- Code editor / block surface + Prism syntax colors (light + dark) ---- */
+.code-surface {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.dark .code-surface {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* react-simple-code-editor: make the overlaid textarea caret/placeholder sensible */
+.code-input-area:focus {
+  outline: none;
+}
+.code-input-area::placeholder {
+  color: #94a3b8;
+}
+
+/* Prism tokens */
+.token.property,
+.token.tag,
+.token.selector,
+.token.atrule {
+  color: #2563eb;
+}
+.dark .token.property,
+.dark .token.tag,
+.dark .token.selector,
+.dark .token.atrule {
+  color: #60a5fa;
+}
+.token.string,
+.token.attr-value,
+.token.char,
+.token.inserted {
+  color: #16a34a;
+}
+.dark .token.string,
+.dark .token.attr-value,
+.dark .token.char,
+.dark .token.inserted {
+  color: #4ade80;
+}
+.token.number,
+.token.boolean,
+.token.constant {
+  color: #d97706;
+}
+.dark .token.number,
+.dark .token.boolean,
+.dark .token.constant {
+  color: #fbbf24;
+}
+.token.keyword,
+.token.null,
+.token.important,
+.token.deleted {
+  color: #dc2626;
+}
+.dark .token.keyword,
+.dark .token.null,
+.dark .token.important,
+.dark .token.deleted {
+  color: #f87171;
+}
+.token.attr-name,
+.token.class-name,
+.token.function {
+  color: #9333ea;
+}
+.dark .token.attr-name,
+.dark .token.class-name,
+.dark .token.function {
+  color: #c084fc;
+}
+.token.punctuation,
+.token.operator {
+  color: #64748b;
+}
+.dark .token.punctuation,
+.dark .token.operator {
+  color: #94a3b8;
+}
+.token.comment {
+  color: #94a3b8;
+  font-style: italic;
+}

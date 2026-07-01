@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Upload, Download, FileText, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
 import * as tomlify from 'tomlify-j0.4';
+import { CodeEditor, CodeBlock } from './CodeHighlight';
 
 interface JsonToTomlConverterProps {
   initialJson?: string;
@@ -125,15 +126,16 @@ export function JsonToTomlConverter({ initialJson = '' }: JsonToTomlConverterPro
             </label>
           </div>
         </div>
-        <textarea
+        <CodeEditor
           value={jsonInput}
-          onChange={(e) => {
-            setJsonInput(e.target.value);
+          onChange={(value) => {
+            setJsonInput(value);
             setError('');
             setTomlOutput('');
           }}
+          language="json"
           placeholder='{"name": "John", "age": 30, "city": "New York"}'
-          className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
+          minHeight="24rem"
         />
       </div>
 
@@ -201,11 +203,7 @@ export function JsonToTomlConverter({ initialJson = '' }: JsonToTomlConverterPro
               </button>
             </div>
           </div>
-          <textarea
-            value={tomlOutput}
-            readOnly
-            className="w-full h-64 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm resize-none"
-          />
+          <CodeBlock code={tomlOutput} language="toml" minHeight="24rem" />
         </div>
       )}
 

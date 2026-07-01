@@ -33,6 +33,8 @@ export function JsonToCsvPage() {
             convertLabel="Convert JSON to CSV"
             downloadName="converted.csv"
             uploadAccept=".json,application/json"
+            inputLanguage="json"
+            outputLanguage="text"
             convert={jsonToCsv}
           />
         </div>

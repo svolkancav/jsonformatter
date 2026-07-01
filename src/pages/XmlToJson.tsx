@@ -33,6 +33,8 @@ export function XmlToJsonPage() {
             convertLabel="Convert XML to JSON"
             downloadName="converted.json"
             uploadAccept=".xml,text/xml,application/xml"
+            inputLanguage="markup"
+            outputLanguage="json"
             convert={xmlToJson}
           />
         </div>
