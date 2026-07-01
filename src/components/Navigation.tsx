@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Code2, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { InstallPWA } from './InstallPWA';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +17,7 @@ export function Navigation() {
     { path: '/json-errors', label: 'JSON Errors' },
     { path: '/blog', label: 'Blog' },
     { path: '/about', label: 'About' },
-    { path: '/contact', label: 'Contact' },
-    { path: '/tr', label: 'Türkçe' }
+    { path: '/contact', label: 'Contact' }
   ];
 
   const toolsItems = [
@@ -134,14 +134,16 @@ export function Navigation() {
 
             <div className="ml-2 flex items-center gap-2">
               <InstallPWA />
+              <LanguageSwitcher />
               <div className="w-10 h-10 flex items-center justify-center">
                 <ThemeToggle />
               </div>
             </div>
           </div>
 
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-1">
             <InstallPWA />
+            <LanguageSwitcher />
             <div className="w-10 h-10 flex items-center justify-center">
               <ThemeToggle />
             </div>
