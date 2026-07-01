@@ -98,6 +98,21 @@ export function ToolContent({ slug }: ToolContentProps) {
 
       {/* FAQ */}
       <section className="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+        {/* FAQPage structured data for rich results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: data.faqs.map((faq) => ({
+                '@type': 'Question',
+                name: faq.question,
+                acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+              })),
+            }),
+          }}
+        />
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">
           Frequently Asked Questions
         </h2>
