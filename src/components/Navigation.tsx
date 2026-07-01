@@ -36,6 +36,10 @@ export function Navigation() {
     { path: '/json-to-xml', label: 'JSON to XML' },
     { path: '/xml-to-json', label: 'XML to JSON' },
     { path: '/jwt-decoder', label: 'JWT Decoder' },
+    { path: '/json-diff', label: 'JSON Diff' },
+    { path: '/base64', label: 'Base64 Encode/Decode' },
+    { path: '/uuid-generator', label: 'UUID Generator' },
+    { path: '/timestamp-converter', label: 'Timestamp Converter' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/character-counter', label: 'Character Counter' }

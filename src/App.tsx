@@ -41,6 +41,10 @@ const YamlToJson = lazy(() => import('./pages/YamlToJson').then(module => ({ def
 const JsonToXml = lazy(() => import('./pages/JsonToXml').then(module => ({ default: module.JsonToXmlPage })));
 const XmlToJson = lazy(() => import('./pages/XmlToJson').then(module => ({ default: module.XmlToJsonPage })));
 const JwtDecoder = lazy(() => import('./pages/JwtDecoder').then(module => ({ default: module.JwtDecoderPage })));
+const Base64Tool = lazy(() => import('./pages/Base64Tool').then(module => ({ default: module.Base64ToolPage })));
+const UuidGenerator = lazy(() => import('./pages/UuidGenerator').then(module => ({ default: module.UuidGeneratorPage })));
+const TimestampConverter = lazy(() => import('./pages/TimestampConverter').then(module => ({ default: module.TimestampConverterPage })));
+const JsonDiff = lazy(() => import('./pages/JsonDiff').then(module => ({ default: module.JsonDiffPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
@@ -87,6 +91,10 @@ function App() {
                   <Route path="/json-to-xml" element={<JsonToXml />} />
                   <Route path="/xml-to-json" element={<XmlToJson />} />
                   <Route path="/jwt-decoder" element={<JwtDecoder />} />
+                  <Route path="/base64" element={<Base64Tool />} />
+                  <Route path="/uuid-generator" element={<UuidGenerator />} />
+                  <Route path="/timestamp-converter" element={<TimestampConverter />} />
+                  <Route path="/json-diff" element={<JsonDiff />} />
                   
                   {/* Text tools */}
                   <Route path="/character-counter" element={<CharacterCounter />} />
