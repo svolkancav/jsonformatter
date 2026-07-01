@@ -113,7 +113,7 @@ export function SampleJsonDetail() {
             <Download className="w-4 h-4" />
             Download .json
           </button>
-          <Link to="/json-formatter" className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+          <Link to="/json-formatter" state={{ prefill: sample.json }} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
             <Wand2 className="w-4 h-4" />
             Open in Formatter
           </Link>
@@ -125,9 +125,9 @@ export function SampleJsonDetail() {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">What is this sample for?</h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{sample.useCase}</p>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">
-            All processing on this site runs in your browser — copy this sample into the{' '}
-            <Link to="/json-formatter" className="text-blue-600 dark:text-blue-400 hover:underline">JSON Formatter</Link>,{' '}
-            <Link to="/json-viewer" className="text-blue-600 dark:text-blue-400 hover:underline">Viewer</Link>, or any converter to experiment freely.
+            All processing on this site runs in your browser — open this sample in the{' '}
+            <Link to="/json-formatter" state={{ prefill: sample.json }} className="text-blue-600 dark:text-blue-400 hover:underline">JSON Formatter</Link>,{' '}
+            <Link to="/json-viewer" state={{ prefill: sample.json }} className="text-blue-600 dark:text-blue-400 hover:underline">Viewer</Link>, or any converter to experiment freely.
           </p>
         </div>
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Copy, CheckCircle2, Wand2, Share2, Download } from 'lucide-react';
 import { ShareModal } from './ShareModal';
 import { CodeEditor, CodeBlock } from './CodeHighlight';
@@ -12,30 +13,18 @@ export function JsonFormatter() {
   const [copiedFormatted, setCopiedFormatted] = useState(false);
   const [copiedMinified, setCopiedMinified] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const location = useLocation();
 
-  useEffect(() => {
-    const handleLoadExample = (event: CustomEvent) => {
-      setJsonInput(event.detail);
-      setFormatted('');
-      setMinified('');
-      setStats(null);
-      setError('');
-    };
-
-    window.addEventListener('loadExample' as any, handleLoadExample as any);
-    return () => window.removeEventListener('loadExample' as any, handleLoadExample as any);
-  }, []);
-
-  const handleFormat = () => {
+  const formatJson = (value: string) => {
     setError('');
 
-    if (!jsonInput.trim()) {
+    if (!value.trim()) {
       setError('Please enter JSON data to format');
       return;
     }
 
     try {
-      const parsed = JSON.parse(jsonInput);
+      const parsed = JSON.parse(value);
       const formattedJson = JSON.stringify(parsed, null, 2);
       const minifiedJson = JSON.stringify(parsed);
 
@@ -50,13 +39,38 @@ export function JsonFormatter() {
         characterCount: formattedJson.length,
         size: size < 1024 ? `${size} B` : `${(size / 1024).toFixed(2)} KB`,
       });
-    } catch (err) {
+    } catch {
       setError('Invalid JSON syntax. Please check your input.');
       setFormatted('');
       setMinified('');
       setStats(null);
     }
   };
+
+  const handleFormat = () => formatJson(jsonInput);
+
+  useEffect(() => {
+    const handleLoadExample = (event: CustomEvent) => {
+      setJsonInput(event.detail);
+      setFormatted('');
+      setMinified('');
+      setStats(null);
+      setError('');
+    };
+
+    window.addEventListener('loadExample' as any, handleLoadExample as any);
+    return () => window.removeEventListener('loadExample' as any, handleLoadExample as any);
+  }, []);
+
+  // Prefill + auto-format when arriving from a sample page ("Open in Formatter").
+  useEffect(() => {
+    const prefill = (location.state as { prefill?: string } | null)?.prefill;
+    if (prefill) {
+      setJsonInput(prefill);
+      formatJson(prefill);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const copyToClipboard = async (text: string, type: 'formatted' | 'minified') => {
     try {
