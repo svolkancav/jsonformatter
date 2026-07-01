@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Code2, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { InstallPWA } from './InstallPWA';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -130,12 +131,16 @@ export function Navigation() {
               )}
             </div>
 
-            <div className="ml-2 w-10 h-10 flex items-center justify-center">
-              <ThemeToggle />
+            <div className="ml-2 flex items-center gap-2">
+              <InstallPWA />
+              <div className="w-10 h-10 flex items-center justify-center">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
 
           <div className="md:hidden flex items-center gap-2">
+            <InstallPWA />
             <div className="w-10 h-10 flex items-center justify-center">
               <ThemeToggle />
             </div>

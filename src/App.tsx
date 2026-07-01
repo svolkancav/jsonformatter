@@ -14,7 +14,6 @@ const Blog = lazy(() => import('./pages/Blog').then(module => ({ default: module
 const BlogArticle = lazy(() => import('./pages/BlogArticle').then(module => ({ default: module.BlogArticle })));
 const Tutorials = lazy(() => import('./pages/Tutorials').then(module => ({ default: module.Tutorials })));
 const Contact = lazy(() => import('./pages/Contact').then(module => ({ default: module.Contact })));
-const Privacy = lazy(() => import('./pages/Privacy').then(module => ({ default: module.Privacy })));
 const Terms = lazy(() => import('./pages/Terms').then(module => ({ default: module.Terms })));
 const JsonToCSharp = lazy(() => import('./pages/tools/JsonToCSharp').then(module => ({ default: module.JsonToCSharp })));
 const JsonToTypeScript = lazy(() => import('./pages/tools/JsonToTypeScript').then(module => ({ default: module.JsonToTypeScript })));
@@ -125,7 +124,7 @@ function App() {
                   <Route path="/tutorials" element={<Tutorials />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/cookie-policy" element={<CookiePolicy />} />
