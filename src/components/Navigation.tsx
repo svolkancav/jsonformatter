@@ -29,6 +29,13 @@ export function Navigation() {
     { path: '/toml-to-json', label: 'TOML to JSON' },
     { path: '/json-to-toon', label: 'JSON to TOON' },
     { path: '/toon-to-json', label: 'TOON to JSON' },
+    { path: '/json-to-csv', label: 'JSON to CSV' },
+    { path: '/csv-to-json', label: 'CSV to JSON' },
+    { path: '/json-to-yaml', label: 'JSON to YAML' },
+    { path: '/yaml-to-json', label: 'YAML to JSON' },
+    { path: '/json-to-xml', label: 'JSON to XML' },
+    { path: '/xml-to-json', label: 'XML to JSON' },
+    { path: '/jwt-decoder', label: 'JWT Decoder' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/character-counter', label: 'Character Counter' }

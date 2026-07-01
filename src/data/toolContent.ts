@@ -409,4 +409,250 @@ name = "Ada"`,
       { question: 'Is my data uploaded?', answer: 'No. Everything runs locally in your browser.' },
     ],
   },
+
+  'json-to-csv': {
+    intro: {
+      heading: 'Convert JSON to CSV Online',
+      paragraphs: [
+        'CSV is the format every spreadsheet, database, and analytics tool understands. Converting a JSON array to CSV lets you hand structured data to non-technical colleagues, import it into Excel or Google Sheets, or bulk-load it into a database — without writing any parsing code.',
+        'The converter maps each object in your JSON array to a row and each property name to a column header. It automatically escapes values that contain commas, quotes, or line breaks so the resulting CSV is valid and opens cleanly everywhere. This is the fastest way to turn an API export or query result into a shareable table.',
+        'Everything runs in your browser, so even datasets containing private information are converted without being uploaded to a server.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to CSV',
+      items: [
+        'Paste your JSON — ideally an array of flat objects — into the input box.',
+        'Click Convert JSON to CSV. Keys become the header row and each object becomes a data row.',
+        'Review the CSV output; values with commas or quotes are escaped automatically.',
+        'Copy the result or download it as a .csv file.',
+        'Open it in Excel, Google Sheets, or import it into your database.',
+      ],
+    },
+    example: {
+      heading: 'JSON Array to CSV',
+      description: 'An array of objects becomes a header row plus one row per object.',
+      input: '[{"name":"Ada","age":36},{"name":"Linus","age":54}]',
+      output: 'name,age\nAda,36\nLinus,54',
+      inputLabel: 'JSON',
+      outputLabel: 'CSV',
+    },
+    faqs: [
+      { question: 'What JSON structure works best?', answer: 'An array of flat objects with consistent keys converts most cleanly — each object becomes a row and each key a column.' },
+      { question: 'How are commas inside values handled?', answer: 'Values containing commas, quotes, or line breaks are automatically wrapped in double quotes and escaped per the CSV standard (RFC 4180), so the output stays valid.' },
+      { question: 'Can it handle nested JSON?', answer: 'CSV is flat, so deeply nested objects are best flattened first. Simple one-level objects convert directly.' },
+      { question: 'Is my data private?', answer: 'Yes. Conversion happens entirely in your browser and nothing is uploaded.' },
+    ],
+  },
+
+  'csv-to-json': {
+    intro: {
+      heading: 'Convert CSV to JSON Online',
+      paragraphs: [
+        'Spreadsheets and exports live in CSV, but applications and APIs speak JSON. Converting CSV to JSON turns rows and columns into a clean array of objects you can drop straight into code, a database, or an API request.',
+        'The converter treats the first row as the keys and every following row as an object. It also detects numbers and booleans so your JSON has proper types rather than everything being a string — ready to use without extra cleanup.',
+        'Your file is parsed locally in the browser and never uploaded, so confidential data stays on your device.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert CSV to JSON',
+      items: [
+        'Paste your CSV, or upload a .csv file. Make sure the first row is your column headers.',
+        'Click Convert CSV to JSON.',
+        'Each row becomes a JSON object keyed by the header names.',
+        'Review the JSON array, then copy or download it.',
+        'Use it in your application, API, or database import.',
+      ],
+    },
+    example: {
+      heading: 'CSV Rows to JSON Objects',
+      description: 'The header row defines the keys; each data row becomes an object.',
+      input: 'name,age\nAda,36\nLinus,54',
+      output: '[\n  { "name": "Ada", "age": 36 },\n  { "name": "Linus", "age": 54 }\n]',
+      inputLabel: 'CSV',
+      outputLabel: 'JSON',
+    },
+    faqs: [
+      { question: 'Does it detect numbers and booleans?', answer: 'Yes. Values like 36 or true are converted to real JSON numbers and booleans rather than strings, so the output is ready to use.' },
+      { question: 'What if my CSV has no header row?', answer: 'The first row is always treated as keys. Add a header row describing each column for meaningful JSON keys.' },
+      { question: 'Are quoted fields with commas handled?', answer: 'Yes. Standard CSV quoting and escaping is parsed correctly, so values containing commas stay intact.' },
+      { question: 'Is my file uploaded?', answer: 'No. Parsing runs entirely in your browser.' },
+    ],
+  },
+
+  'json-to-yaml': {
+    intro: {
+      heading: 'Convert JSON to YAML Online',
+      paragraphs: [
+        'YAML is the configuration language of modern infrastructure — Kubernetes manifests, CI/CD pipelines, Docker Compose, and countless app configs are written in it. Its clean, indentation-based syntax is far easier for humans to read and edit than JSON. Converting JSON to YAML gives you that readable form instantly.',
+        'The converter maps JSON objects to YAML mappings, arrays to YAML sequences, and preserves your strings, numbers, and booleans. The result is valid, idiomatic YAML you can paste straight into a config file.',
+        'Conversion happens in your browser, so configuration data — which often contains sensitive values — never leaves your device.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to YAML',
+      items: [
+        'Paste your JSON into the input box.',
+        'Click Convert JSON to YAML.',
+        'Objects become indented mappings and arrays become dashed lists.',
+        'Review the readable YAML output.',
+        'Copy it into your Kubernetes, CI, Docker Compose, or app config file.',
+      ],
+    },
+    example: {
+      heading: 'JSON to YAML',
+      description: 'Nested JSON becomes clean, indented YAML.',
+      input: '{"name":"app","ports":[80,443],"debug":true}',
+      output: 'name: app\nports:\n  - 80\n  - 443\ndebug: true',
+      inputLabel: 'JSON',
+      outputLabel: 'YAML',
+    },
+    faqs: [
+      { question: 'What is YAML used for?', answer: 'YAML is the standard for human-edited configuration: Kubernetes, GitHub Actions and other CI, Docker Compose, and many application config files.' },
+      { question: 'Are data types preserved?', answer: 'Yes. Strings, numbers, booleans, arrays, and nested objects are all mapped to their YAML equivalents.' },
+      { question: 'Why is YAML easier to read than JSON?', answer: 'YAML uses indentation instead of braces and quotes, and supports comments, which makes configuration files cleaner and self-documenting.' },
+      { question: 'Is my data private?', answer: 'Yes — the conversion runs entirely in your browser with no uploads.' },
+    ],
+  },
+
+  'yaml-to-json': {
+    intro: {
+      heading: 'Convert YAML to JSON Online',
+      paragraphs: [
+        'YAML is great for humans, but most programs, APIs, and validators work with JSON. Converting YAML to JSON lets you take a readable config file and turn it into the structured data your code actually consumes.',
+        'The converter parses YAML mappings, sequences, and typed values and produces an equivalent JSON document. It is ideal for feeding Kubernetes, CI, or Docker Compose configuration into tooling, validating YAML against a JSON schema, or debugging exactly how a YAML file will be interpreted.',
+        'Everything is processed in your browser, so configuration files containing secrets stay entirely on your machine.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert YAML to JSON',
+      items: [
+        'Paste your YAML, or upload a .yaml / .yml file.',
+        'Click Convert YAML to JSON.',
+        'Mappings become objects and sequences become arrays, with types preserved.',
+        'Review the formatted JSON output.',
+        'Copy or download it for your application, API, or validation pipeline.',
+      ],
+    },
+    example: {
+      heading: 'YAML to JSON',
+      description: 'Indented YAML becomes a nested JSON object.',
+      input: 'name: app\nports:\n  - 80\n  - 443\ndebug: true',
+      output: '{\n  "name": "app",\n  "ports": [80, 443],\n  "debug": true\n}',
+      inputLabel: 'YAML',
+      outputLabel: 'JSON',
+    },
+    faqs: [
+      { question: 'Does it preserve data types?', answer: 'Yes. YAML numbers, booleans, strings, lists, and nested mappings are mapped to their natural JSON counterparts.' },
+      { question: 'Can I convert a whole Kubernetes or Compose file?', answer: 'Yes. Paste an entire manifest or docker-compose.yml and get the equivalent JSON structure.' },
+      { question: 'What if my YAML is invalid?', answer: 'You will get a clear error describing the parse problem, such as bad indentation, so you can fix it quickly.' },
+      { question: 'Is my file uploaded?', answer: 'No. All parsing happens client-side in your browser.' },
+    ],
+  },
+
+  'json-to-xml': {
+    intro: {
+      heading: 'Convert JSON to XML Online',
+      paragraphs: [
+        'XML remains the backbone of SOAP web services, many enterprise systems, document standards, and legacy integrations. When you have JSON but a downstream system expects XML, this converter does the translation, turning your objects and arrays into well-formed XML elements.',
+        'Each JSON key becomes an element and nested objects become nested elements, producing valid XML you can feed into SOAP calls, configuration loaders, or publishing pipelines. Special characters are escaped automatically so the output always parses.',
+        'The work happens in your browser — your JSON is never transmitted to a server.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to XML',
+      items: [
+        'Paste your JSON into the input box.',
+        'Click Convert JSON to XML.',
+        'Keys become XML elements; nested objects become nested elements.',
+        'Review the well-formed, indented XML output.',
+        'Copy or download it for your target system.',
+      ],
+    },
+    example: {
+      heading: 'JSON to XML',
+      description: 'A nested JSON object becomes nested XML elements.',
+      input: '{"note":{"to":"Ada","from":"Linus"}}',
+      output: '<note>\n  <to>Ada</to>\n  <from>Linus</from>\n</note>',
+      inputLabel: 'JSON',
+      outputLabel: 'XML',
+    },
+    faqs: [
+      { question: 'What does the XML structure look like?', answer: 'Each JSON key becomes an element named after it, and nested objects become nested elements. Arrays produce repeated elements.' },
+      { question: 'Are special characters escaped?', answer: 'Yes. Characters like &, <, and > are escaped into valid XML entities so the document is well-formed.' },
+      { question: 'What if my JSON is an array at the top level?', answer: 'XML needs a single root, so a top-level array is wrapped in a root element automatically to keep the output valid.' },
+      { question: 'Is my data uploaded?', answer: 'No — the conversion runs entirely client-side in your browser.' },
+    ],
+  },
+
+  'xml-to-json': {
+    intro: {
+      heading: 'Convert XML to JSON Online',
+      paragraphs: [
+        'XML powers SOAP responses, RSS feeds, and countless legacy and enterprise systems, but modern applications work with JSON. Converting XML to JSON lets you take any XML document and turn it into the structured data your code can consume directly.',
+        'The converter reads XML elements and attributes and produces an equivalent JSON object, preserving nesting. It is ideal for consuming a SOAP or RSS response in a JavaScript app, migrating away from XML, or simply inspecting an XML payload in a friendlier format.',
+        'All processing happens in your browser, so your XML — including any sensitive content — stays on your device.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert XML to JSON',
+      items: [
+        'Paste your XML, or upload an .xml file.',
+        'Click Convert XML to JSON.',
+        'Elements become object keys and nested elements become nested objects.',
+        'Review the formatted JSON output.',
+        'Copy or download it for your application or API.',
+      ],
+    },
+    example: {
+      heading: 'XML to JSON',
+      description: 'Nested XML elements become a nested JSON object.',
+      input: '<note>\n  <to>Ada</to>\n  <from>Linus</from>\n</note>',
+      output: '{\n  "note": {\n    "to": "Ada",\n    "from": "Linus"\n  }\n}',
+      inputLabel: 'XML',
+      outputLabel: 'JSON',
+    },
+    faqs: [
+      { question: 'How are XML attributes handled?', answer: 'Attributes are preserved in the JSON output with a prefix so they are not confused with child elements.' },
+      { question: 'Can it handle SOAP or RSS?', answer: 'Yes. Any well-formed XML document — SOAP envelopes, RSS feeds, config files — converts to an equivalent JSON structure.' },
+      { question: 'What if my XML is malformed?', answer: 'You will get an error so you can locate and fix the invalid markup before converting.' },
+      { question: 'Is my XML uploaded?', answer: 'No. Everything is parsed locally in your browser.' },
+    ],
+  },
+
+  'jwt-decoder': {
+    intro: {
+      heading: 'What Is a JWT and How to Decode It',
+      paragraphs: [
+        'A JSON Web Token (JWT) is a compact, URL-safe token used for authentication and authorization across the web. It has three parts separated by dots — a header, a payload, and a signature — and each of the first two is just base64url-encoded JSON. That means anyone can read a JWT’s contents; the signature only proves it has not been tampered with, it does not hide the data.',
+        'This decoder splits the token, base64url-decodes the header and payload, and shows them as readable JSON. It also surfaces the standard time claims (exp, iat) as human-readable dates and tells you whether the token has expired — invaluable when debugging why an API keeps returning 401.',
+        'Crucially, decoding happens entirely in your browser. Your token — which may grant access to real accounts — is never sent to any server, so it is safe to inspect production tokens here.',
+      ],
+    },
+    steps: {
+      heading: 'How to Decode a JWT',
+      items: [
+        'Copy the JWT from your request header, cookie, or logs (a "Bearer " prefix is fine — it is stripped).',
+        'Paste it into the input box.',
+        'Click Decode JWT.',
+        'Read the decoded header and payload as formatted JSON, plus expiry details.',
+        'Check the claims — issuer, subject, scopes, expiry — to debug your auth flow.',
+      ],
+    },
+    tips: {
+      heading: 'Good to Know About JWTs',
+      items: [
+        { title: 'Decoding is not verifying', text: 'This tool reads the token; it does not check the signature. Never trust a decoded payload without verifying the signature server-side.' },
+        { title: 'Do not put secrets in the payload', text: 'The payload is readable by anyone who has the token. Store only non-sensitive claims there.' },
+        { title: 'exp is a Unix timestamp', text: 'The exp claim is seconds since 1970. This tool converts it to a readable date and flags expired tokens.' },
+        { title: 'Base64url, not base64', text: 'JWT segments use URL-safe base64 (- and _ instead of + and /), which is why plain base64 decoders sometimes fail on them.' },
+      ],
+    },
+    faqs: [
+      { question: 'Is it safe to paste my token here?', answer: 'Yes. Decoding happens entirely in your browser using client-side JavaScript. Your token is never transmitted, logged, or stored.' },
+      { question: 'Does this verify the signature?', answer: 'No. This tool decodes the header and payload so you can read them. Signature verification requires the secret or public key and must be done on your server.' },
+      { question: 'Why can I read the payload without a key?', answer: 'A JWT is only encoded, not encrypted. The header and payload are base64url-encoded JSON that anyone can decode — the signature exists to detect tampering, not to hide the contents.' },
+      { question: 'How do I know if a token is expired?', answer: 'The decoder reads the exp claim, converts it to a readable date, and flags whether the token has already expired.' },
+    ],
+  },
 };

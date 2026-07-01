@@ -81,6 +81,48 @@ export const staticRoutes = [
     keywords: 'toml to json, toml json converter, convert toml to json, toml converter, json converter, configuration file converter',
   },
   {
+    path: '/json-to-csv',
+    title: 'JSON to CSV Converter | Free Online JSON to CSV Tool',
+    description: 'Free online JSON to CSV converter. Turn an array of JSON objects into clean CSV instantly — keys become columns, objects become rows. Fast, private, browser-based.',
+    keywords: 'json to csv, json to csv converter, convert json to csv, json array to csv, json csv converter, free online converter',
+  },
+  {
+    path: '/csv-to-json',
+    title: 'CSV to JSON Converter | Free Online CSV to JSON Tool',
+    description: 'Free online CSV to JSON converter. Turn CSV rows into an array of JSON objects instantly — the header row becomes keys. Fast, private, browser-based.',
+    keywords: 'csv to json, csv to json converter, convert csv to json, csv json converter, csv to array, free online converter',
+  },
+  {
+    path: '/json-to-yaml',
+    title: 'JSON to YAML Converter | Free Online JSON to YAML Tool',
+    description: 'Free online JSON to YAML converter. Convert JSON data to clean, readable YAML instantly — perfect for config files, Kubernetes, CI pipelines, and Docker Compose.',
+    keywords: 'json to yaml, json to yaml converter, convert json to yaml, yaml converter, json yaml, free online converter',
+  },
+  {
+    path: '/yaml-to-json',
+    title: 'YAML to JSON Converter | Free Online YAML to JSON Tool',
+    description: 'Free online YAML to JSON converter. Convert YAML config files to JSON instantly — perfect for turning Kubernetes, CI, or Docker Compose YAML into JSON your code can use.',
+    keywords: 'yaml to json, yaml to json converter, convert yaml to json, yaml json converter, yaml parser, free online converter',
+  },
+  {
+    path: '/json-to-xml',
+    title: 'JSON to XML Converter | Free Online JSON to XML Tool',
+    description: 'Free online JSON to XML converter. Convert JSON data to well-formed XML instantly — ideal for SOAP services, legacy systems, and XML-based integrations.',
+    keywords: 'json to xml, json to xml converter, convert json to xml, json xml converter, free online converter',
+  },
+  {
+    path: '/xml-to-json',
+    title: 'XML to JSON Converter | Free Online XML to JSON Tool',
+    description: 'Free online XML to JSON converter. Convert XML documents to JSON instantly — turn SOAP responses, RSS feeds, and legacy XML into JSON your code can use.',
+    keywords: 'xml to json, xml to json converter, convert xml to json, xml json converter, xml parser, free online converter',
+  },
+  {
+    path: '/jwt-decoder',
+    title: 'JWT Decoder | Free Online JSON Web Token Decoder',
+    description: 'Free online JWT decoder. Paste a JSON Web Token to instantly decode its header and payload as readable JSON, with expiry info. Runs entirely in your browser.',
+    keywords: 'jwt decoder, decode jwt, json web token decoder, jwt parser, jwt debugger, decode json web token, free online jwt',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',
