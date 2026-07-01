@@ -34,6 +34,13 @@ const JsonToToml = lazy(() => import('./pages/JsonToToml').then(module => ({ def
 const TomlToJson = lazy(() => import('./pages/TomlToJson').then(module => ({ default: module.TomlToJsonPage })));
 const JsonToToon = lazy(() => import('./pages/JsonToToon').then(module => ({ default: module.JsonToToonPage })));
 const ToonToJson = lazy(() => import('./pages/ToonToJson').then(module => ({ default: module.ToonToJsonPage })));
+const JsonToCsv = lazy(() => import('./pages/JsonToCsv').then(module => ({ default: module.JsonToCsvPage })));
+const CsvToJson = lazy(() => import('./pages/CsvToJson').then(module => ({ default: module.CsvToJsonPage })));
+const JsonToYaml = lazy(() => import('./pages/JsonToYaml').then(module => ({ default: module.JsonToYamlPage })));
+const YamlToJson = lazy(() => import('./pages/YamlToJson').then(module => ({ default: module.YamlToJsonPage })));
+const JsonToXml = lazy(() => import('./pages/JsonToXml').then(module => ({ default: module.JsonToXmlPage })));
+const XmlToJson = lazy(() => import('./pages/XmlToJson').then(module => ({ default: module.XmlToJsonPage })));
+const JwtDecoder = lazy(() => import('./pages/JwtDecoder').then(module => ({ default: module.JwtDecoderPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
@@ -73,6 +80,13 @@ function App() {
                   <Route path="/toml-to-json" element={<TomlToJson />} />
                   <Route path="/json-to-toon" element={<JsonToToon />} />
                   <Route path="/toon-to-json" element={<ToonToJson />} />
+                  <Route path="/json-to-csv" element={<JsonToCsv />} />
+                  <Route path="/csv-to-json" element={<CsvToJson />} />
+                  <Route path="/json-to-yaml" element={<JsonToYaml />} />
+                  <Route path="/yaml-to-json" element={<YamlToJson />} />
+                  <Route path="/json-to-xml" element={<JsonToXml />} />
+                  <Route path="/xml-to-json" element={<XmlToJson />} />
+                  <Route path="/jwt-decoder" element={<JwtDecoder />} />
                   
                   {/* Text tools */}
                   <Route path="/character-counter" element={<CharacterCounter />} />
