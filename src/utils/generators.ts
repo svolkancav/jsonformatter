@@ -1,6 +1,24 @@
+// Parses JSON and returns a representative root OBJECT for type generation.
+// A top-level array (very common for API data) is unwrapped to its first
+// object element, so pasting an array of records still generates the item type.
+function rootObject(json: string): any {
+  const parsed = JSON.parse(json);
+  if (Array.isArray(parsed)) {
+    const first = parsed.find((x) => x && typeof x === 'object' && !Array.isArray(x));
+    if (!first) {
+      throw new Error('Provide a JSON object, or an array containing at least one object.');
+    }
+    return first;
+  }
+  if (!parsed || typeof parsed !== 'object') {
+    throw new Error('Provide a JSON object, or an array of objects.');
+  }
+  return parsed;
+}
+
 export function generateCSharpClasses(json: string, rootName: string = 'Root'): string {
   try {
-    const obj = JSON.parse(json);
+    const obj = rootObject(json);
     const classes: string[] = [];
     const processedTypes = new Set<string>();
 
@@ -84,7 +102,7 @@ export function generateCSharpClasses(json: string, rootName: string = 'Root'): 
 
 export function generateGoStructs(json: string, rootName: string = 'Root'): string {
   try {
-    const obj = JSON.parse(json);
+    const obj = rootObject(json);
     const structs: string[] = [];
     const processed = new Set<string>();
 
@@ -140,7 +158,7 @@ export function generateGoStructs(json: string, rootName: string = 'Root'): stri
 
 export function generateTypeScriptInterfaces(json: string, rootName: string = 'Root'): string {
   try {
-    const obj = JSON.parse(json);
+    const obj = rootObject(json);
     const interfaces: string[] = [];
     const processedTypes = new Set<string>();
 
@@ -210,7 +228,7 @@ export function generateTypeScriptInterfaces(json: string, rootName: string = 'R
 
 export function generateJavaClasses(json: string, rootName: string = 'Root'): string {
   try {
-    const obj = JSON.parse(json);
+    const obj = rootObject(json);
     const classes: string[] = [];
     const processedTypes = new Set<string>();
 
@@ -315,7 +333,7 @@ export function generateJavaClasses(json: string, rootName: string = 'Root'): st
 
 export function generatePythonClasses(json: string, rootName: string = 'Root'): string {
   try {
-    const obj = JSON.parse(json);
+    const obj = rootObject(json);
     const classes: string[] = [];
     const processedTypes = new Set<string>();
 
