@@ -900,5 +900,212 @@ if (!validate(data)) {
       ]
     },
     relatedArticles: ['understanding-json-guide', 'json-best-practices']
+  },
+  'json-parse-error-unexpected-token': {
+    id: 'json-parse-error-unexpected-token',
+    title: 'How to Fix "Unexpected token in JSON" and Other Parse Errors',
+    excerpt: 'Decode the most-searched JSON parse errors — "Unexpected token < in JSON at position 0", "Unexpected end of JSON input" and more — and learn exactly how to fix each one.',
+    date: '2025-04-14',
+    readTime: '9 min read',
+    category: 'Troubleshooting',
+    content: {
+      sections: [
+        {
+          title: 'Why These Errors Appear',
+          content: 'Almost every developer has pasted a cryptic error like "Unexpected token < in JSON at position 0" into a search engine. These messages come from JSON.parse() (or a library built on it) when the text you handed it is not valid JSON. The parser reads until it hits a character it cannot make sense of, then reports the offending token and its position. The message looks scary but it is precise: it tells you exactly where parsing broke.',
+        },
+        {
+          title: '"Unexpected token < in JSON at position 0"',
+          content: 'This is the single most common one, and it almost never means your JSON is malformed — it means you are not receiving JSON at all. Position 0 with a < character means the very first byte is an HTML tag. Your fetch call got back an HTML page (usually a 404 or 500 error page, a login redirect, or a proxy error) instead of the JSON API response. Check the actual response body and HTTP status before parsing:',
+          code: `const res = await fetch('/api/data');
+if (!res.ok) throw new Error('HTTP ' + res.status);
+const text = await res.text();
+console.log(text.slice(0, 200)); // see what really came back
+const data = JSON.parse(text);   // parse only once you trust it`,
+        },
+        {
+          title: '"Unexpected end of JSON input"',
+          content: 'This means the parser reached the end of the string before the structure was complete — an unclosed brace or bracket, or an empty string. Common causes: the response body was empty (a 204 No Content, or a failed request), the JSON was truncated in transit, or you called JSON.parse("") on an empty value. Guard against empty input and make sure every { and [ has a matching } and ].',
+        },
+        {
+          title: 'Other Frequent Culprits',
+          content: '• "Unexpected token \\047 in JSON" — you used single quotes; JSON requires double quotes.\n• "Unexpected token } in JSON" — a trailing comma before the closing brace or bracket.\n• "Unexpected non-whitespace character after JSON" — you have two JSON values concatenated, or extra text after the object.\n• "Unexpected token o in JSON at position 1" — you passed an object to JSON.parse() that was already an object (it got stringified to "[object Object]"); you probably meant to skip parsing.',
+        },
+        {
+          title: 'The Fastest Way to Locate the Problem',
+          content: 'When the position number is not enough, paste the raw text into our JSON formatter or validator. It highlights the exact line and character where the structure breaks and names the specific issue — missing comma, unquoted key, wrong quote style — which is far quicker than counting brackets by hand. Once it validates cleanly there, it will parse cleanly in your code.',
+        },
+      ],
+    },
+    relatedArticles: ['common-json-errors', 'json-schema-validation-guide'],
+  },
+  'json-array-to-csv': {
+    id: 'json-array-to-csv',
+    title: 'How to Convert a JSON Array to CSV',
+    excerpt: 'Turn an array of JSON objects into clean CSV — learn how keys map to columns, how to handle nested fields and commas, and the fastest way to do it online.',
+    date: '2025-04-22',
+    readTime: '7 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'Why Convert JSON to CSV',
+          content: 'CSV is the lingua franca of data import: spreadsheets, databases, BI tools, and countless scripts all accept it. When you have an array of JSON objects — an API export, a query result, a log dump — converting it to CSV lets you open it in Excel, load it into a database, or feed it to a data pipeline without writing any parsing code.',
+        },
+        {
+          title: 'How the Mapping Works',
+          content: 'The conversion is conceptually simple: each object in the array becomes one row, and the union of all object keys becomes the header row of columns. Given a clean array of flat objects, the result is a tidy table:',
+          code: `[
+  { "id": 1, "name": "Ada",   "city": "London" },
+  { "id": 2, "name": "Linus", "city": "Helsinki" }
+]
+
+// becomes
+id,name,city
+1,Ada,London
+2,Linus,Helsinki`,
+        },
+        {
+          title: 'Handling Commas, Quotes, and Newlines',
+          content: 'CSV breaks if a value itself contains a comma, a double quote, or a line break. The rule (RFC 4180) is to wrap such values in double quotes and escape any internal double quote by doubling it. A value like Smith, John becomes "Smith, John". A good converter does this automatically — doing it by hand with a naive join(",") is the number-one cause of corrupted CSV.',
+          code: `// value: He said "hi", then left
+// correct CSV cell:
+"He said ""hi"", then left"`,
+        },
+        {
+          title: 'What About Nested Objects?',
+          content: 'CSV is flat, so nested JSON needs a strategy. The usual approach is to flatten nested keys with a separator — user.name becomes a user.name column — or to serialize the nested part back to a JSON string inside a single cell. Arrays of objects that represent separate records are better split into their own file. If your data is deeply nested, flatten it first (see our guide on flattening nested JSON).',
+        },
+        {
+          title: 'The Quick Way',
+          content: 'Rather than writing a script, paste your array into our Excel/CSV converters — they detect the columns, escape special characters correctly, and give you a downloadable file in seconds. For a spreadsheet instead of raw CSV, the JSON to Excel converter produces an .xlsx directly.',
+        },
+      ],
+    },
+    relatedArticles: ['convert-json-to-excel-guide', 'flatten-nested-json'],
+  },
+  'flatten-nested-json': {
+    id: 'flatten-nested-json',
+    title: 'How to Flatten Nested JSON Objects',
+    excerpt: 'Flattening turns deeply nested JSON into a single-level structure with dotted keys — essential for CSV, spreadsheets, and tables. Learn the patterns and edge cases.',
+    date: '2025-04-30',
+    readTime: '8 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'What "Flattening" Means',
+          content: 'Flattening converts a nested JSON structure into a single-level object where nested paths become compound keys, usually joined by dots. It is the step that makes hierarchical JSON fit into flat formats like CSV, Excel, or a database table. Understanding it well is the difference between a clean export and a mangled one.',
+          code: `// nested
+{ "user": { "name": "Ada", "address": { "city": "London" } } }
+
+// flattened
+{ "user.name": "Ada", "user.address.city": "London" }`,
+        },
+        {
+          title: 'The Basic Algorithm',
+          content: 'Flattening is a recursive walk: for each key, if the value is a plain object, recurse into it while building up the prefix; otherwise, record the value at the accumulated key. The result is a flat map from dotted paths to leaf values.',
+          code: `function flatten(obj, prefix = '', out = {}) {
+  for (const [k, v] of Object.entries(obj)) {
+    const key = prefix ? prefix + '.' + k : k;
+    if (v && typeof v === 'object' && !Array.isArray(v)) {
+      flatten(v, key, out);
+    } else {
+      out[key] = v;
+    }
+  }
+  return out;
+}`,
+        },
+        {
+          title: 'Handling Arrays',
+          content: 'Arrays are the tricky part, and there is no single right answer. Three common strategies: (1) index the array into the key — items.0.sku, items.1.sku — which keeps everything in one row but explodes the column count; (2) join primitive arrays into one cell — tags becomes "red;green;blue"; or (3) if each array element is really a separate record, break it out into its own set of rows. Pick based on how you will consume the output.',
+        },
+        {
+          title: 'Common Pitfalls',
+          content: '• Key collisions: if a real key already contains a dot, dotted flattening becomes ambiguous — choose a separator your data does not use.\n• Losing types: flattening for CSV turns everything into text, so numbers and booleans may need re-typing downstream.\n• Sparse columns: different objects with different nested shapes produce many mostly-empty columns; normalize your data first if possible.',
+        },
+        {
+          title: 'When You Just Need the Result',
+          content: 'If your goal is simply to get nested JSON into a spreadsheet, our JSON to Excel converter flattens nested objects into dotted columns for you automatically — no code required. Use the manual approach above when you need custom control over how arrays and collisions are handled.',
+        },
+      ],
+    },
+    relatedArticles: ['json-array-to-csv', 'convert-json-to-excel-guide'],
+  },
+  'minify-json-guide': {
+    id: 'minify-json-guide',
+    title: 'How to Minify JSON (and When You Actually Should)',
+    excerpt: 'Minifying JSON strips whitespace to shrink payloads and speed up APIs. Learn how it works, how much it saves, and when to minify versus keep JSON readable.',
+    date: '2025-05-08',
+    readTime: '6 min read',
+    category: 'Tutorial',
+    content: {
+      sections: [
+        {
+          title: 'What Minifying Does',
+          content: 'Minifying JSON removes every character that a parser does not need: indentation, line breaks, and the spaces after colons and commas. The data is completely unchanged — only the formatting whitespace is gone. The result is a single dense line that is harder for humans to read but smaller and faster for machines to transfer and parse.',
+          code: `// formatted (readable)
+{
+  "id": 1,
+  "name": "Ada"
+}
+
+// minified
+{"id":1,"name":"Ada"}`,
+        },
+        {
+          title: 'How Much Space You Save',
+          content: 'For typical nested JSON, minifying cuts 15-30% off the raw size, and more for deeply indented documents. On top of that, servers usually apply gzip or brotli compression, which shrinks both versions dramatically — but minified JSON still comes out ahead and, importantly, parses marginally faster because the parser scans fewer bytes.',
+        },
+        {
+          title: 'When to Minify',
+          content: 'Minify JSON for anything that travels over the network or is stored at scale: API responses, data embedded in HTML, config bundled into a build, or records written to a database in bulk. In these machine-to-machine contexts, readability does not matter and every kilobyte and millisecond counts.',
+        },
+        {
+          title: 'When NOT to Minify',
+          content: 'Keep JSON formatted whenever a human reads or edits it: configuration files checked into git (minified diffs are unreadable), documentation examples, and files you debug by eye. A good workflow is to author and store config in a readable form and minify only at the boundary where it ships. You can always toggle between the two — paste a minified blob into our formatter to beautify it, or paste formatted JSON to minify it instantly.',
+        },
+      ],
+    },
+    relatedArticles: ['understanding-json-guide', 'json-rest-api-design'],
+  },
+  'json-vs-jsonl-ndjson': {
+    id: 'json-vs-jsonl-ndjson',
+    title: 'JSON vs JSONL vs NDJSON: Line-Delimited JSON Explained',
+    excerpt: 'JSONL and NDJSON put one JSON object per line. Learn how they differ from regular JSON, why they scale to huge datasets, and when to use each.',
+    date: '2025-05-16',
+    readTime: '7 min read',
+    category: 'Comparison',
+    content: {
+      sections: [
+        {
+          title: 'The Core Difference',
+          content: 'Regular JSON represents an entire dataset as one value — typically a single array containing every record. JSONL (JSON Lines) and NDJSON (Newline-Delimited JSON) instead put one complete, independent JSON object on each line, with no enclosing array and no commas between records. JSONL and NDJSON are essentially the same format under two names.',
+          code: `// Regular JSON — one array
+[
+  {"id":1,"name":"Ada"},
+  {"id":2,"name":"Linus"}
+]
+
+// JSONL / NDJSON — one object per line
+{"id":1,"name":"Ada"}
+{"id":2,"name":"Linus"}`,
+        },
+        {
+          title: 'Why Line-Delimited Scales Better',
+          content: 'Because each line is independent, you can read and process a JSONL file one record at a time without loading the whole thing into memory — critical for files with millions of records. You can also append a new record by simply writing another line, and split the file across workers by line count. A giant JSON array, by contrast, must be fully parsed before you can touch the first element.',
+        },
+        {
+          title: 'Where Each Is Used',
+          content: 'Regular JSON dominates APIs and config, where the payload is small and a single well-formed value is convenient. JSONL/NDDJSON dominates data engineering: log streams, big data exports, machine-learning training sets, and LLM fine-tuning files (OpenAI and others expect JSONL). If the data is a stream or a large collection processed record-by-record, line-delimited wins.',
+        },
+        {
+          title: 'Converting Between Them',
+          content: 'Converting is straightforward: to go from a JSON array to JSONL, write each element on its own line; to go the other way, wrap the lines in [ ] and join them with commas. Note that a JSONL file as a whole is not valid JSON — each line is valid JSON, but the file is not — so do not try to JSON.parse() the entire file at once. Parse it line by line instead.',
+        },
+      ],
+    },
+    relatedArticles: ['parsing-large-json-files', 'json-vs-xml-yaml'],
   }
 };
