@@ -21,6 +21,10 @@ const JsonToTypeScript = lazy(() => import('./pages/tools/JsonToTypeScript').the
 const JsonToGo = lazy(() => import('./pages/tools/JsonToGo').then(module => ({ default: module.JsonToGo })));
 const JsonToPython = lazy(() => import('./pages/tools/JsonToPython').then(module => ({ default: module.JsonToPython })));
 const JsonToJava = lazy(() => import('./pages/tools/JsonToJava').then(module => ({ default: module.JsonToJava })));
+const SampleJsonHub = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonHub })));
+const SampleJsonDetail = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonDetail })));
+const JsonErrorsHub = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorsHub })));
+const JsonErrorDetail = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorDetail })));
 const JsonValidator = lazy(() => import('./pages/tools/JsonValidator').then(module => ({ default: module.JsonValidator })));
 const BlobView = lazy(() => import('./pages/BlobView').then(module => ({ default: module.BlobView })));
 const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
@@ -108,6 +112,10 @@ function App() {
                   <Route path="/json-to-go" element={<JsonToGo />} />
                   <Route path="/json-to-python" element={<JsonToPython />} />
                   <Route path="/json-to-java" element={<JsonToJava />} />
+                  <Route path="/sample-json" element={<SampleJsonHub />} />
+                  <Route path="/sample-json/:slug" element={<SampleJsonDetail />} />
+                  <Route path="/json-errors" element={<JsonErrorsHub />} />
+                  <Route path="/json-errors/:slug" element={<JsonErrorDetail />} />
                   <Route path="/json-validator" element={<JsonValidator />} />
                   
                   {/* Other pages */}

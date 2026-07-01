@@ -224,4 +224,36 @@ export const staticRoutes = [
     description: 'Browse all pages and tools on JSON Formatter using our HTML sitemap for users.',
     keywords: 'sitemap, site map, pages, navigation',
   },
+
+  // --- Sample JSON data library ---
+  {
+    path: '/sample-json',
+    title: 'Sample JSON Data | Free Example JSON Datasets for Testing',
+    description: 'Free, copy-paste-ready sample JSON datasets for testing and development — users, products, orders, GeoJSON, API responses and more.',
+    keywords: 'sample json, sample json data, example json, json test data, dummy json data, json examples, mock json',
+  },
+  { path: '/sample-json/users', title: 'Sample JSON: Users | Free Example JSON to Copy', description: 'A ready-to-use sample JSON array of user objects for testing forms, tables, APIs, and front-end mock data.', keywords: 'sample json users, user json example, mock user data json' },
+  { path: '/sample-json/products', title: 'Sample JSON: Products | Free Example JSON to Copy', description: 'A sample JSON array of e-commerce product objects with price, stock, categories, and tags for testing catalogs and carts.', keywords: 'sample json products, product json example, ecommerce json data' },
+  { path: '/sample-json/employees', title: 'Sample JSON: Employees | Free Example JSON to Copy', description: 'A sample JSON dataset of employees with departments, salaries, and managers for HR apps, tables, and reporting demos.', keywords: 'sample json employees, employee json example, hr json data' },
+  { path: '/sample-json/orders', title: 'Sample JSON: Orders | Free Example JSON to Copy', description: 'A sample JSON array of orders with nested line items, totals, and shipping for testing order history and invoices.', keywords: 'sample json orders, order json example, nested json sample' },
+  { path: '/sample-json/blog-posts', title: 'Sample JSON: Blog Posts | Free Example JSON to Copy', description: 'A sample JSON array of blog post objects with author, tags, and timestamps for testing CMS front-ends and feeds.', keywords: 'sample json blog posts, blog json example, cms json data' },
+  { path: '/sample-json/todos', title: 'Sample JSON: Todo List | Free Example JSON to Copy', description: 'A simple sample JSON array of todo items with status and priority — the classic dataset for tutorials and to-do apps.', keywords: 'sample json todos, todo json example, todo list json' },
+  { path: '/sample-json/geojson', title: 'Sample GeoJSON: Points | Free Example GeoJSON to Copy', description: 'A sample GeoJSON FeatureCollection with point features and properties for testing maps and geospatial code.', keywords: 'sample geojson, geojson example, geojson points sample' },
+  { path: '/sample-json/api-response', title: 'Sample JSON: Paginated API Response | Free Example JSON', description: 'A sample JSON API response with a data array plus pagination metadata — the common envelope pattern for REST APIs.', keywords: 'sample api response json, paginated json example, rest api json sample' },
+
+  // --- JSON error reference ---
+  {
+    path: '/json-errors',
+    title: 'Common JSON Errors and How to Fix Them | Error Reference',
+    description: 'A reference of the most common JSON parse errors in JavaScript and Python — what each error message means and exactly how to fix it.',
+    keywords: 'json errors, json parse error, json syntax error, fix json error, jsondecodeerror, unexpected token json',
+  },
+  { path: '/json-errors/unexpected-token', title: 'How to Fix: Unexpected token < in JSON at position 0', description: 'What "Unexpected token < in JSON at position 0" means in JavaScript and how to fix it — usually you received HTML instead of JSON.', keywords: 'unexpected token in json, unexpected token < in json at position 0, json parse html error' },
+  { path: '/json-errors/unexpected-end-of-json-input', title: 'How to Fix: Unexpected end of JSON input', description: 'What causes "Unexpected end of JSON input" in JavaScript and how to fix truncated or empty JSON.', keywords: 'unexpected end of json input, json parse empty, truncated json error' },
+  { path: '/json-errors/unexpected-token-o-in-json', title: 'How to Fix: Unexpected token o in JSON at position 1', description: 'Why "Unexpected token o in JSON at position 1" happens — you passed an object to JSON.parse instead of a string.', keywords: 'unexpected token o in json, json parse object error, json.parse object' },
+  { path: '/json-errors/unexpected-non-whitespace-character', title: 'How to Fix: Unexpected non-whitespace character after JSON', description: 'What "Unexpected non-whitespace character after JSON" means and how to fix trailing or concatenated data.', keywords: 'unexpected non-whitespace character after json, json trailing data error' },
+  { path: '/json-errors/expecting-value', title: 'How to Fix: Expecting value: line 1 column 1 (char 0)', description: 'The most common Python JSONDecodeError — what "Expecting value" means and how to fix it.', keywords: 'expecting value line 1 column 1 char 0, jsondecodeerror expecting value, python json error' },
+  { path: '/json-errors/expecting-delimiter', title: "How to Fix: Expecting ',' delimiter (Python JSON)", description: 'Why Python raises "Expecting \',\' delimiter" and how to fix the missing comma or bad structure.', keywords: "expecting ',' delimiter, jsondecodeerror delimiter, python json missing comma" },
+  { path: '/json-errors/extra-data', title: 'How to Fix: Extra data (Python JSONDecodeError)', description: 'What Python\'s "Extra data" JSONDecodeError means and how to fix multiple values in one string.', keywords: 'json extra data error, jsondecodeerror extra data, python json multiple objects' },
+  { path: '/json-errors/expecting-property-name', title: 'How to Fix: Expecting property name enclosed in double quotes', description: 'Why you get "Expecting property name enclosed in double quotes" — usually single quotes, unquoted keys, or a trailing comma.', keywords: 'expecting property name enclosed in double quotes, json single quotes error, python json property name' },
 ];
