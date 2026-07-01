@@ -82,6 +82,62 @@ export function generateCSharpClasses(json: string, rootName: string = 'Root'): 
   }
 }
 
+export function generateGoStructs(json: string, rootName: string = 'Root'): string {
+  try {
+    const obj = JSON.parse(json);
+    const structs: string[] = [];
+    const processed = new Set<string>();
+
+    function toPascalCase(str: string): string {
+      return str
+        .replace(/[_-]([a-zA-Z0-9])/g, (_, c) => c.toUpperCase())
+        .replace(/^[a-z]/, (c) => c.toUpperCase());
+    }
+
+    function getGoType(value: any, key: string): string {
+      if (value === null) return 'interface{}';
+      if (Array.isArray(value)) {
+        if (value.length === 0) return '[]interface{}';
+        if (typeof value[0] === 'object' && value[0] !== null && !Array.isArray(value[0])) {
+          const nested = toPascalCase(key.replace(/s$/, ''));
+          generateStruct(value[0], nested);
+          return `[]${nested}`;
+        }
+        return `[]${getGoType(value[0], key)}`;
+      }
+      if (typeof value === 'object') {
+        generateStruct(value, key);
+        return toPascalCase(key);
+      }
+      if (typeof value === 'string') return 'string';
+      if (typeof value === 'number') return Number.isInteger(value) ? 'int' : 'float64';
+      if (typeof value === 'boolean') return 'bool';
+      return 'interface{}';
+    }
+
+    function generateStruct(o: any, name: string): string {
+      if (typeof o !== 'object' || o === null || Array.isArray(o)) return '';
+      const structName = toPascalCase(name);
+      if (processed.has(structName)) return structName;
+      processed.add(structName);
+
+      const fields: string[] = [];
+      for (const [key, value] of Object.entries(o)) {
+        const fieldName = toPascalCase(key);
+        const goType = getGoType(value, key);
+        fields.push(`\t${fieldName} ${goType} \`json:"${key}"\``);
+      }
+      structs.push(`type ${structName} struct {\n${fields.join('\n')}\n}`);
+      return structName;
+    }
+
+    generateStruct(obj, rootName);
+    return structs.reverse().join('\n\n');
+  } catch (error) {
+    throw new Error('Invalid JSON: ' + (error as Error).message);
+  }
+}
+
 export function generateTypeScriptInterfaces(json: string, rootName: string = 'Root'): string {
   try {
     const obj = JSON.parse(json);

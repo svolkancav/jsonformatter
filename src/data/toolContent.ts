@@ -783,4 +783,90 @@ name = "Ada"`,
       { question: 'Is my data private?', answer: 'Yes — both documents are compared entirely in your browser with no uploads.' },
     ],
   },
+
+  'json-to-go': {
+    intro: {
+      heading: 'Convert JSON to Go Structs',
+      paragraphs: [
+        'Go is statically typed, so consuming JSON usually means first defining a struct that mirrors the data, complete with json field tags. Writing those structs by hand for a large API response is tedious and error-prone. This tool reads your JSON and generates the matching Go structs instantly, with correct field types and json tags.',
+        'It handles nested objects by generating separate named structs, turns arrays into slices, and infers Go types (string, int, float64, bool) from the values. Field names are exported (capitalized) and each carries a json tag so encoding/json maps them back to the original keys.',
+        'Everything runs in your browser — your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to Go',
+      items: [
+        'Paste your JSON into the input box.',
+        'Optionally set the root struct name.',
+        'Click Generate Go Structs.',
+        'Copy the structs or download them as a .go file, then drop them into your package.',
+      ],
+    },
+    example: {
+      heading: 'JSON to Go Struct',
+      description: 'A JSON object becomes an exported struct with json tags.',
+      input: '{"id": 1, "name": "Ada", "active": true}',
+      output: 'type Root struct {\n\tId     int    `json:"id"`\n\tName   string `json:"name"`\n\tActive bool   `json:"active"`\n}',
+      inputLabel: 'JSON',
+      outputLabel: 'Go',
+    },
+    faqs: [
+      { question: 'Does it add json tags?', answer: 'Yes. Every field gets a json tag matching the original JSON key, so encoding/json marshals and unmarshals correctly.' },
+      { question: 'How are nested objects handled?', answer: 'Each nested object becomes its own named struct, and arrays become slices of the appropriate type.' },
+      { question: 'What Go types are used?', answer: 'Strings map to string, whole numbers to int, decimals to float64, booleans to bool, and unknown/null values to interface{}.' },
+      { question: 'Is my data private?', answer: 'Yes — generation happens entirely in your browser.' },
+    ],
+  },
+
+  'json-to-python': {
+    intro: {
+      heading: 'Convert JSON to Python Classes',
+      paragraphs: [
+        'When you consume JSON in Python, mapping it onto typed classes makes your code clearer and safer than passing raw dictionaries around. This tool generates Python classes from your JSON automatically, inferring types and creating nested classes for nested objects.',
+        'It saves you from hand-writing boilerplate for large API responses and gives you a typed starting point you can adapt to dataclasses, Pydantic models, or plain classes as your project requires.',
+        'All processing is in your browser, so your data stays on your device.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to Python',
+      items: [
+        'Paste your JSON into the input box.',
+        'Optionally set the root class name.',
+        'Click Generate Python Classes.',
+        'Copy the classes or download them as a .py file.',
+      ],
+    },
+    faqs: [
+      { question: 'Does it produce dataclasses or Pydantic models?', answer: 'It generates typed Python classes you can use directly or quickly adapt into @dataclass or Pydantic BaseModel form depending on your stack.' },
+      { question: 'How are nested objects handled?', answer: 'Nested JSON objects become their own classes, referenced from the parent, so the full structure is typed.' },
+      { question: 'Does it add type hints?', answer: 'Yes. Fields are annotated with inferred Python types (str, int, float, bool, list) so your editor and type checker understand the shape.' },
+      { question: 'Is my data private?', answer: 'Yes — everything runs locally in your browser.' },
+    ],
+  },
+
+  'json-to-java': {
+    intro: {
+      heading: 'Convert JSON to Java Classes',
+      paragraphs: [
+        'Java applications typically model JSON with POJOs (plain old Java objects) that Jackson or Gson can serialize and deserialize. Writing those classes by hand for a complex payload is slow. This tool generates the Java classes from your JSON instantly, with correct types and nested classes.',
+        'It infers Java types (String, int, double, boolean) from the values, creates a separate class for each nested object, and turns arrays into List fields — giving you a typed starting point ready to paste into your project.',
+        'Conversion happens in your browser; your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to Java',
+      items: [
+        'Paste your JSON into the input box.',
+        'Optionally set the root class name.',
+        'Click Generate Java Classes.',
+        'Copy the classes or download them, then add getters/setters or serialization annotations as your framework needs.',
+      ],
+    },
+    faqs: [
+      { question: 'Does it work with Jackson and Gson?', answer: 'Yes. The generated POJOs map cleanly to JSON with both Jackson and Gson; you can add annotations if you need custom field names.' },
+      { question: 'How are nested objects handled?', answer: 'Each nested object becomes its own class, and arrays become List fields of the appropriate type.' },
+      { question: 'What Java types are used?', answer: 'Strings map to String, whole numbers to int, decimals to double, booleans to boolean, and arrays to List.' },
+      { question: 'Is my data private?', answer: 'Yes — generation runs entirely in your browser.' },
+    ],
+  },
 };

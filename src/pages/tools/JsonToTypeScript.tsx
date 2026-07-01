@@ -3,6 +3,7 @@ import { Code2, Copy, Download, CheckCircle } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import { generateTypeScriptInterfaces } from '../../utils/generators';
 import { CodeEditor, CodeBlock } from '../../components/CodeHighlight';
+import { RelatedTools } from '../../components/RelatedTools';
 
 export function JsonToTypeScript() {
   const [input, setInput] = useState('');
@@ -160,6 +161,8 @@ export function JsonToTypeScript() {
             </p>
           </section>
         </article>
+
+        <RelatedTools slug="json-to-typescript" />
       </div>
     </>
   );

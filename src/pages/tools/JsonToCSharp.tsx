@@ -3,6 +3,7 @@ import { Code2, Copy, Download, CheckCircle } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import { generateCSharpClasses } from '../../utils/generators';
 import { CodeEditor, CodeBlock } from '../../components/CodeHighlight';
+import { RelatedTools } from '../../components/RelatedTools';
 
 export function JsonToCSharp() {
   const [input, setInput] = useState('');
@@ -410,6 +411,8 @@ export function JsonToCSharp() {
             </div>
           </section>
         </article>
+
+        <RelatedTools slug="json-to-csharp" />
       </div>
     </>
   );
