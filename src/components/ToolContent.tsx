@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { toolContent, type ToolContentData } from '../data/toolContent';
+import { RelatedTools } from './RelatedTools';
 
 interface ToolContentProps {
   slug: string;
@@ -126,6 +127,8 @@ export function ToolContent({ slug }: ToolContentProps) {
           ))}
         </div>
       </section>
+
+      <RelatedTools slug={slug} />
     </div>
   );
 }

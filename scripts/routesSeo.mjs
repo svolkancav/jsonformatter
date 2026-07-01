@@ -147,6 +147,24 @@ export const staticRoutes = [
     keywords: 'json diff, json compare, compare json, json difference, diff json online, json comparison tool',
   },
   {
+    path: '/json-to-go',
+    title: 'JSON to Go Struct Converter | Free Online JSON to Go Tool',
+    description: 'Convert JSON to Go structs instantly. Free online JSON to Go struct generator with correct types and json tags. Runs entirely in your browser.',
+    keywords: 'json to go, json to go struct, json to golang, generate go structs, go struct generator, json struct tags',
+  },
+  {
+    path: '/json-to-python',
+    title: 'JSON to Python Converter | Generate Python Classes from JSON',
+    description: 'Convert JSON to Python classes instantly. Free online JSON to Python class generator with type hints and nested class support. Runs in your browser.',
+    keywords: 'json to python, json to python class, json to dataclass, generate python classes, python class generator, json to pydantic',
+  },
+  {
+    path: '/json-to-java',
+    title: 'JSON to Java Converter | Generate Java Classes from JSON',
+    description: 'Convert JSON to Java classes instantly. Free online JSON to Java POJO generator with correct types and nested class support. Runs entirely in your browser.',
+    keywords: 'json to java, json to java class, json to pojo, generate java classes, java class generator, json to java object',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',

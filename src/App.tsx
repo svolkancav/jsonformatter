@@ -18,6 +18,9 @@ const Privacy = lazy(() => import('./pages/Privacy').then(module => ({ default: 
 const Terms = lazy(() => import('./pages/Terms').then(module => ({ default: module.Terms })));
 const JsonToCSharp = lazy(() => import('./pages/tools/JsonToCSharp').then(module => ({ default: module.JsonToCSharp })));
 const JsonToTypeScript = lazy(() => import('./pages/tools/JsonToTypeScript').then(module => ({ default: module.JsonToTypeScript })));
+const JsonToGo = lazy(() => import('./pages/tools/JsonToGo').then(module => ({ default: module.JsonToGo })));
+const JsonToPython = lazy(() => import('./pages/tools/JsonToPython').then(module => ({ default: module.JsonToPython })));
+const JsonToJava = lazy(() => import('./pages/tools/JsonToJava').then(module => ({ default: module.JsonToJava })));
 const JsonValidator = lazy(() => import('./pages/tools/JsonValidator').then(module => ({ default: module.JsonValidator })));
 const BlobView = lazy(() => import('./pages/BlobView').then(module => ({ default: module.BlobView })));
 const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
@@ -102,6 +105,9 @@ function App() {
                   {/* Legacy tool routes */}
                   <Route path="/json-to-csharp" element={<JsonToCSharp />} />
                   <Route path="/json-to-typescript" element={<JsonToTypeScript />} />
+                  <Route path="/json-to-go" element={<JsonToGo />} />
+                  <Route path="/json-to-python" element={<JsonToPython />} />
+                  <Route path="/json-to-java" element={<JsonToJava />} />
                   <Route path="/json-validator" element={<JsonValidator />} />
                   
                   {/* Other pages */}

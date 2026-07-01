@@ -9,6 +9,8 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-toml';
 import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-go';
+import 'prismjs/components/prism-python';
 
 export type CodeLang =
   | 'json'
@@ -17,6 +19,8 @@ export type CodeLang =
   | 'toml'
   | 'csharp'
   | 'typescript'
+  | 'go'
+  | 'python'
   | 'csv'
   | 'text';
 

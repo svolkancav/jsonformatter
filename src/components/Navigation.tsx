@@ -42,6 +42,9 @@ export function Navigation() {
     { path: '/timestamp-converter', label: 'Timestamp Converter' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
+    { path: '/json-to-go', label: 'JSON to Go' },
+    { path: '/json-to-python', label: 'JSON to Python' },
+    { path: '/json-to-java', label: 'JSON to Java' },
     { path: '/character-counter', label: 'Character Counter' }
   ];
 
