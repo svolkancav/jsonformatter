@@ -940,4 +940,82 @@ name = "Ada"`,
       { question: 'Is my data private?', answer: 'Yes — evaluation runs entirely in your browser.' },
     ],
   },
+
+  'json-to-rust': {
+    intro: {
+      heading: 'Convert JSON to Rust Structs',
+      paragraphs: [
+        'Rust is strongly typed, so consuming JSON means defining structs that match the data — usually with serde derives for (de)serialization. Writing them by hand for a large payload is tedious; this tool generates them from a JSON sample instantly.',
+        'It adds #[derive(Serialize, Deserialize)], infers Rust types (String, i64, f64, bool, Vec<T>), and creates a named struct for each nested object. Paste your JSON and drop the result into your crate (with serde in scope).',
+        'Everything runs in your browser — your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to Rust',
+      items: [
+        'Paste your JSON into the input.',
+        'Optionally set the root struct name.',
+        'Click Generate Rust Structs.',
+        'Copy the structs into your project (add use serde::{Serialize, Deserialize};).',
+      ],
+    },
+    faqs: [
+      { question: 'Does it use serde?', answer: 'Yes. Each struct gets #[derive(Serialize, Deserialize)] so it works with serde_json out of the box.' },
+      { question: 'How are nested objects and arrays handled?', answer: 'Nested objects become their own structs; arrays become Vec<T> of the appropriate type.' },
+      { question: 'What about camelCase keys?', answer: 'Fields keep the JSON key name. For camelCase JSON with snake_case fields, add #[serde(rename_all = "camelCase")] to the struct.' },
+      { question: 'Is my data private?', answer: 'Yes — generation runs entirely in your browser.' },
+    ],
+  },
+
+  'json-to-kotlin': {
+    intro: {
+      heading: 'Convert JSON to Kotlin Data Classes',
+      paragraphs: [
+        'Kotlin data classes are the idiomatic way to model JSON in Android and server-side Kotlin. This tool turns a JSON sample into data classes automatically, inferring types and creating nested classes for nested objects.',
+        'It maps values to Kotlin types (String, Long, Double, Boolean, List<T>) and generates a data class per nested object, giving you a typed starting point for kotlinx.serialization, Moshi, or Gson.',
+        'All processing happens in your browser.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to Kotlin',
+      items: [
+        'Paste your JSON into the input.',
+        'Optionally set the root class name.',
+        'Click Generate Kotlin Classes.',
+        'Copy the data classes into your project and add serialization annotations if needed.',
+      ],
+    },
+    faqs: [
+      { question: 'Does it produce data classes?', answer: 'Yes — each object becomes a Kotlin data class with val properties.' },
+      { question: 'Which serialization libraries work?', answer: 'The classes work with kotlinx.serialization, Moshi, and Gson; add the relevant annotations for custom names.' },
+      { question: 'How are nested objects handled?', answer: 'Each nested object becomes its own data class, and arrays become List<T>.' },
+      { question: 'Is my data private?', answer: 'Yes — everything runs locally in your browser.' },
+    ],
+  },
+
+  'json-to-php': {
+    intro: {
+      heading: 'Convert JSON to PHP Classes',
+      paragraphs: [
+        'Modeling JSON with typed PHP classes makes your code clearer than juggling associative arrays. This tool generates PHP classes with typed properties from a JSON sample, including nested classes for nested objects.',
+        'It infers PHP types (string, int, float, bool, array) and creates a class per nested object, giving you a typed starting point you can extend with constructors, getters, or attributes as your framework requires.',
+        'Conversion runs in your browser; your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to PHP',
+      items: [
+        'Paste your JSON into the input.',
+        'Optionally set the root class name.',
+        'Click Generate PHP Classes.',
+        'Copy the classes into your project and add constructors/getters as needed.',
+      ],
+    },
+    faqs: [
+      { question: 'Does it use typed properties?', answer: 'Yes — properties use PHP 7.4+ type declarations (public int $id;). Remove the types if you target older PHP.' },
+      { question: 'How are nested objects handled?', answer: 'Each nested object becomes its own class; arrays are typed as array.' },
+      { question: 'Can I use it with Laravel or Symfony?', answer: 'Yes — the plain classes are a starting point you can turn into DTOs, models, or add attributes for your framework.' },
+      { question: 'Is my data private?', answer: 'Yes — generation runs entirely in your browser.' },
+    ],
+  },
 };
