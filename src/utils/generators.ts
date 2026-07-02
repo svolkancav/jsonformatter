@@ -590,3 +590,120 @@ export function compareJSON(json1: string, json2: string): { differences: string
     throw new Error('Invalid JSON: ' + (error as Error).message);
   }
 }
+
+function pascalCase(str: string): string {
+  return str
+    .replace(/[_-]([a-zA-Z0-9])/g, (_, c) => c.toUpperCase())
+    .replace(/^[a-z]/, (c) => c.toUpperCase());
+}
+
+export function generateRustStructs(json: string, rootName: string = 'Root'): string {
+  try {
+    const obj = rootObject(json);
+    const structs: string[] = [];
+    const processed = new Set<string>();
+    function getType(v: any, key: string): string {
+      if (v === null) return 'Option<Value>';
+      if (Array.isArray(v)) {
+        if (!v.length) return 'Vec<Value>';
+        if (typeof v[0] === 'object' && v[0] !== null && !Array.isArray(v[0])) {
+          const n = pascalCase(key.replace(/s$/, ''));
+          gen(v[0], n);
+          return `Vec<${n}>`;
+        }
+        return `Vec<${getType(v[0], key)}>`;
+      }
+      if (typeof v === 'object') { gen(v, key); return pascalCase(key); }
+      if (typeof v === 'string') return 'String';
+      if (typeof v === 'number') return Number.isInteger(v) ? 'i64' : 'f64';
+      if (typeof v === 'boolean') return 'bool';
+      return 'Value';
+    }
+    function gen(o: any, name: string): string {
+      if (typeof o !== 'object' || o === null || Array.isArray(o)) return '';
+      const sn = pascalCase(name);
+      if (processed.has(sn)) return sn;
+      processed.add(sn);
+      const fields = Object.entries(o).map(([k, v]) => `    pub ${k}: ${getType(v, k)},`);
+      structs.push(`#[derive(Serialize, Deserialize)]\nstruct ${sn} {\n${fields.join('\n')}\n}`);
+      return sn;
+    }
+    gen(obj, rootName);
+    return structs.reverse().join('\n\n');
+  } catch (error) {
+    throw new Error('Invalid JSON: ' + (error as Error).message);
+  }
+}
+
+export function generateKotlinClasses(json: string, rootName: string = 'Root'): string {
+  try {
+    const obj = rootObject(json);
+    const classes: string[] = [];
+    const processed = new Set<string>();
+    function getType(v: any, key: string): string {
+      if (v === null) return 'Any?';
+      if (Array.isArray(v)) {
+        if (!v.length) return 'List<Any>';
+        if (typeof v[0] === 'object' && v[0] !== null && !Array.isArray(v[0])) {
+          const n = pascalCase(key.replace(/s$/, ''));
+          gen(v[0], n);
+          return `List<${n}>`;
+        }
+        return `List<${getType(v[0], key)}>`;
+      }
+      if (typeof v === 'object') { gen(v, key); return pascalCase(key); }
+      if (typeof v === 'string') return 'String';
+      if (typeof v === 'number') return Number.isInteger(v) ? 'Long' : 'Double';
+      if (typeof v === 'boolean') return 'Boolean';
+      return 'Any';
+    }
+    function gen(o: any, name: string): string {
+      if (typeof o !== 'object' || o === null || Array.isArray(o)) return '';
+      const cn = pascalCase(name);
+      if (processed.has(cn)) return cn;
+      processed.add(cn);
+      const fields = Object.entries(o).map(([k, v]) => `    val ${k}: ${getType(v, k)}`);
+      classes.push(`data class ${cn}(\n${fields.join(',\n')}\n)`);
+      return cn;
+    }
+    gen(obj, rootName);
+    return classes.reverse().join('\n\n');
+  } catch (error) {
+    throw new Error('Invalid JSON: ' + (error as Error).message);
+  }
+}
+
+export function generatePhpClasses(json: string, rootName: string = 'Root'): string {
+  try {
+    const obj = rootObject(json);
+    const classes: string[] = [];
+    const processed = new Set<string>();
+    function getType(v: any, key: string): string {
+      if (v === null) return 'mixed';
+      if (Array.isArray(v)) {
+        if (v.length && typeof v[0] === 'object' && v[0] !== null && !Array.isArray(v[0])) {
+          gen(v[0], pascalCase(key.replace(/s$/, '')));
+        }
+        return 'array';
+      }
+      if (typeof v === 'object') { gen(v, key); return pascalCase(key); }
+      if (typeof v === 'string') return 'string';
+      if (typeof v === 'number') return Number.isInteger(v) ? 'int' : 'float';
+      if (typeof v === 'boolean') return 'bool';
+      return 'mixed';
+    }
+    function gen(o: any, name: string): string {
+      if (typeof o !== 'object' || o === null || Array.isArray(o)) return '';
+      const cn = pascalCase(name);
+      if (processed.has(cn)) return cn;
+      processed.add(cn);
+      const fields = Object.entries(o).map(([k, v]) => `    public ${getType(v, k)} $${k};`);
+      classes.push(`class ${cn}\n{\n${fields.join('\n')}\n}`);
+      return cn;
+    }
+    gen(obj, rootName);
+    return classes.reverse().join('\n\n');
+  } catch (error) {
+    throw new Error('Invalid JSON: ' + (error as Error).message);
+  }
+}

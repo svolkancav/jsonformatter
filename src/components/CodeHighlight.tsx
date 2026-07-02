@@ -11,6 +11,9 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-php';
 
 export type CodeLang =
   | 'json'
@@ -21,6 +24,9 @@ export type CodeLang =
   | 'typescript'
   | 'go'
   | 'python'
+  | 'rust'
+  | 'kotlin'
+  | 'php'
   | 'csv'
   | 'text';
 

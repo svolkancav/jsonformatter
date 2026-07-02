@@ -183,6 +183,30 @@ export const staticRoutes = [
     keywords: 'jsonpath tester, jsonpath evaluator, jsonpath online, test jsonpath, jsonpath query, json path',
   },
   {
+    path: '/json-to-rust',
+    title: 'JSON to Rust Struct Converter | Free Online JSON to Rust Tool',
+    description: 'Convert JSON to Rust structs instantly. Free online JSON to Rust struct generator with serde derives and correct types.',
+    keywords: 'json to rust, json to rust struct, rust serde struct, generate rust structs, json rust converter',
+  },
+  {
+    path: '/json-to-kotlin',
+    title: 'JSON to Kotlin Data Class Converter | Free Online Tool',
+    description: 'Convert JSON to Kotlin data classes instantly. Free online JSON to Kotlin generator with correct types and nested classes.',
+    keywords: 'json to kotlin, json to kotlin data class, generate kotlin classes, kotlin data class generator',
+  },
+  {
+    path: '/json-to-php',
+    title: 'JSON to PHP Class Converter | Free Online JSON to PHP Tool',
+    description: 'Convert JSON to PHP classes instantly. Free online JSON to PHP class generator with typed properties and nested classes.',
+    keywords: 'json to php, json to php class, generate php classes, php class generator, json php converter',
+  },
+  {
+    path: '/glossary',
+    title: 'JSON Glossary | Data Format Terms Explained (JSON, JWT, YAML…)',
+    description: 'A plain-English glossary of JSON and data-format terms — object, array, serialization, JSON Schema, JSONPath, JWT, NDJSON, TOON, epoch, Base64 and more.',
+    keywords: 'json glossary, json terms, what is json, json definitions, data format glossary',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',

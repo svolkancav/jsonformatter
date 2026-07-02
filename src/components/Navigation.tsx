@@ -16,6 +16,7 @@ export function Navigation() {
     { path: '/sample-json', label: 'Sample JSON' },
     { path: '/json-errors', label: 'JSON Errors' },
     { path: '/cheatsheet', label: 'Cheat Sheets' },
+    { path: '/glossary', label: 'Glossary' },
     { path: '/blog', label: 'Blog' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' }
@@ -53,6 +54,9 @@ export function Navigation() {
     { path: '/json-to-go', label: 'JSON to Go' },
     { path: '/json-to-python', label: 'JSON to Python' },
     { path: '/json-to-java', label: 'JSON to Java' },
+    { path: '/json-to-rust', label: 'JSON to Rust' },
+    { path: '/json-to-kotlin', label: 'JSON to Kotlin' },
+    { path: '/json-to-php', label: 'JSON to PHP' },
     { path: '/character-counter', label: 'Character Counter' }
   ];
 

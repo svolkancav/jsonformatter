@@ -47,6 +47,9 @@ export const TOOLS: ToolInfo[] = [
   { slug: 'json-to-go', label: 'JSON to Go', family: 'codegen', desc: 'Generate Go structs with json tags.' },
   { slug: 'json-to-python', label: 'JSON to Python', family: 'codegen', desc: 'Generate Python classes from JSON.' },
   { slug: 'json-to-java', label: 'JSON to Java', family: 'codegen', desc: 'Generate Java classes (POJOs).' },
+  { slug: 'json-to-rust', label: 'JSON to Rust', family: 'codegen', desc: 'Generate Rust structs with serde.' },
+  { slug: 'json-to-kotlin', label: 'JSON to Kotlin', family: 'codegen', desc: 'Generate Kotlin data classes.' },
+  { slug: 'json-to-php', label: 'JSON to PHP', family: 'codegen', desc: 'Generate PHP classes from JSON.' },
   // Utilities
   { slug: 'base64', label: 'Base64 Encode/Decode', family: 'util', desc: 'Encode and decode Base64.' },
   { slug: 'uuid-generator', label: 'UUID Generator', family: 'util', desc: 'Generate random UUID v4 values.' },
