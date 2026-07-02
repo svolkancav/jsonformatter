@@ -20,6 +20,7 @@ const JsonToTypeScript = lazy(() => import('./pages/tools/JsonToTypeScript').the
 const JsonToGo = lazy(() => import('./pages/tools/JsonToGo').then(module => ({ default: module.JsonToGo })));
 const JsonToPython = lazy(() => import('./pages/tools/JsonToPython').then(module => ({ default: module.JsonToPython })));
 const JsonToJava = lazy(() => import('./pages/tools/JsonToJava').then(module => ({ default: module.JsonToJava })));
+const ToolsHub = lazy(() => import('./pages/ToolsHub').then(module => ({ default: module.ToolsHub })));
 const SampleJsonHub = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonHub })));
 const SampleJsonDetail = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonDetail })));
 const JsonErrorsHub = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorsHub })));
@@ -83,7 +84,7 @@ function App() {
           }>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/tools" element={<Navigate to="/json-formatter" replace />} />
+                  <Route path="/tools" element={<ToolsHub />} />
                   
                   {/* Dedicated tool pages */}
                   <Route path="/json-formatter" element={<JsonFormatter />} />

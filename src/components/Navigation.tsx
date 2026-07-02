@@ -21,6 +21,7 @@ export function Navigation() {
   ];
 
   const toolsItems = [
+    { path: '/tools', label: '📋 All Tools' },
     { path: '/json-formatter', label: 'JSON Formatter' },
     { path: '/json-viewer', label: 'JSON Viewer' },
     { path: '/json-blob-viewer', label: 'JSON Blob Viewer' },
