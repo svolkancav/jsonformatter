@@ -33,6 +33,7 @@ export function JsonToGo() {
             buttonLabel="Generate Go Structs"
             rootLabel="Root Struct Name"
             fileExtension="go"
+            example={'{"id": 1, "name": "Ada", "active": true, "tags": ["admin"], "address": {"city": "London"}}'}
           />
         </div>
 

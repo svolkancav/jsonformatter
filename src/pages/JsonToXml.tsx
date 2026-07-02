@@ -35,6 +35,7 @@ export function JsonToXmlPage() {
             uploadAccept=".json,application/json"
             inputLanguage="json"
             outputLanguage="markup"
+            example={'{"note": {"to": "Ada", "from": "Linus", "body": "Hello"}}'}
             convert={jsonToXml}
           />
         </div>

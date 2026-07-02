@@ -12,6 +12,8 @@ interface TextConverterProps {
   /** Syntax-highlighting language for the input / output panes. */
   inputLanguage?: CodeLang;
   outputLanguage?: CodeLang;
+  /** Optional sample input; shows a "Try Example" button that fills and runs it. */
+  example?: string;
   /** Transforms input to output; throw an Error with a helpful message on bad input. */
   convert: (input: string) => string;
 }
@@ -29,6 +31,7 @@ export function TextConverter({
   uploadAccept = '.txt',
   inputLanguage = 'json',
   outputLanguage = 'json',
+  example,
   convert,
 }: TextConverterProps) {
   const [input, setInput] = useState('');
@@ -106,6 +109,17 @@ export function TextConverter({
             {inputLabel}
           </label>
           <div className="flex gap-2">
+            {example && (
+              <button
+                onClick={() => {
+                  setInput(example);
+                  run(example);
+                }}
+                className="px-3 py-1 text-xs bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded text-blue-700 dark:text-blue-300 transition-colors"
+              >
+                Try Example
+              </button>
+            )}
             <button
               onClick={handlePaste}
               className="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors"

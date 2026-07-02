@@ -33,6 +33,7 @@ export function JsonToPython() {
             buttonLabel="Generate Python Classes"
             rootLabel="Root Class Name"
             fileExtension="py"
+            example={'{"id": 1, "name": "Ada", "active": true, "tags": ["admin"], "address": {"city": "London"}}'}
           />
         </div>
 

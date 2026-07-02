@@ -12,6 +12,8 @@ interface CodeGenToolProps {
   rootLabel: string;
   defaultRoot?: string;
   fileExtension: string;
+  /** Optional sample JSON; shows a "Try Example" button that fills and generates. */
+  example?: string;
 }
 
 /** Shared "JSON in → generated source out" tool used by the code generators. */
@@ -23,6 +25,7 @@ export function CodeGenTool({
   rootLabel,
   defaultRoot = 'Root',
   fileExtension,
+  example,
 }: CodeGenToolProps) {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -78,9 +81,23 @@ export function CodeGenTool({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            JSON Input
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              JSON Input
+            </label>
+            {example && (
+              <button
+                onClick={() => {
+                  setInput(example);
+                  setOutput(generate(example, rootName || defaultRoot));
+                  setError('');
+                }}
+                className="px-3 py-1 text-xs bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded text-blue-700 dark:text-blue-300 transition-colors"
+              >
+                Try Example
+              </button>
+            )}
+          </div>
           <CodeEditor
             value={input}
             onChange={setInput}
