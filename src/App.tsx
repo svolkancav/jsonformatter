@@ -40,6 +40,16 @@ const TrJsonDogrulayici = lazy(() => import('./pages/tr/TrJsonDogrulayici').then
 const TrJsonExcel = lazy(() => import('./pages/tr/TrJsonExcel').then(module => ({ default: module.TrJsonExcel })));
 const TrExcelJson = lazy(() => import('./pages/tr/TrExcelJson').then(module => ({ default: module.TrExcelJson })));
 const TrJsonCsv = lazy(() => import('./pages/tr/TrJsonCsv').then(module => ({ default: module.TrJsonCsv })));
+const DeHub = lazy(() => import('./pages/locale/DePages').then(module => ({ default: module.DeHub })));
+const DeFormatter = lazy(() => import('./pages/locale/DePages').then(module => ({ default: module.DeFormatter })));
+const DeViewer = lazy(() => import('./pages/locale/DePages').then(module => ({ default: module.DeViewer })));
+const DeJsonCsv = lazy(() => import('./pages/locale/DePages').then(module => ({ default: module.DeJsonCsv })));
+const DeJsonExcel = lazy(() => import('./pages/locale/DePages').then(module => ({ default: module.DeJsonExcel })));
+const EsHub = lazy(() => import('./pages/locale/EsPages').then(module => ({ default: module.EsHub })));
+const EsFormatter = lazy(() => import('./pages/locale/EsPages').then(module => ({ default: module.EsFormatter })));
+const EsViewer = lazy(() => import('./pages/locale/EsPages').then(module => ({ default: module.EsViewer })));
+const EsJsonCsv = lazy(() => import('./pages/locale/EsPages').then(module => ({ default: module.EsJsonCsv })));
+const EsJsonExcel = lazy(() => import('./pages/locale/EsPages').then(module => ({ default: module.EsJsonExcel })));
 const JsonValidator = lazy(() => import('./pages/tools/JsonValidator').then(module => ({ default: module.JsonValidator })));
 const BlobView = lazy(() => import('./pages/BlobView').then(module => ({ default: module.BlobView })));
 const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
@@ -146,6 +156,16 @@ function App() {
                   <Route path="/tr/json-excel-cevirici" element={<TrJsonExcel />} />
                   <Route path="/tr/excel-json-cevirici" element={<TrExcelJson />} />
                   <Route path="/tr/json-csv-cevirici" element={<TrJsonCsv />} />
+                  <Route path="/de" element={<DeHub />} />
+                  <Route path="/de/json-formatierer" element={<DeFormatter />} />
+                  <Route path="/de/json-betrachter" element={<DeViewer />} />
+                  <Route path="/de/json-zu-csv" element={<DeJsonCsv />} />
+                  <Route path="/de/json-zu-excel" element={<DeJsonExcel />} />
+                  <Route path="/es" element={<EsHub />} />
+                  <Route path="/es/formateador-json" element={<EsFormatter />} />
+                  <Route path="/es/visor-json" element={<EsViewer />} />
+                  <Route path="/es/json-a-csv" element={<EsJsonCsv />} />
+                  <Route path="/es/json-a-excel" element={<EsJsonExcel />} />
                   <Route path="/json-validator" element={<JsonValidator />} />
                   
                   {/* Other pages */}
