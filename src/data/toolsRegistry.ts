@@ -24,6 +24,8 @@ export const TOOLS: ToolInfo[] = [
   { slug: 'json-blob-viewer', label: 'JSON Blob Viewer', family: 'format', desc: 'Read large or minified JSON blobs.' },
   { slug: 'json-validator', label: 'JSON Validator', family: 'format', desc: 'Check JSON and pinpoint syntax errors.' },
   { slug: 'json-diff', label: 'JSON Diff', family: 'format', desc: 'Compare two JSON documents.' },
+  { slug: 'json-schema-generator', label: 'JSON Schema Generator', family: 'format', desc: 'Generate a JSON Schema from JSON.' },
+  { slug: 'jsonpath-tester', label: 'JSONPath Tester', family: 'format', desc: 'Evaluate JSONPath expressions.' },
   // Convert
   { slug: 'json-to-csv', label: 'JSON to CSV', family: 'convert', desc: 'Turn a JSON array into CSV.' },
   { slug: 'csv-to-json', label: 'CSV to JSON', family: 'convert', desc: 'Turn CSV rows into JSON objects.' },

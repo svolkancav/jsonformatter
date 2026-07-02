@@ -1,6 +1,7 @@
 import Papa from 'papaparse';
 import { dump as yamlDump, load as yamlLoad } from 'js-yaml';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import { JSONPath } from 'jsonpath-plus';
 
 // All converters take a string and return a string, throwing an Error with a
 // helpful message on invalid input. Everything runs client-side.
@@ -63,6 +64,44 @@ function decodeBase64Url(segment: string): string {
   const binary = atob(b64 + pad);
   const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
   return new TextDecoder().decode(bytes);
+}
+
+// Generates a JSON Schema (draft-07) that describes the given JSON sample.
+function toSchema(value: unknown): Record<string, unknown> {
+  if (value === null) return { type: 'null' };
+  if (Array.isArray(value)) {
+    return { type: 'array', items: value.length ? toSchema(value[0]) : {} };
+  }
+  if (typeof value === 'object') {
+    const properties: Record<string, unknown> = {};
+    const required: string[] = [];
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      properties[k] = toSchema(v);
+      required.push(k);
+    }
+    return { type: 'object', properties, required };
+  }
+  if (typeof value === 'string') return { type: 'string' };
+  if (typeof value === 'number') return { type: Number.isInteger(value) ? 'integer' : 'number' };
+  if (typeof value === 'boolean') return { type: 'boolean' };
+  return {};
+}
+
+export function generateJsonSchema(input: string): string {
+  const data = JSON.parse(input);
+  const schema = {
+    $schema: 'http://json-schema.org/draft-07/schema#',
+    ...toSchema(data),
+  };
+  return JSON.stringify(schema, null, 2);
+}
+
+// Evaluates a JSONPath expression against the given JSON and returns the matches.
+export function jsonPathQuery(json: string, path: string): string {
+  if (!path.trim()) throw new Error('Enter a JSONPath expression, e.g. $.store.book[*].title');
+  const data = JSON.parse(json);
+  const result = JSONPath({ path: path.trim(), json: data });
+  return JSON.stringify(result, null, 2);
 }
 
 export function decodeJwt(input: string): string {

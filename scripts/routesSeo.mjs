@@ -171,6 +171,18 @@ export const staticRoutes = [
     keywords: 'json to java, json to java class, json to pojo, generate java classes, java class generator, json to java object',
   },
   {
+    path: '/json-schema-generator',
+    title: 'JSON Schema Generator | Generate JSON Schema from JSON Online',
+    description: 'Free online JSON Schema generator. Paste a JSON sample and instantly generate a draft-07 JSON Schema with types and required fields.',
+    keywords: 'json schema generator, generate json schema, json to json schema, json schema from json, draft-07 schema',
+  },
+  {
+    path: '/jsonpath-tester',
+    title: 'JSONPath Tester & Evaluator | Free Online JSONPath Tool',
+    description: 'Free online JSONPath tester. Evaluate a JSONPath expression against your JSON and see the matches instantly. Runs entirely in your browser.',
+    keywords: 'jsonpath tester, jsonpath evaluator, jsonpath online, test jsonpath, jsonpath query, json path',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',
