@@ -12,6 +12,15 @@ export function JsonDiffPage() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
 
+  const tryExample = () => {
+    const a = '{"name": "Ada", "age": 36, "roles": ["admin"]}';
+    const b = '{"name": "Ada", "age": 37, "roles": ["admin", "editor"]}';
+    setLeft(a);
+    setRight(b);
+    setError('');
+    setResult(jsonDiff(a, b));
+  };
+
   const compare = () => {
     setError('');
     if (!left.trim() || !right.trim()) {
@@ -48,6 +57,14 @@ export function JsonDiffPage() {
         <AdSlot slotId="json_diff_header" format="horizontal" />
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-8">
+          <div className="flex justify-end mb-3">
+            <button
+              onClick={tryExample}
+              className="px-3 py-1 text-xs bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded text-blue-700 dark:text-blue-300 transition-colors"
+            >
+              Try Example
+            </button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

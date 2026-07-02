@@ -56,6 +56,7 @@ export function TimestampConverterPage() {
             downloadName="timestamp.txt"
             inputLanguage="text"
             outputLanguage="text"
+            example={mode === 'toDate' ? '1700000000' : '2026-07-01T10:00:00Z'}
             convert={mode === 'toDate' ? timestampToHuman : dateToTimestamp}
           />
         </div>

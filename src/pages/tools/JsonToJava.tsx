@@ -33,6 +33,7 @@ export function JsonToJava() {
             buttonLabel="Generate Java Classes"
             rootLabel="Root Class Name"
             fileExtension="java"
+            example={'{"id": 1, "name": "Ada", "active": true, "tags": ["admin"], "address": {"city": "London"}}'}
           />
         </div>
 

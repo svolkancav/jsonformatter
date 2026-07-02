@@ -35,6 +35,7 @@ export function JsonToYamlPage() {
             uploadAccept=".json,application/json"
             inputLanguage="json"
             outputLanguage="yaml"
+            example={'{"name": "app", "ports": [80, 443], "debug": true}'}
             convert={jsonToYaml}
           />
         </div>

@@ -35,6 +35,7 @@ export function JsonToCsvPage() {
             uploadAccept=".json,application/json"
             inputLanguage="json"
             outputLanguage="text"
+            example={'[{"name": "Ada", "age": 36}, {"name": "Linus", "age": 54}]'}
             convert={jsonToCsv}
           />
         </div>

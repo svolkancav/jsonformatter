@@ -54,6 +54,7 @@ export function Base64ToolPage() {
             downloadName={mode === 'encode' ? 'encoded.txt' : 'decoded.txt'}
             inputLanguage="text"
             outputLanguage="text"
+            example={mode === 'encode' ? 'Hello, world!' : 'SGVsbG8sIHdvcmxkIQ=='}
             convert={mode === 'encode' ? base64Encode : base64Decode}
           />
         </div>

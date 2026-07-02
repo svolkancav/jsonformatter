@@ -35,6 +35,7 @@ export function XmlToJsonPage() {
             uploadAccept=".xml,text/xml,application/xml"
             inputLanguage="markup"
             outputLanguage="json"
+            example={'<note>\n  <to>Ada</to>\n  <from>Linus</from>\n</note>'}
             convert={xmlToJson}
           />
         </div>
