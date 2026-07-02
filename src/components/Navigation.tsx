@@ -15,6 +15,7 @@ export function Navigation() {
     { path: '/', label: 'Home' },
     { path: '/sample-json', label: 'Sample JSON' },
     { path: '/json-errors', label: 'JSON Errors' },
+    { path: '/cheatsheet', label: 'Cheat Sheets' },
     { path: '/blog', label: 'Blog' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' }

@@ -229,6 +229,84 @@ export const sampleDatasets: SampleDataset[] = [
   }
 }`,
   },
+  {
+    slug: 'countries',
+    title: 'Sample JSON: Countries',
+    description: 'A sample JSON array of countries with capital, currency, population, and ISO codes — great for dropdowns and reference data.',
+    category: 'Reference',
+    useCase:
+      'Perfect for country pickers, phone/currency selectors, or any app that needs reference data with ISO codes.',
+    json: `[
+  { "name": "Turkey", "code": "TR", "capital": "Ankara", "currency": "TRY", "population": 85000000 },
+  { "name": "Germany", "code": "DE", "capital": "Berlin", "currency": "EUR", "population": 83000000 },
+  { "name": "Japan", "code": "JP", "capital": "Tokyo", "currency": "JPY", "population": 125000000 }
+]`,
+  },
+  {
+    slug: 'movies',
+    title: 'Sample JSON: Movies',
+    description: 'A sample JSON array of movies with title, year, genres, rating, and cast — ideal for demos, tables, and search UIs.',
+    category: 'Content',
+    useCase:
+      'A rich, familiar dataset for building catalogs, search-and-filter UIs, or demonstrating nested arrays (genres, cast).',
+    json: `[
+  {
+    "title": "Inception",
+    "year": 2010,
+    "genres": ["Sci-Fi", "Thriller"],
+    "rating": 8.8,
+    "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt"]
+  },
+  {
+    "title": "The Matrix",
+    "year": 1999,
+    "genres": ["Sci-Fi", "Action"],
+    "rating": 8.7,
+    "cast": ["Keanu Reeves", "Carrie-Anne Moss"]
+  }
+]`,
+  },
+  {
+    slug: 'weather',
+    title: 'Sample JSON: Weather',
+    description: 'A sample JSON weather API response with current conditions and a daily forecast — great for weather widgets and dashboards.',
+    category: 'API',
+    useCase:
+      'Model a weather widget or dashboard against a realistic response with current conditions and a nested forecast array.',
+    json: `{
+  "location": "Istanbul",
+  "current": {
+    "tempC": 21,
+    "condition": "Partly cloudy",
+    "humidity": 60,
+    "windKph": 14
+  },
+  "forecast": [
+    { "date": "2026-07-02", "minC": 19, "maxC": 28, "condition": "Sunny" },
+    { "date": "2026-07-03", "minC": 20, "maxC": 30, "condition": "Sunny" }
+  ]
+}`,
+  },
+  {
+    slug: 'invoice',
+    title: 'Sample JSON: Invoice',
+    description: 'A sample JSON invoice with line items, tax, totals, and customer details — perfect for billing and PDF-generation demos.',
+    category: 'Business',
+    useCase:
+      'Use it to build invoice screens, test tax/total calculations, or feed a PDF generator with realistic nested line items.',
+    json: `{
+  "invoiceNumber": "INV-2026-0042",
+  "issuedAt": "2026-07-01",
+  "customer": { "name": "Acme Inc.", "email": "billing@acme.com" },
+  "items": [
+    { "description": "Consulting", "quantity": 10, "unitPrice": 120.0 },
+    { "description": "Hosting", "quantity": 1, "unitPrice": 49.0 }
+  ],
+  "subtotal": 1249.0,
+  "taxRate": 0.2,
+  "total": 1498.8
+}`,
+  },
 ];
 
 export const sampleBySlug: Record<string, SampleDataset> = Object.fromEntries(
