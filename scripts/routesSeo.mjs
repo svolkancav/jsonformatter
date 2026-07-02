@@ -316,4 +316,18 @@ export const staticRoutes = [
   { path: '/tr/json-excel-cevirici', title: "JSON'dan Excel'e Çevirici | Ücretsiz Online JSON Excel Aracı", description: "Ücretsiz online JSON'dan Excel'e çevirici. JSON verinizi anında .xlsx elektronik tablosuna dönüştürün.", keywords: 'json excel çevirici, json excel dönüştürücü, json to excel türkçe, json xlsx çevirici' },
   { path: '/tr/excel-json-cevirici', title: "Excel'den JSON'a Çevirici | Ücretsiz Online Excel JSON Aracı", description: "Ücretsiz online Excel'den JSON'a çevirici. Excel (.xlsx veya .csv) dosyalarınızı anında JSON’a dönüştürün.", keywords: 'excel json çevirici, excel json dönüştürücü, excel to json türkçe, xlsx json çevirici' },
   { path: '/tr/json-csv-cevirici', title: "JSON'dan CSV'ye Çevirici | Ücretsiz Online JSON CSV Aracı", description: "Ücretsiz online JSON'dan CSV'ye çevirici. JSON dizinizi anında temiz CSV’ye dönüştürün.", keywords: 'json csv çevirici, json csv dönüştürücü, json to csv türkçe' },
+
+  // --- German pages ---
+  { path: '/de', title: 'Kostenlose JSON-Tools (Deutsch) | Formatierer & Konverter', description: 'Kostenlose JSON-Tools: formatieren, anzeigen und konvertieren — komplett im Browser.', keywords: 'json tools deutsch, json formatierer, json konverter' },
+  { path: '/de/json-formatierer', title: 'JSON Formatierer | Kostenloses Online-Tool zum Formatieren von JSON', description: 'Kostenloser Online-JSON-Formatierer. Formatieren, verschönern und validieren Sie JSON sofort im Browser.', keywords: 'json formatierer, json formatieren, json verschönern, json validieren' },
+  { path: '/de/json-betrachter', title: 'JSON Viewer (Betrachter) | Kostenloses Online-Tool', description: 'Kostenloser Online-JSON-Viewer. Zeigen Sie JSON als übersichtliche Baumstruktur an.', keywords: 'json viewer deutsch, json betrachter, json baumansicht' },
+  { path: '/de/json-zu-csv', title: 'JSON zu CSV Konverter | Kostenloses Online-Tool', description: 'Wandeln Sie ein JSON-Array sofort in sauberes CSV um — im Browser.', keywords: 'json zu csv, json in csv, json csv konverter' },
+  { path: '/de/json-zu-excel', title: 'JSON zu Excel Konverter | Kostenloses Online-Tool', description: 'Wandeln Sie JSON-Daten sofort in eine .xlsx-Tabelle um — im Browser.', keywords: 'json zu excel, json in excel, json excel konverter' },
+
+  // --- Spanish pages ---
+  { path: '/es', title: 'Herramientas JSON gratis (Español) | Formateador y Conversores', description: 'Herramientas JSON gratis: formatear, visualizar y convertir — 100% en tu navegador.', keywords: 'herramientas json español, formateador json, conversor json' },
+  { path: '/es/formateador-json', title: 'Formateador JSON | Herramienta Online Gratis para Formatear JSON', description: 'Formateador JSON online gratis. Formatea, embellece y valida JSON al instante en tu navegador.', keywords: 'formateador json, formatear json, embellecer json, validar json' },
+  { path: '/es/visor-json', title: 'Visor JSON | Herramienta Online Gratis (JSON Viewer)', description: 'Visor JSON online gratis. Explora tus datos JSON en una estructura de árbol legible.', keywords: 'visor json, json viewer español, árbol json' },
+  { path: '/es/json-a-csv', title: 'Convertidor de JSON a CSV | Herramienta Online Gratis', description: 'Convierte un array JSON en CSV al instante — en tu navegador.', keywords: 'json a csv, convertir json a csv, convertidor json csv' },
+  { path: '/es/json-a-excel', title: 'Convertidor de JSON a Excel | Herramienta Online Gratis', description: 'Convierte datos JSON en una hoja .xlsx al instante — en tu navegador.', keywords: 'json a excel, convertir json a excel, convertidor json excel' },
 ];

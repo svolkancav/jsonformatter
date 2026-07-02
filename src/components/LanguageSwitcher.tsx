@@ -2,25 +2,34 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Globe, ChevronDown } from 'lucide-react';
 
-// Languages the site offers. Add more here as localized pages are created.
-const LANGUAGES = [
+type Lang = 'en' | 'tr' | 'de' | 'es';
+
+const LANGUAGES: { code: Lang; label: string; short: string }[] = [
   { code: 'en', label: 'English', short: 'EN' },
   { code: 'tr', label: 'Türkçe', short: 'TR' },
+  { code: 'de', label: 'Deutsch', short: 'DE' },
+  { code: 'es', label: 'Español', short: 'ES' },
 ];
 
-// English path -> Turkish path for pages that exist in both languages.
-const EN_TO_TR: Record<string, string> = {
-  '/': '/tr',
-  '/json-formatter': '/tr/json-formatlayici',
-  '/json-viewer': '/tr/json-goruntuleyici',
-  '/json-validator': '/tr/json-dogrulayici',
-  '/json-to-excel': '/tr/json-excel-cevirici',
-  '/excel-to-json': '/tr/excel-json-cevirici',
-  '/json-to-csv': '/tr/json-csv-cevirici',
-};
-const TR_TO_EN: Record<string, string> = Object.fromEntries(
-  Object.entries(EN_TO_TR).map(([en, tr]) => [tr, en]),
-);
+// Each group holds the equivalent path per language for the same tool.
+const PAGE_GROUPS: Partial<Record<Lang, string>>[] = [
+  { en: '/', tr: '/tr', de: '/de', es: '/es' },
+  { en: '/json-formatter', tr: '/tr/json-formatlayici', de: '/de/json-formatierer', es: '/es/formateador-json' },
+  { en: '/json-viewer', tr: '/tr/json-goruntuleyici', de: '/de/json-betrachter', es: '/es/visor-json' },
+  { en: '/json-to-csv', tr: '/tr/json-csv-cevirici', de: '/de/json-zu-csv', es: '/es/json-a-csv' },
+  { en: '/json-to-excel', tr: '/tr/json-excel-cevirici', de: '/de/json-zu-excel', es: '/es/json-a-excel' },
+  { en: '/json-validator', tr: '/tr/json-dogrulayici' },
+  { en: '/excel-to-json', tr: '/tr/excel-json-cevirici' },
+];
+
+const HUB: Record<Lang, string> = { en: '/', tr: '/tr', de: '/de', es: '/es' };
+
+function detectLang(pathname: string): Lang {
+  if (pathname === '/tr' || pathname.startsWith('/tr/')) return 'tr';
+  if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
+  if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
+  return 'en';
+}
 
 export function LanguageSwitcher() {
   const location = useLocation();
@@ -28,7 +37,7 @@ export function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const currentLang = location.pathname === '/tr' || location.pathname.startsWith('/tr/') ? 'tr' : 'en';
+  const currentLang = detectLang(location.pathname);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -38,15 +47,11 @@ export function LanguageSwitcher() {
     return () => document.removeEventListener('mousedown', onClick);
   }, []);
 
-  const switchTo = (code: string) => {
+  const switchTo = (code: Lang) => {
     setOpen(false);
     if (code === currentLang) return;
-    const path = location.pathname;
-    if (code === 'tr') {
-      navigate(EN_TO_TR[path] ?? '/tr');
-    } else {
-      navigate(TR_TO_EN[path] ?? '/');
-    }
+    const group = PAGE_GROUPS.find((g) => Object.values(g).includes(location.pathname));
+    navigate(group?.[code] ?? HUB[code]);
   };
 
   const current = LANGUAGES.find((l) => l.code === currentLang) ?? LANGUAGES[0];
