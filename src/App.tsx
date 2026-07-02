@@ -27,6 +27,8 @@ const JsonErrorsHub = lazy(() => import('./pages/JsonErrors').then(module => ({ 
 const JsonErrorDetail = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorDetail })));
 const CheatSheetsHub = lazy(() => import('./pages/CheatSheets').then(module => ({ default: module.CheatSheetsHub })));
 const CheatSheetDetail = lazy(() => import('./pages/CheatSheets').then(module => ({ default: module.CheatSheetDetail })));
+const JsonSchemaGenerator = lazy(() => import('./pages/JsonSchemaGenerator').then(module => ({ default: module.JsonSchemaGeneratorPage })));
+const JsonPathTester = lazy(() => import('./pages/JsonPathTester').then(module => ({ default: module.JsonPathTesterPage })));
 const TrHub = lazy(() => import('./pages/tr/TrHub').then(module => ({ default: module.TrHub })));
 const TrJsonFormatlayici = lazy(() => import('./pages/tr/TrJsonFormatlayici').then(module => ({ default: module.TrJsonFormatlayici })));
 const TrJsonGoruntuleyici = lazy(() => import('./pages/tr/TrJsonGoruntuleyici').then(module => ({ default: module.TrJsonGoruntuleyici })));
@@ -111,6 +113,8 @@ function App() {
                   <Route path="/uuid-generator" element={<UuidGenerator />} />
                   <Route path="/timestamp-converter" element={<TimestampConverter />} />
                   <Route path="/json-diff" element={<JsonDiff />} />
+                  <Route path="/json-schema-generator" element={<JsonSchemaGenerator />} />
+                  <Route path="/jsonpath-tester" element={<JsonPathTester />} />
                   
                   {/* Text tools */}
                   <Route path="/character-counter" element={<CharacterCounter />} />

@@ -869,4 +869,75 @@ name = "Ada"`,
       { question: 'Is my data private?', answer: 'Yes — generation runs entirely in your browser.' },
     ],
   },
+
+  'json-schema-generator': {
+    intro: {
+      heading: 'Generate a JSON Schema from JSON',
+      paragraphs: [
+        'JSON Schema describes the shape of your data — which fields exist, their types, and which are required — so you can validate real data against a contract and catch bad payloads early. Writing a schema by hand is tedious; this tool infers one from a JSON sample automatically.',
+        'Paste any JSON and get a draft-07 JSON Schema with types (string, integer, number, boolean, array, object, null), nested object schemas, array item schemas, and a required list. Use it as a starting point and tighten constraints (formats, min/max, enums) as needed.',
+        'Everything runs in your browser — your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Generate a JSON Schema',
+      items: [
+        'Paste a representative JSON sample into the input.',
+        'Click Generate JSON Schema.',
+        'Review the draft-07 schema with inferred types and required fields.',
+        'Copy or download it, then refine constraints (formats, enums, min/max) for your needs.',
+      ],
+    },
+    example: {
+      heading: 'JSON to JSON Schema',
+      description: 'Each field is typed, and present keys are marked required.',
+      input: '{ "id": 1, "name": "Ada" }',
+      output: '{\n  "type": "object",\n  "properties": {\n    "id": { "type": "integer" },\n    "name": { "type": "string" }\n  },\n  "required": ["id", "name"]\n}',
+      inputLabel: 'JSON',
+      outputLabel: 'Schema',
+    },
+    faqs: [
+      { question: 'Which JSON Schema version does it produce?', answer: 'It generates a draft-07 schema, the most widely supported version across validators.' },
+      { question: 'Does it detect required fields?', answer: 'Yes. Every key present in the sample is added to the required array; remove any that should be optional.' },
+      { question: 'How are nested objects and arrays handled?', answer: 'Nested objects get their own schema, and arrays get an items schema inferred from the first element.' },
+      { question: 'Is my data private?', answer: 'Yes — the schema is generated entirely in your browser.' },
+    ],
+  },
+
+  'jsonpath-tester': {
+    intro: {
+      heading: 'Test JSONPath Expressions Online',
+      paragraphs: [
+        'JSONPath is a query language for JSON — like XPath for XML. It lets you select values deep inside a document with a compact expression, which is invaluable for extracting fields, filtering arrays, and configuring integrations that use JSONPath.',
+        'This tester evaluates your JSONPath against your JSON and shows every match instantly, so you can build and debug expressions without writing code. It supports the common JSONPath syntax including wildcards, recursive descent, array slices, and filters.',
+        'All evaluation happens in your browser; your data is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Use the JSONPath Tester',
+      items: [
+        'Paste your JSON into the input.',
+        'Enter a JSONPath expression, e.g. $.store.books[*].title.',
+        'Click Evaluate JSONPath to see the matching values.',
+        'Refine the expression until it selects exactly what you need.',
+      ],
+    },
+    tips: {
+      heading: 'Handy JSONPath Syntax',
+      items: [
+        { title: '$', text: 'The root of the document.' },
+        { title: '.key / [\'key\']', text: 'Select a child property by name.' },
+        { title: '[*]', text: 'All elements of an array (wildcard).' },
+        { title: '..key', text: 'Recursive descent — find key at any depth.' },
+        { title: '[0], [-1:]', text: 'Index or slice into an array.' },
+        { title: '[?(@.price<20)]', text: 'Filter by a condition on each element.' },
+      ],
+    },
+    faqs: [
+      { question: 'What is JSONPath used for?', answer: 'It selects and extracts values from JSON with a concise expression — used in tooling, APIs, log processing, and integration platforms.' },
+      { question: 'What syntax is supported?', answer: 'Common JSONPath: root ($), child access, wildcards ([*]), recursive descent (..), array slices, and filter expressions.' },
+      { question: 'Why do I get an empty result?', answer: 'The path matched nothing. Check spelling, array wildcards ([*]), and that the structure matches your expression.' },
+      { question: 'Is my data private?', answer: 'Yes — evaluation runs entirely in your browser.' },
+    ],
+  },
 };

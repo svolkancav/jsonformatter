@@ -27,6 +27,8 @@ export function Navigation() {
     { path: '/json-viewer', label: 'JSON Viewer' },
     { path: '/json-blob-viewer', label: 'JSON Blob Viewer' },
     { path: '/json-validator', label: 'JSON Validator' },
+    { path: '/json-schema-generator', label: 'JSON Schema Generator' },
+    { path: '/jsonpath-tester', label: 'JSONPath Tester' },
     { path: '/json-to-excel', label: 'JSON to Excel' },
     { path: '/excel-to-json', label: 'Excel to JSON' },
     { path: '/excel-to-xml', label: 'Excel to XML' },
