@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://jsonformater.com/tools</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://jsonformater.com/json-formatter</loc>
     <lastmod>2024-01-10</lastmod>
     <changefreq>daily</changefreq>

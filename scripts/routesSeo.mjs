@@ -15,6 +15,12 @@ export const staticRoutes = [
     keywords: 'free json formatter, online json formatter, json blob viewer, json to excel converter, excel to json converter, json viewer, free online json tool, json beautifier',
   },
   {
+    path: '/tools',
+    title: 'All JSON Tools | Free Online JSON Formatter, Converters & Utilities',
+    description: 'Browse every free online JSON tool in one place: formatter, viewer, validator, diff, converters (CSV, YAML, XML, Excel, TOML, TOON), code generators, and developer utilities.',
+    keywords: 'json tools, online json tools, free json tools, json formatter, json converter, json utilities, developer tools',
+  },
+  {
     path: '/json-formatter',
     title: 'Free Online JSON Formatter & Validator',
     description: 'Format, validate, and beautify your JSON data instantly with our free online JSON formatter tool.',
