@@ -25,6 +25,8 @@ const SampleJsonHub = lazy(() => import('./pages/SampleJson').then(module => ({ 
 const SampleJsonDetail = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonDetail })));
 const JsonErrorsHub = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorsHub })));
 const JsonErrorDetail = lazy(() => import('./pages/JsonErrors').then(module => ({ default: module.JsonErrorDetail })));
+const CheatSheetsHub = lazy(() => import('./pages/CheatSheets').then(module => ({ default: module.CheatSheetsHub })));
+const CheatSheetDetail = lazy(() => import('./pages/CheatSheets').then(module => ({ default: module.CheatSheetDetail })));
 const TrHub = lazy(() => import('./pages/tr/TrHub').then(module => ({ default: module.TrHub })));
 const TrJsonFormatlayici = lazy(() => import('./pages/tr/TrJsonFormatlayici').then(module => ({ default: module.TrJsonFormatlayici })));
 const TrJsonGoruntuleyici = lazy(() => import('./pages/tr/TrJsonGoruntuleyici').then(module => ({ default: module.TrJsonGoruntuleyici })));
@@ -123,6 +125,8 @@ function App() {
                   <Route path="/sample-json/:slug" element={<SampleJsonDetail />} />
                   <Route path="/json-errors" element={<JsonErrorsHub />} />
                   <Route path="/json-errors/:slug" element={<JsonErrorDetail />} />
+                  <Route path="/cheatsheet" element={<CheatSheetsHub />} />
+                  <Route path="/cheatsheet/:slug" element={<CheatSheetDetail />} />
                   <Route path="/tr" element={<TrHub />} />
                   <Route path="/tr/json-formatlayici" element={<TrJsonFormatlayici />} />
                   <Route path="/tr/json-goruntuleyici" element={<TrJsonGoruntuleyici />} />
