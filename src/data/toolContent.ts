@@ -1018,4 +1018,49 @@ name = "Ada"`,
       { question: 'Is my data private?', answer: 'Yes — generation runs entirely in your browser.' },
     ],
   },
+
+  'cron-expression-generator': {
+    intro: {
+      heading: 'What Is a Cron Expression?',
+      paragraphs: [
+        'A cron expression is a compact string of five fields that defines a repeating schedule — used by cron on Linux, CI pipelines, cloud schedulers, and countless job runners. The five fields are minute, hour, day of month, month, and day of week, and each can be a specific value, a list, a range, or a step like */5.',
+        'The syntax is powerful but easy to get wrong. This tool translates any cron expression into plain English, shows you the next times it will run, and offers ready-made presets you can start from — so you can build and verify a schedule with confidence.',
+        'Everything is computed in your browser; nothing you type is uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Use the Cron Generator',
+      items: [
+        'Type a cron expression, or click a preset to fill one in.',
+        'Read the plain-English description of when it runs.',
+        'Check the next 5 run times to confirm the schedule is what you expect.',
+        'Copy the expression into your crontab, CI config, or scheduler.',
+      ],
+    },
+    example: {
+      heading: 'Example',
+      description: 'The expression on the left runs every 15 minutes, from 9 AM to 5 PM, on weekdays.',
+      input: '*/15 9-17 * * 1-5',
+      output: 'Every 15 minutes, between 09:00 and 17:59, Monday through Friday',
+      inputLabel: 'Cron',
+      outputLabel: 'Meaning',
+    },
+    tips: {
+      heading: 'Cron Syntax Quick Tips',
+      items: [
+        { title: '*', text: 'Every value for that field (e.g. every minute).' },
+        { title: '*/n', text: 'Every n units — */5 in minutes means every 5 minutes.' },
+        { title: 'a-b', text: 'A range, e.g. 9-17 for hours 9 through 17.' },
+        { title: 'a,b,c', text: 'A list of specific values, e.g. 1,15,30.' },
+        { title: 'Day of week', text: '0 and 7 both mean Sunday; 1 is Monday.' },
+        { title: 'Order', text: 'minute, hour, day-of-month, month, day-of-week.' },
+      ],
+    },
+    faqs: [
+      { question: 'What do the five fields mean?', answer: 'In order: minute (0–59), hour (0–23), day of month (1–31), month (1–12), and day of week (0–6, where 0 is Sunday).' },
+      { question: 'What does */5 mean?', answer: 'A step value. In the minute field, */5 means "every 5 minutes". In the hour field it would mean every 5 hours.' },
+      { question: 'What time zone are the next runs in?', answer: 'The next run times are shown in UTC. Your actual server may use a different time zone, so adjust accordingly.' },
+      { question: 'Is my expression sent anywhere?', answer: 'No. Parsing and next-run calculation happen entirely in your browser.' },
+    ],
+  },
 };

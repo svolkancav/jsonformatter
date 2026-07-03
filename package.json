@@ -18,6 +18,8 @@
     "@types/nodemailer": "^7.0.2",
     "@types/papaparse": "^5.3.16",
     "@vercel/node": "^5.3.26",
+    "cron-parser": "^5.6.1",
+    "cronstrue": "^3.24.0",
     "fast-xml-parser": "^5.9.3",
     "js-yaml": "^5.2.0",
     "jsonpath-plus": "^10.4.0",

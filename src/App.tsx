@@ -24,6 +24,7 @@ const JsonToRust = lazy(() => import('./pages/tools/JsonToRust').then(module => 
 const JsonToKotlin = lazy(() => import('./pages/tools/JsonToKotlin').then(module => ({ default: module.JsonToKotlin })));
 const JsonToPhp = lazy(() => import('./pages/tools/JsonToPhp').then(module => ({ default: module.JsonToPhp })));
 const Glossary = lazy(() => import('./pages/Glossary').then(module => ({ default: module.Glossary })));
+const CronGenerator = lazy(() => import('./pages/CronGenerator').then(module => ({ default: module.CronGeneratorPage })));
 const ToolsHub = lazy(() => import('./pages/ToolsHub').then(module => ({ default: module.ToolsHub })));
 const SampleJsonHub = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonHub })));
 const SampleJsonDetail = lazy(() => import('./pages/SampleJson').then(module => ({ default: module.SampleJsonDetail })));
@@ -143,6 +144,7 @@ function App() {
                   <Route path="/json-to-kotlin" element={<JsonToKotlin />} />
                   <Route path="/json-to-php" element={<JsonToPhp />} />
                   <Route path="/glossary" element={<Glossary />} />
+                  <Route path="/cron-expression-generator" element={<CronGenerator />} />
                   <Route path="/sample-json" element={<SampleJsonHub />} />
                   <Route path="/sample-json/:slug" element={<SampleJsonDetail />} />
                   <Route path="/json-errors" element={<JsonErrorsHub />} />
