@@ -207,6 +207,12 @@ export const staticRoutes = [
     keywords: 'json glossary, json terms, what is json, json definitions, data format glossary',
   },
   {
+    path: '/cron-expression-generator',
+    title: 'Cron Expression Generator & Explainer | Free Online Crontab Tool',
+    description: 'Free online cron expression generator and explainer. Describe any crontab expression in plain English, see the next run times, and use ready-made presets.',
+    keywords: 'cron expression generator, cron generator, crontab generator, cron expression explained, cron parser, crontab guru, cron schedule',
+  },
+  {
     path: '/json-validator',
     title: 'JSON Validator - Validate JSON Online Free',
     description: 'Free online JSON validator. Check if your JSON is valid, find syntax errors, and get detailed error messages.',

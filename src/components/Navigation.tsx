@@ -49,6 +49,7 @@ export function Navigation() {
     { path: '/base64', label: 'Base64 Encode/Decode' },
     { path: '/uuid-generator', label: 'UUID Generator' },
     { path: '/timestamp-converter', label: 'Timestamp Converter' },
+    { path: '/cron-expression-generator', label: 'Cron Expression Generator' },
     { path: '/json-to-csharp', label: 'JSON to C#' },
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/json-to-go', label: 'JSON to Go' },

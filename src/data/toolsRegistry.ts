@@ -56,6 +56,7 @@ export const TOOLS: ToolInfo[] = [
   { slug: 'timestamp-converter', label: 'Timestamp Converter', family: 'util', desc: 'Unix epoch ↔ human date.' },
   { slug: 'jwt-decoder', label: 'JWT Decoder', family: 'util', desc: 'Decode a JWT header and payload.' },
   { slug: 'character-counter', label: 'Character Counter', family: 'util', desc: 'Count characters, words, and lines.' },
+  { slug: 'cron-expression-generator', label: 'Cron Expression Generator', family: 'util', desc: 'Explain cron expressions & next runs.' },
 ];
 
 const BY_SLUG = new Map(TOOLS.map((t) => [t.slug, t]));
