@@ -13,6 +13,9 @@ import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-kotlin';
+// prism-php depends on markup-templating — it MUST be imported first,
+// otherwise loading prism-php throws and breaks all syntax highlighting.
+import 'prismjs/components/prism-markup-templating';
 import 'prismjs/components/prism-php';
 
 export type CodeLang =
