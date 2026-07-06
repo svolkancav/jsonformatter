@@ -311,6 +311,9 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url><loc>https://jsonformater.com/blog/json-security-guide</loc><lastmod>2025-06-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://jsonformater.com/blog/dates-in-json</loc><lastmod>2025-06-12</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://jsonformater.com/blog/json-performance-at-scale</loc><lastmod>2025-06-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url>
     <loc>https://jsonformater.com/tutorials</loc>
     <lastmod>2024-01-10</lastmod>

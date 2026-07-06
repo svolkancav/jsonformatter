@@ -1107,5 +1107,205 @@ id,name,city
       ],
     },
     relatedArticles: ['parsing-large-json-files', 'json-vs-xml-yaml'],
+  },
+  'json-security-guide': {
+    id: 'json-security-guide',
+    title: 'JSON Security: Common Risks and How to Protect Your Application',
+    excerpt: 'JSON looks harmless, but parsing untrusted JSON opens the door to injection, prototype pollution, denial-of-service, and data leaks. A practical, in-depth guide to the real risks and the defenses that actually work.',
+    date: '2025-06-02',
+    readTime: '14 min read',
+    category: 'Advanced',
+    content: {
+      sections: [
+        {
+          title: 'Why JSON Security Deserves Attention',
+          content: 'JSON is just data, so it feels safe — but the moment your application parses JSON that came from outside (a client, a third-party API, a file upload, a webhook), you are executing decisions based on input you do not control. Attackers know this. Most JSON-related incidents are not about the format itself but about what your code does with the parsed result: trusting it, expanding it, or feeding it into something more powerful.\n\nThis guide walks through the concrete risks — injection, prototype pollution, denial-of-service, and information disclosure — and, more importantly, the defenses that actually hold up in production. The recurring theme is simple: never trust the shape or size of incoming JSON, and validate before you use it.',
+        },
+        {
+          title: 'Prototype Pollution',
+          content: 'Prototype pollution is the most JSON-specific vulnerability, and it is easy to introduce by accident. It happens when a parser or a deep-merge function copies attacker-controlled keys like __proto__, constructor, or prototype into an object, mutating the base Object prototype for the entire process. From there an attacker can influence unrelated code paths — turning a bad payload into privilege escalation or remote code execution in some frameworks.\n\nJSON.parse itself does not pollute prototypes, but naive code that merges parsed data into existing objects does. The fix is to reject dangerous keys and avoid unsafe recursive merges.',
+          code: `// DANGEROUS: a deep merge that copies __proto__
+merge(target, JSON.parse(untrustedInput));
+
+// SAFER: reject dangerous keys during parse
+const data = JSON.parse(untrustedInput, (key, value) => {
+  if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+    return undefined; // drop it
+  }
+  return value;
+});
+
+// Or create objects without a prototype for lookups
+const safe = Object.assign(Object.create(null), data);`,
+        },
+        {
+          title: 'JSON Injection and Downstream Injection',
+          content: 'JSON injection happens when you build JSON by string concatenation instead of serialization, letting attacker input break out of a string and inject new fields. The rule is absolute: never build JSON with string templates — always use a real serializer (JSON.stringify or your language equivalent), which escapes values correctly.\n\nThe more dangerous cousin is downstream injection: a value that is valid JSON but malicious when your code passes it, unescaped, into SQL, a shell command, an HTML page, or a NoSQL query. The parsed value is fine as data; the vulnerability is in how you use it.',
+          code: `// DANGEROUS: hand-built JSON
+const body = '{"name":"' + userName + '"}'; // userName can break out
+
+// CORRECT: let the serializer escape everything
+const body = JSON.stringify({ name: userName });
+
+// And escape/parameterize again at every downstream boundary
+db.query('SELECT * FROM users WHERE name = $1', [data.name]); // parameterized`,
+        },
+        {
+          title: 'Denial-of-Service: Big and Deep Payloads',
+          content: 'Because JSON.parse loads the entire input into memory at once, an attacker can send a payload designed to exhaust resources: a multi-gigabyte body, a deeply nested structure that blows the stack, or a huge array that consumes all available RAM. Even a "small" 20 KB payload can expand dramatically once deserialized into objects.\n\nDefenses are about limits, applied before and during parsing:',
+          code: `// 1. Cap request body size at the server/middleware level
+app.use(express.json({ limit: '100kb' }));
+
+// 2. Reject absurd nesting depth (many parsers/validators support this)
+// 3. Validate the schema so unexpected giant arrays are rejected early
+// 4. Stream very large legitimate inputs instead of buffering them`,
+        },
+        {
+          title: 'Validate Before You Trust: JSON Schema',
+          content: 'The single most effective defense is to validate incoming JSON against a strict schema before your code touches it. A schema rejects unexpected fields, wrong types, out-of-range numbers, and oversized arrays at the boundary — turning a whole class of attacks and bugs into a clean 400 response.\n\nUse a battle-tested validator (Ajv for JavaScript, and equivalents in every language), define required fields and types, set maxLength / maximum / maxItems constraints, and disallow additional properties. Treat validation as a security control, not just data hygiene.',
+          code: `const schema = {
+  type: 'object',
+  additionalProperties: false,          // reject unexpected fields
+  required: ['email', 'age'],
+  properties: {
+    email: { type: 'string', format: 'email', maxLength: 254 },
+    age:   { type: 'integer', minimum: 0, maximum: 130 },
+    tags:  { type: 'array', maxItems: 20, items: { type: 'string' } }
+  }
+};`,
+        },
+        {
+          title: 'Information Disclosure and Sensitive Data',
+          content: 'JSON responses leak data more often than people realize. Serializing a full database object can expose password hashes, internal IDs, tokens, or fields you never meant to return. Verbose error responses can reveal stack traces and library versions that help an attacker.\n\nAdopt an allow-list mindset for output: explicitly choose which fields to serialize rather than returning whole entities. Strip secrets, and return generic error messages to clients while logging the details server-side.',
+          code: `// DANGEROUS: returns everything, including passwordHash, internalNotes...
+res.json(user);
+
+// SAFER: serialize only what the client should see
+res.json({ id: user.id, name: user.name, email: user.email });`,
+        },
+        {
+          title: 'A Practical Checklist',
+          content: '• Never build JSON by string concatenation — always serialize.\n• Validate every incoming payload against a strict schema (required fields, types, maxLength/maxItems, no additional properties).\n• Cap request body size and reject excessive nesting depth.\n• Drop __proto__ / constructor / prototype keys and avoid unsafe deep merges.\n• Re-escape or parameterize values at every downstream boundary (SQL, shell, HTML, NoSQL).\n• Serialize responses with an explicit allow-list of fields; never dump full entities.\n• Return generic errors to clients; log details privately.\n\nNone of these are exotic — they are the difference between JSON as safe data and JSON as an attack surface. When you need to inspect a suspicious payload, do it in a client-side tool like our formatter and validator so the data never leaves your machine.',
+        },
+      ],
+    },
+    relatedArticles: ['json-schema-validation-guide', 'common-json-errors'],
+  },
+  'dates-in-json': {
+    id: 'dates-in-json',
+    title: 'Working with Dates and Times in JSON: The Complete Guide',
+    excerpt: 'JSON has no date type, which is the source of endless bugs. A thorough guide to representing dates and times in JSON correctly — ISO 8601 vs Unix timestamps, time zones, and the pitfalls that bite everyone.',
+    date: '2025-06-12',
+    readTime: '12 min read',
+    category: 'Best Practices',
+    content: {
+      sections: [
+        {
+          title: 'The Root of the Problem: JSON Has No Date Type',
+          content: 'JSON defines exactly six value types — string, number, boolean, null, object, and array. There is no date. Every date you have ever seen in JSON is really a string or a number by convention, and every system on both ends must agree on that convention. When they do not, you get off-by-hours bugs, dates that shift when they cross a time zone, and values that sort incorrectly.\n\nThis guide covers the two mainstream conventions — ISO 8601 strings and Unix timestamps — when to use each, and the time-zone traps that cause the most production incidents.',
+        },
+        {
+          title: 'Option 1: ISO 8601 Strings (Recommended for APIs)',
+          content: 'The most interoperable choice is an ISO 8601 string in UTC, ending with Z (the "Zulu"/UTC designator). It is human-readable, unambiguous, sorts correctly as text, and is parsed natively by virtually every language. For most APIs, this is the right default.',
+          code: `{
+  "createdAt": "2026-07-06T14:30:00Z",
+  "updatedAt": "2026-07-06T14:30:00.123Z"
+}
+
+// Always store/transmit in UTC, convert to local time only for display.
+new Date("2026-07-06T14:30:00Z"); // parsed reliably everywhere`,
+        },
+        {
+          title: 'Option 2: Unix Timestamps (Compact and Unambiguous)',
+          content: 'A Unix timestamp — the number of seconds (or milliseconds) since 1 January 1970 UTC — is a single integer with no formatting or time-zone ambiguity at all. It is compact, trivially comparable, and common in tokens (JWT exp/iat) and event pipelines. The main downsides are that it is not human-readable and that you must be crystal clear about seconds vs. milliseconds.',
+          code: `{
+  "exp": 1783410231,      // seconds — 10 digits (common in JWT, Unix tools)
+  "eventTime": 1783410231000  // milliseconds — 13 digits (JavaScript Date)
+}
+
+// Seconds -> Date in JS (multiply by 1000):
+new Date(1783410231 * 1000);`,
+        },
+        {
+          title: 'The Time Zone Trap',
+          content: 'Most date bugs come from ambiguous time zones. A value like "2026-07-06 14:30:00" with no offset is meaningless without knowing which zone it refers to — and different systems will guess differently. The fix is a discipline, not a library: store and transmit instants in UTC, include the offset or Z designator, and convert to the user’s local time only at the moment you display it.\n\nAlso beware of "floating" dates like a birthday (2026-07-06) that should NOT be converted across zones — represent those as a plain date string and treat them as date-only, never as an instant at midnight UTC.',
+        },
+        {
+          title: 'Durations, Dates, and Times',
+          content: 'ISO 8601 covers more than instants. A date-only value is 2026-07-06. A time-only value is 14:30:00. A duration uses the P format — P1Y2M10DT2H30M means one year, two months, ten days, two hours, thirty minutes. Using these standard forms keeps your JSON self-describing and avoids inventing custom formats that the other side has to reverse-engineer.',
+          code: `{
+  "date": "2026-07-06",          // date only, no time/zone
+  "time": "14:30:00",            // time only
+  "timeout": "PT30M",            // ISO 8601 duration: 30 minutes
+  "subscription": "P1Y"          // one year
+}`,
+        },
+        {
+          title: 'Common Pitfalls and How to Avoid Them',
+          content: '• Sending local time without an offset — always include Z or the offset.\n• Mixing seconds and milliseconds — pick one and document it; 10 digits is seconds, 13 is milliseconds.\n• Relying on Date.toString() formats — they are locale- and engine-dependent; use toISOString().\n• Treating date-only values as UTC midnight — this shifts the day backward for users west of UTC.\n• Assuming lexical sort equals chronological sort — it only works for ISO 8601 strings in the same zone, or for numeric timestamps.\n• Losing sub-second precision when you need it — include milliseconds in the ISO string.',
+        },
+        {
+          title: 'Best Practices Summary',
+          content: 'For APIs, default to ISO 8601 strings in UTC (2026-07-06T14:30:00Z) — readable, sortable, unambiguous. For tokens, high-volume events, or when size matters, use Unix timestamps and clearly document seconds vs. milliseconds. Always store instants in UTC, convert to local only for display, and use date-only strings for calendar dates that must not shift across zones.\n\nWhen you receive a raw timestamp and need to see what it means, paste it into our Unix Timestamp Converter to get the human-readable date, or decode a JWT to read its exp/iat claims as real dates.',
+        },
+      ],
+    },
+    relatedArticles: ['json-rest-api-design', 'json-best-practices'],
+  },
+  'json-performance-at-scale': {
+    id: 'json-performance-at-scale',
+    title: 'JSON at Scale: Performance, Size, and Parsing Speed',
+    excerpt: 'When JSON goes from kilobytes to gigabytes, naive code falls over. An in-depth look at what makes JSON slow, how to measure it, and the techniques — streaming, NDJSON, minification, and alternatives — that keep it fast at scale.',
+    date: '2025-06-22',
+    readTime: '13 min read',
+    category: 'Advanced',
+    content: {
+      sections: [
+        {
+          title: 'Where JSON Performance Actually Goes',
+          content: 'For most applications JSON is effectively free — a few kilobytes parse in microseconds. Performance only becomes a topic at scale: large payloads, high request rates, or memory-constrained environments. Before optimizing, it helps to know where the cost really is. There are three main areas: the bytes on the wire (network and storage), the CPU spent parsing and serializing, and the memory used to hold the parsed structure.\n\nCrucially, the parsed, in-memory representation is often several times larger than the JSON text, because every object, string, and number becomes a full language object with overhead. A 100 MB JSON file can need several hundred megabytes of RAM once parsed.',
+        },
+        {
+          title: 'The Cost of JSON.parse and Serialization',
+          content: 'JSON.parse and JSON.stringify are highly optimized in modern engines, but they are synchronous and all-or-nothing: they block the thread and require the entire input (and output) in memory at once. On a server, a big parse blocks the event loop and delays every other request; on the client, it can freeze the UI.\n\nThe first rule of JSON performance is therefore: keep payloads small and parse off the hot path. Move heavy parsing to a worker thread, and never parse more than you need.',
+          code: `// Blocking: a large synchronous parse stalls everything
+const data = JSON.parse(hugeString);
+
+// Better on the client: parse in a Web Worker so the UI stays responsive
+// Better on the server: stream (below) instead of buffering the whole body`,
+        },
+        {
+          title: 'Reduce Bytes: Minification and Compression',
+          content: 'Two cheap wins shrink the payload. Minifying removes formatting whitespace, cutting 15-30% off the raw size for free. On top of that, HTTP compression (gzip or brotli) typically reduces JSON by 70-90% because JSON is highly repetitive — the same keys appear in every object. Always enable compression on JSON endpoints; it is usually the single biggest transfer win.\n\nFor data with many repeated keys, structural changes help even more: return columnar data (arrays of values with a separate header) instead of an array of objects, so keys are not repeated thousands of times.',
+          code: `// Repetitive: keys repeated for every row
+[{"id":1,"name":"A"},{"id":2,"name":"B"}]
+
+// Columnar: keys once, values compact (great with compression)
+{ "columns": ["id","name"], "rows": [[1,"A"],[2,"B"]] }`,
+        },
+        {
+          title: 'Stream Instead of Buffer: NDJSON',
+          content: 'The biggest scalability unlock is to stop treating a large dataset as one JSON value. Newline-delimited JSON (NDJSON) puts one object per line, so you can read, parse, and process records one at a time with constant memory — no matter how many records there are. This is how log pipelines, data exports, and ML training sets handle gigabytes without exhausting RAM.\n\nStreaming parsers (like stream-json) achieve the same for a regular JSON array, emitting each element as it is read rather than building the whole array first.',
+          code: `// NDJSON: process millions of records in constant memory
+const rl = readline.createInterface({ input: fs.createReadStream('data.ndjson') });
+for await (const line of rl) {
+  if (line.trim()) handle(JSON.parse(line));
+}`,
+        },
+        {
+          title: 'Send Less: Pagination and Field Selection',
+          content: 'The fastest JSON is the JSON you never send. Two API-level techniques matter most at scale: pagination (return a page of results with a cursor, never an unbounded array) and field selection (let clients request only the fields they need, GraphQL-style or via a fields parameter). Both cut payload size, parse time, and memory simultaneously, and they protect your server from a single client requesting everything at once.',
+        },
+        {
+          title: 'When to Consider Alternatives',
+          content: 'JSON is the right default, but at extreme scale other formats earn their place. Binary formats like Protocol Buffers, MessagePack, or Avro are smaller and faster to parse because they skip text encoding and repeated keys, at the cost of human readability and tooling. For LLM prompts, token-oriented formats like TOON represent the same data in fewer tokens, cutting cost and context usage. The trade-off is always the same: you give up JSON’s universality and readability for size or speed, so switch only where you have measured a real bottleneck.',
+        },
+        {
+          title: 'Measure, Then Optimize',
+          content: 'Every optimization here has a cost in complexity, so do not apply them blindly. Measure first: log payload sizes, time your parse/serialize calls, and watch memory under realistic load. Optimize the one number that is actually hurting you — usually payload size (fix with compression + pagination) or main-thread blocking (fix with streaming or a worker). Most applications never need more than small payloads, gzip, and pagination.\n\nWhen you are inspecting or shrinking a payload by hand, our JSON formatter can minify it and our JSON to TOON converter shows how much a token-oriented representation would save.',
+        },
+      ],
+    },
+    relatedArticles: ['parsing-large-json-files', 'minify-json-guide'],
   }
 };
