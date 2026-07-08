@@ -126,7 +126,7 @@ export function Footer() {
         <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-600 dark:text-gray-400 text-center md:text-left">
-              © 2026 JSON Formatter. All rights reserved. Professional JSON formatter and C# class generator tool.
+              © 2026 JSON Formatter. All rights reserved. Free online JSON toolkit — format, view, convert, and share JSON, all in your browser.
             </p>
 
             <div className="flex items-center gap-4">
