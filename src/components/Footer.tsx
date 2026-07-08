@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { useState } from 'react';
+import { ProductHuntBadge } from './ProductHuntBadge';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -129,6 +130,7 @@ export function Footer() {
             </p>
 
             <div className="flex items-center gap-4">
+              <ProductHuntBadge />
               <a
                 href="https://github.com/svolkancav"
                 target="_blank"
