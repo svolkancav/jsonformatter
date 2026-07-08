@@ -3,6 +3,36 @@ import { Upload, Download, FileSpreadsheet, AlertCircle, CheckCircle2, Copy } fr
 import * as XLSX from 'xlsx';
 import { CodeEditor } from './CodeHighlight';
 
+// Flattens one record into a single flat row for a spreadsheet:
+//  - nested objects  -> dotted column names ("address.city")
+//  - arrays of scalars -> joined into one cell ("a, b, c")
+//  - arrays of objects -> indexed + flattened ("items.0.sku", "items.1.sku")
+function flattenRow(value: unknown, prefix = '', out: Record<string, unknown> = {}): Record<string, unknown> {
+  if (value === null || value === undefined) {
+    out[prefix] = value ?? '';
+    return out;
+  }
+  if (Array.isArray(value)) {
+    const allScalar = value.every((v) => v === null || typeof v !== 'object');
+    if (allScalar) {
+      out[prefix] = value.join(', ');
+    } else {
+      value.forEach((v, i) => flattenRow(v, prefix ? `${prefix}.${i}` : String(i), out));
+    }
+    return out;
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>);
+    if (entries.length === 0 && prefix) out[prefix] = '';
+    for (const [k, v] of entries) {
+      flattenRow(v, prefix ? `${prefix}.${k}` : k, out);
+    }
+    return out;
+  }
+  out[prefix] = value;
+  return out;
+}
+
 interface JsonToExcelConverterProps {
   initialJson?: string;
 }
@@ -44,9 +74,15 @@ export function JsonToExcelConverter({ initialJson = '' }: JsonToExcelConverterP
         return;
       }
 
+      // Flatten nested objects/arrays so deep structures map to real columns
+      // (e.g. "address.city", "items.0.sku") instead of dumping [object Object].
+      const flatRows = dataArray.map((row) =>
+        row && typeof row === 'object' && !Array.isArray(row) ? flattenRow(row) : { value: row },
+      );
+
       // Create workbook and worksheet
       const workbook = XLSX.utils.book_new();
-      const worksheet = XLSX.utils.json_to_sheet(dataArray);
+      const worksheet = XLSX.utils.json_to_sheet(flatRows);
       
       // Add worksheet to workbook
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
@@ -250,7 +286,8 @@ export function JsonToExcelConverter({ initialJson = '' }: JsonToExcelConverterP
               <li>• JSON objects will become rows in Excel</li>
               <li>• Object keys will become column headers</li>
               <li>• Arrays of objects work best for tabular data</li>
-              <li>• Complex nested objects will be flattened</li>
+              <li>• Nested objects are flattened into dotted columns (e.g. address.city)</li>
+              <li>• Arrays of objects are expanded (e.g. items.0.sku); scalar arrays are joined into one cell</li>
             </ul>
           </div>
         </div>
