@@ -4,6 +4,7 @@ import { Menu, X, Code2, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { InstallPWA } from './InstallPWA';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { ProductHuntBadge } from './ProductHuntBadge';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -142,6 +143,7 @@ export function Navigation() {
             </div>
 
             <div className="ml-2 flex items-center gap-2">
+              <ProductHuntBadge width={150} className="hidden lg:block" />
               <InstallPWA />
               <LanguageSwitcher />
               <div className="w-10 h-10 flex items-center justify-center">
