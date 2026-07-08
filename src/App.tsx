@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Navigation } from './components/Navigation';
+import { ProductHuntBar } from './components/ProductHuntBar';
 import { Footer } from './components/Footer';
 import { SEO } from './components/SEO';
 import { CookieConsent } from './components/CookieConsent';
@@ -94,6 +95,7 @@ function App() {
       <AdSense />
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors flex flex-col">
         <Navigation />
+        <ProductHuntBar />
         <Breadcrumbs />
         <main className="flex-1">
           <Suspense fallback={
