@@ -7,18 +7,26 @@ const PH_POST_URL = 'https://www.producthunt.com/products/json-formatter-blob-vi
 
 const ALT = 'JSON Formatter Blob Viewer - View, share & convert JSON — 100% in your browser | Product Hunt';
 
-export function ProductHuntBadge() {
+interface ProductHuntBadgeProps {
+  /** Rendered badge width in px (height scales automatically). */
+  width?: number;
+  /** Extra classes on the wrapping link (e.g. responsive hiding). */
+  className?: string;
+}
+
+export function ProductHuntBadge({ width = 200, className = '' }: ProductHuntBadgeProps) {
   if (!PH_POST_ID || !PH_POST_URL) return null;
 
   const href = `${PH_POST_URL}?utm_source=badge-featured&utm_medium=badge&utm_campaign=badge`;
   const img = (theme: 'light' | 'dark') =>
     `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=${PH_POST_ID}&theme=${theme}`;
+  const style = { width, height: 'auto' as const };
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Featured on Product Hunt">
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Featured on Product Hunt" className={className}>
       {/* Light badge in light mode, dark badge in dark mode */}
-      <img src={img('light')} alt={ALT} width={200} height={43} style={{ width: 200, height: 'auto' }} className="block dark:hidden" loading="lazy" />
-      <img src={img('dark')} alt={ALT} width={200} height={43} style={{ width: 200, height: 'auto' }} className="hidden dark:block" loading="lazy" />
+      <img src={img('light')} alt={ALT} width={width} height={43} style={style} className="block dark:hidden" loading="lazy" />
+      <img src={img('dark')} alt={ALT} width={width} height={43} style={style} className="hidden dark:block" loading="lazy" />
     </a>
   );
 }
