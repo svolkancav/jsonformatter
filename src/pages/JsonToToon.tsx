@@ -47,7 +47,7 @@ export function JsonToToonPage() {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold mb-2">JSON:</p>
-                <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-sm">
+                <pre className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
 {`{
   "users": [
     { "id": 1, "name": "Alice", "role": "admin" },
@@ -58,7 +58,7 @@ export function JsonToToonPage() {
               </div>
               <div>
                 <p className="font-semibold mb-2">TOON:</p>
-                <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-sm">
+                <pre className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
 {`users[2]{id,name,role}:
   1,Alice,admin
   2,Bob,user`}

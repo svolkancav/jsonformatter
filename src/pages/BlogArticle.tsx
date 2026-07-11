@@ -60,7 +60,7 @@ export function BlogArticle() {
               {section.content}
             </div>
             {section.code && (
-              <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+              <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 font-mono text-sm overflow-x-auto">
                 <pre>{section.code}</pre>
               </div>
             )}
@@ -73,7 +73,7 @@ export function BlogArticle() {
                   {subsection.content}
                 </div>
                 {subsection.code && (
-                  <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                  <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 font-mono text-sm overflow-x-auto">
                     <pre>{subsection.code}</pre>
                   </div>
                 )}
