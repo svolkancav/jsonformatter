@@ -204,7 +204,7 @@ export function JsonToCSharp() {
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   Convert a basic user JSON object into a C# class. This is the most common use case for API responses.
                 </p>
-                <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 mb-3">
+                <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 mb-3">
                   <pre className="text-sm overflow-x-auto">{`{
   "id": 12345,
   "username": "johndoe",
@@ -232,7 +232,7 @@ export function JsonToCSharp() {
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   Handle complex JSON with nested objects. The tool automatically creates separate classes for nested structures.
                 </p>
-                <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 mb-3">
+                <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 mb-3">
                   <pre className="text-sm overflow-x-auto">{`{
   "user": {
     "name": "John Doe",
@@ -266,7 +266,7 @@ export function JsonToCSharp() {
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   Convert JSON arrays to C# List properties. Perfect for working with collections of data.
                 </p>
-                <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 mb-3">
+                <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 mb-3">
                   <pre className="text-sm overflow-x-auto">{`{
   "products": [
     {

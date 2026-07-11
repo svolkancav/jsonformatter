@@ -242,7 +242,7 @@ export function Home() {
                 JSON's simplicity extends to its syntax. The entire specification fits on a single page, making it easy to implement parsers and generators. This simplicity has contributed significantly to its widespread adoption across the software development industry. Today, JSON is the backbone of modern web development, powering REST APIs, NoSQL databases, and configuration systems.
               </p>
 
-              <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 mt-6">
+              <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 mt-6">
                 <p className="font-mono text-sm mb-2 text-gray-500 dark:text-gray-400">Example:</p>
                 <pre className="font-mono text-sm overflow-x-auto">{`{
   "name": "John Doe",
@@ -365,7 +365,7 @@ export function Home() {
                 </div>
               </div>
 
-              <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 mt-6">
+              <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg p-4 mt-6">
                 <p className="font-mono text-sm mb-2 text-gray-500 dark:text-gray-400">Valid JSON Example:</p>
                 <pre className="font-mono text-sm overflow-x-auto">{`{
   "user": {

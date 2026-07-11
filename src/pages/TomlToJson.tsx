@@ -45,7 +45,7 @@ export function TomlToJsonPage() {
               <li>Package manager configuration files</li>
             </ul>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Example TOML:</h3>
-            <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto">
+            <pre className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-4 rounded-lg overflow-x-auto">
 {`[package]
 name = "my-project"
 version = "1.0.0"
