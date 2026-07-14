@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { Copy, CheckCircle2, Wand2, Share2, Download } from 'lucide-react';
 import { ShareModal } from './ShareModal';
 import { CodeEditor, CodeBlock } from './CodeHighlight';
+import { recordHistory } from '../utils/history';
+import { SendToTools } from './SendToTools';
 
 export function JsonFormatter() {
   const [jsonInput, setJsonInput] = useState('');
@@ -39,6 +41,8 @@ export function JsonFormatter() {
         characterCount: formattedJson.length,
         size: size < 1024 ? `${size} B` : `${(size / 1024).toFixed(2)} KB`,
       });
+
+      recordHistory(location.pathname, value);
     } catch {
       setError('Invalid JSON syntax. Please check your input.');
       setFormatted('');
@@ -232,6 +236,16 @@ export function JsonFormatter() {
                 </button>
               </div>
               <CodeBlock code={formatted} language="json" minHeight="28rem" />
+              <SendToTools
+                value={formatted}
+                label="Convert to"
+                targets={[
+                  { path: '/json-to-csv', label: 'CSV' },
+                  { path: '/json-to-yaml', label: 'YAML' },
+                  { path: '/json-to-xml', label: 'XML' },
+                  { path: '/json-diff', label: 'Diff' },
+                ]}
+              />
             </div>
 
             <div className="space-y-3">

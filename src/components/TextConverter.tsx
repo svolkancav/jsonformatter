@@ -1,6 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Upload, Download, FileText, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
 import { CodeEditor, CodeBlock, type CodeLang } from './CodeHighlight';
+import { recordHistory } from '../utils/history';
+import { SendToTools } from './SendToTools';
 
 interface TextConverterProps {
   inputLabel: string;
@@ -38,6 +41,7 @@ export function TextConverter({
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const location = useLocation();
 
   const run = useCallback(
     (value: string) => {
@@ -50,13 +54,24 @@ export function TextConverter({
       }
       try {
         setOutput(convert(value));
+        recordHistory(location.pathname, value);
       } catch (err) {
         setOutput('');
         setError(err instanceof Error ? err.message : 'Conversion failed.');
       }
     },
-    [convert],
+    [convert, location.pathname],
   );
+
+  // Prefill + auto-run when arriving from history or another tool ("Send to").
+  useEffect(() => {
+    const prefill = (location.state as { prefill?: string } | null)?.prefill;
+    if (prefill) {
+      setInput(prefill);
+      run(prefill);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -207,6 +222,16 @@ export function TextConverter({
             </div>
           </div>
           <CodeBlock code={output} language={outputLanguage} minHeight="30rem" />
+          {outputLanguage === 'json' && (
+            <SendToTools
+              value={output}
+              targets={[
+                { path: '/json-formatter', label: 'Formatter' },
+                { path: '/json-viewer', label: 'Viewer' },
+                { path: '/json-diff', label: 'Diff' },
+              ]}
+            />
+          )}
         </div>
       )}
     </div>
