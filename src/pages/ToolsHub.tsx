@@ -1,12 +1,23 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { AdSlot } from '../components/AdSlot';
+import { FavoriteButton } from '../components/FavoriteButton';
+import { getFavorites } from '../utils/favorites';
 import { TOOLS, FAMILY_LABELS, type ToolFamily } from '../data/toolsRegistry';
 
 const ORDER: ToolFamily[] = ['format', 'convert', 'codegen', 'util'];
 
 export function ToolsHub() {
+  const [favSlugs, setFavSlugs] = useState<string[]>([]);
+  useEffect(() => {
+    const load = () => setFavSlugs(getFavorites());
+    load();
+    window.addEventListener('jf-favorites-changed', load);
+    return () => window.removeEventListener('jf-favorites-changed', load);
+  }, []);
+  const pinned = favSlugs.map((s) => TOOLS.find((t) => t.slug === s)).filter(Boolean);
   return (
     <>
       <SEO
@@ -27,6 +38,36 @@ export function ToolsHub() {
 
         <AdSlot slotId="tools_hub_header" format="horizontal" />
 
+        {pinned.length > 0 && (
+          <section className="mt-8">
+            <div className="mb-4">
+              <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white">
+                <Star className="w-5 h-5 text-amber-500" fill="currentColor" /> Pinned
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400">Your favorite tools, one click away.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {pinned.map((tool) => (
+                <div
+                  key={tool!.slug}
+                  className="relative bg-white dark:bg-gray-800 rounded-xl border border-amber-300/60 dark:border-amber-500/30 p-5 shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <Link
+                      to={`/${tool!.slug}`}
+                      className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >
+                      {tool!.label}
+                    </Link>
+                    <FavoriteButton slug={tool!.slug} />
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{tool!.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <div className="space-y-12 mt-8">
           {ORDER.map((family) => {
             const tools = TOOLS.filter((t) => t.family === family);
@@ -39,19 +80,23 @@ export function ToolsHub() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {tools.map((tool) => (
-                    <Link
+                    <div
                       key={tool.slug}
-                      to={`/${tool.slug}`}
-                      className="group bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-500 transition-all"
+                      className="group relative bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-500 transition-all"
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      <div className="flex items-center justify-between mb-1 gap-2">
+                        <Link
+                          to={`/${tool.slug}`}
+                          className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+                        >
                           {tool.label}
-                        </h3>
-                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+                        <FavoriteButton slug={tool.slug} />
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{tool.desc}</p>
-                    </Link>
+                      <Link to={`/${tool.slug}`} className="block">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{tool.desc}</p>
+                      </Link>
+                    </div>
                   ))}
                 </div>
               </section>

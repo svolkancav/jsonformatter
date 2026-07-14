@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { toolContent, type ToolContentData } from '../data/toolContent';
 import { RelatedTools } from './RelatedTools';
+import { FavoriteButton } from './FavoriteButton';
 
 interface ToolContentProps {
   slug: string;
@@ -20,6 +21,11 @@ export function ToolContent({ slug }: ToolContentProps) {
 
   return (
     <div className="mt-16 space-y-12">
+      <div className="flex items-center justify-end gap-1 -mb-6">
+        <span className="text-sm text-gray-500 dark:text-gray-400">Pin this tool</span>
+        <FavoriteButton slug={slug} />
+      </div>
+
       {/* Overview */}
       <section className="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
