@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Code2, Copy, Download, CheckCircle } from 'lucide-react';
 import { CodeEditor, CodeBlock, type CodeLang } from './CodeHighlight';
+import { recordHistory } from '../utils/history';
 
 interface CodeGenToolProps {
   /** Output language for syntax highlighting. */
@@ -33,6 +35,8 @@ export function CodeGenTool({
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
+  const location = useLocation();
+
   const handleConvert = () => {
     if (!input.trim()) {
       setError('Please enter JSON data.');
@@ -41,11 +45,19 @@ export function CodeGenTool({
     try {
       setOutput(generate(input, rootName || defaultRoot));
       setError('');
+      recordHistory(location.pathname, input);
     } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }
   };
+
+  // Prefill when arriving from history or another tool ("Send to").
+  useEffect(() => {
+    const prefill = (location.state as { prefill?: string } | null)?.prefill;
+    if (prefill) setInput(prefill);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCopy = async () => {
     if (!output) return;
