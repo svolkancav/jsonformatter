@@ -9,6 +9,7 @@ import { SEO } from '../components/SEO';
 import { AdSlot } from '../components/AdSlot';
 import { RecentHistory } from '../components/RecentHistory';
 import { FavoriteTools } from '../components/FavoriteTools';
+import { ToolSearch } from '../components/ToolSearch';
 
 export function Home() {
   const [activeTool, setActiveTool] = useState<ToolType>('formatter');
@@ -76,6 +77,7 @@ export function Home() {
       />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        <ToolSearch />
         <header className="text-center mb-4">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             {activeTool === 'formatter' && 'JSON Formatter & Validator'}
