@@ -54,24 +54,53 @@ export function ToolSearch() {
     }
   };
 
+  const popular = ['json-formatter', 'jwt-decoder', 'json-to-csv', 'json-diff', 'base64'];
+
   return (
-    <div className="max-w-2xl mx-auto mb-8 relative" ref={ref}>
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setOpen(true);
-          }}
-          onFocus={() => setOpen(true)}
-          onKeyDown={onKeyDown}
-          placeholder="Search 35+ tools — format, convert, decode, generate…"
-          aria-label="Search tools"
-          className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+    <div className="max-w-3xl mx-auto mb-10 relative" ref={ref}>
+      {/* Gradient ring wrapper makes the search bar the clear focal point */}
+      <div
+        className={`rounded-2xl p-[2px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 transition-shadow ${
+          open ? 'shadow-2xl shadow-blue-500/20' : 'shadow-xl shadow-blue-500/10'
+        }`}
+      >
+        <div className="relative bg-white dark:bg-gray-800 rounded-[14px]">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-blue-500" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+            }}
+            onFocus={() => setOpen(true)}
+            onKeyDown={onKeyDown}
+            placeholder="Search 35+ JSON tools — format, convert, decode, generate…"
+            aria-label="Search tools"
+            className="w-full pl-14 pr-4 py-5 text-lg md:text-xl bg-transparent rounded-[14px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+          />
+        </div>
       </div>
+
+      {/* Popular quick links */}
+      {!query && (
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <span className="text-xs text-gray-500 dark:text-gray-400">Popular:</span>
+          {popular.map((slug) => {
+            const tool = TOOLS.find((t) => t.slug === slug);
+            if (!tool) return null;
+            return (
+              <button
+                key={slug}
+                onClick={() => go(slug)}
+                className="px-3 py-1 text-xs rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {tool.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {open && results.length > 0 && (
         <div className="absolute z-40 left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden text-left">
