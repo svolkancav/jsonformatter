@@ -1,5 +1,8 @@
 # 🚀 JSON Formatter & Converter Tool
 
+[![Deploy](https://github.com/svolkancav/jsonformatter/actions/workflows/deploy.yml/badge.svg)](https://github.com/svolkancav/jsonformatter/actions/workflows/deploy.yml) [![License: MIT](https://img.shields.io/github/license/svolkancav/jsonformatter)](LICENSE)
+
+
 **Live Site:** [jsonformater.com](https://jsonformater.com/)
 
 A powerful, free online tool for formatting, validating, and converting JSON data with additional utilities for Excel, CSV, XML, C#, and TypeScript conversions.
