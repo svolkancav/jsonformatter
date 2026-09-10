@@ -1,0 +1,70 @@
+# Production stack for jsonformater.com.
+#
+# nginx_proxy is the shared entrypoint for every site on this host, so its
+# config (./nginx/nginx.conf) and TLS certs stay server-managed and untracked —
+# they carry other projects' server blocks.
+#
+# Blob storage runs here rather than on Supabase: jsonformatter_db holds the
+# data, jsonformatter_api is the only client, and nginx routes /api to it.
+# JSONFORMATTER_DB_PASSWORD comes from /opt/jsonformatter/.env (untracked).
+
+services:
+  jsonformatter_app:
+    container_name: jsonformatter_app
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+
+  jsonformatter_db:
+    image: postgres:17-alpine
+    container_name: jsonformatter_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jsonformatter
+      POSTGRES_USER: jsonformatter
+      POSTGRES_PASSWORD: ${JSONFORMATTER_DB_PASSWORD:?JSONFORMATTER_DB_PASSWORD is required}
+    volumes:
+      - jsonformatter_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jsonformatter -d jsonformatter"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  jsonformatter_api:
+    container_name: jsonformatter_api
+    build: ./server
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://jsonformatter:${JSONFORMATTER_DB_PASSWORD:?JSONFORMATTER_DB_PASSWORD is required}@jsonformatter_db:5432/jsonformatter
+      PORT: "8080"
+    expose:
+      - "8080"
+    depends_on:
+      jsonformatter_db:
+        condition: service_healthy
+
+  nginx_proxy:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - default
+      - web
+    depends_on:
+      - jsonformatter_app
+      - jsonformatter_api
+
+networks:
+  web:
+    external: true
+
+volumes:
+  jsonformatter_db_data:

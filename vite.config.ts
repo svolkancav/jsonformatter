@@ -28,7 +28,6 @@ export default defineConfig({
           // Vendor chunks
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          supabase: ['@supabase/supabase-js'],
           icons: ['lucide-react'],
           excel: ['xlsx', 'papaparse'],
         },

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Copy, Download, Share2, Clock, Eye, CheckCircle, Code2, AlertCircle } from 'lucide-react';
-import { getJsonBlob, getRecentBlobs, type JsonBlob } from '../lib/supabase';
+import { getJsonBlob, getRecentBlobs, type JsonBlob } from '../lib/blobs';
 import { SEO } from '../components/SEO';
 import { ShareModal } from '../components/ShareModal';
 

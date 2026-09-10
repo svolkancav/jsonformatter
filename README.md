@@ -59,11 +59,11 @@ A powerful, free online tool for formatting, validating, and converting JSON dat
 ### Libraries & Tools
 - **xlsx** - Excel file parsing and generation
 - **papaparse** - CSV parsing
-- **@supabase/supabase-js** - Backend integration
 - **@emailjs/browser** - Contact form email service
 
 ### Backend & Infrastructure
-- **Supabase** - Backend as a Service (authentication, database, storage)
+- **PostgreSQL 17** - Blob storage, self-hosted (`jsonformatter_db` container)
+- **Node.js + Express** - Blob API, self-hosted (`server/`, `jsonformatter_api` container)
 - **n8n** - Workflow automation for contact forms and notifications
 - **Docker** - Containerization
 - **Nginx Proxy Manager** - Reverse proxy and SSL management
@@ -76,7 +76,6 @@ A powerful, free online tool for formatting, validating, and converting JSON dat
 ### Prerequisites
 - Node.js 18+ and npm/yarn
 - Docker and Docker Compose (for production deployment)
-- Supabase account (for backend features)
 - n8n instance (for workflow automation)
 
 ### Local Development
@@ -95,8 +94,9 @@ npm install
 3. **Set up environment variables**
 Create a `.env.local` file in the root directory:
 ```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+# Optional. Only needed when the blob API is not on the same origin as the
+# app - in production nginx proxies /api, so leave this unset.
+VITE_API_BASE_URL=http://localhost:8080
 ```
 
 4. **Start development server**
@@ -133,8 +133,6 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
-      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
     networks:
       - proxy-network
     labels:
@@ -224,12 +222,22 @@ docker-compose up -d
 
 ## 🔧 Configuration
 
-### Supabase Setup
+### Blob Storage (Save & Share)
 
-1. Create a new Supabase project
-2. Set up tables for analytics or user data (optional)
-3. Get your project URL and anon key
-4. Add to environment variables
+Saved JSON blobs live in a PostgreSQL container on the app server; the
+`server/` Express service is the only thing that talks to it, and nginx
+proxies `/api` to that service. There is no third-party backend.
+
+1. Put a database password in `/opt/jsonformatter/.env` (untracked):
+   ```env
+   JSONFORMATTER_DB_PASSWORD=<strong-random-password>
+   ```
+2. Bring the stack up: `docker compose up -d --build`
+3. The API applies its schema on boot, so no migration step is needed.
+4. Check it: `curl -s http://127.0.0.1/api/health` -> `{"status":"ok"}`
+
+Endpoints: `POST /api/blobs`, `GET /api/blobs/:shortId`,
+`GET /api/blobs/recent|popular|stats`, `GET /api/blobs/lookup?ids=a,b`.
 
 ### n8n Workflow Automation
 
@@ -241,7 +249,7 @@ docker-compose up -d
 Example n8n workflow:
 - Trigger: Webhook (from contact form)
 - Action 1: Send email notification
-- Action 2: Store in Supabase (optional)
+- Action 2: Store the submission (optional)
 - Action 3: Send confirmation email to user
 
 ### Google Analytics
@@ -411,7 +419,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [React](https://reactjs.org/) - UI framework
 - [Vite](https://vitejs.dev/) - Build tool
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
-- [Supabase](https://supabase.com/) - Backend platform
+- [PostgreSQL](https://www.postgresql.org/) - Blob storage
 - [n8n](https://n8n.io/) - Workflow automation
 - [SheetJS](https://sheetjs.com/) - Excel file handling
 - [PapaParse](https://www.papaparse.com/) - CSV parsing

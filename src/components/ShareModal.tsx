@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Copy, CheckCircle, Share2, Download, Clock } from 'lucide-react';
-import { saveJsonBlob } from '../lib/supabase';
+import { saveJsonBlob } from '../lib/blobs';
 
 interface ShareModalProps {
   jsonContent: string;
