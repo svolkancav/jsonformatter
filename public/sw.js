@@ -1,7 +1,7 @@
 // Minimal service worker: enables PWA install and speeds up repeat visits
 // without risking stale content. HTML is always network-first (so prerendered
 // pages stay fresh); hashed /assets/ are cached immutably.
-const CACHE = 'jf-cache-v1';
+const CACHE = 'jf-cache-v2';
 const OFFLINE_URL = '/';
 
 self.addEventListener('install', (event) => {
@@ -42,7 +42,15 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Page navigations: network-first, fall back to the cached shell offline.
+  // The explicit revalidation matters — a plain fetch() may be answered from
+  // the browser's HTTP cache, and a stale document names old hashed assets
+  // that are themselves cached immutably, stranding the visitor on an old
+  // build. Asking for a revalidation is a cheap 304 when nothing changed.
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match(OFFLINE_URL)));
+    event.respondWith(
+      fetch(request, { cache: 'no-cache' })
+        .catch(() => fetch(request))
+        .catch(() => caches.match(OFFLINE_URL)),
+    );
   }
 });
