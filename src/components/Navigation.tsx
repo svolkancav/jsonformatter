@@ -47,6 +47,7 @@ export function Navigation() {
     { path: '/xml-to-json', label: 'XML to JSON' },
     { path: '/jwt-decoder', label: 'JWT Decoder' },
     { path: '/json-diff', label: 'JSON Diff' },
+    { path: '/text-diff', label: 'Text Diff' },
     { path: '/base64', label: 'Base64 Encode/Decode' },
     { path: '/uuid-generator', label: 'UUID Generator' },
     { path: '/timestamp-converter', label: 'Timestamp Converter' },

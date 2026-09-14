@@ -95,6 +95,12 @@ export function Sitemap() {
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://jsonformater.com/text-diff</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://jsonformater.com/character-counter</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>

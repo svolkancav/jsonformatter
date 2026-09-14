@@ -750,6 +750,52 @@ name = "Ada"`,
     ],
   },
 
+  'text-diff': {
+    intro: {
+      heading: 'Compare Two Strings or Blocks of Text',
+      paragraphs: [
+        'Finding what changed between two pieces of text by reading them side by side is slow and unreliable — a single altered character, a swapped line, or a stray trailing space is exactly the kind of thing the eye skips over. A text diff does the comparison mechanically: it lines the two versions up, works out the longest sequence of lines they still share, and reports everything else as added or removed.',
+        'This tool compares raw text, not parsed data, so it works on anything you can paste: log output, CSV rows, SQL queries, config files, translation strings, email drafts, or two revisions of the same paragraph. If you specifically need to compare JSON documents — where key order and whitespace should not count as changes — use the JSON Diff tool instead, which compares the parsed structure.',
+        'The comparison happens entirely in your browser. Nothing you paste is uploaded, logged, or stored, so it is safe to use on internal logs and other sensitive text.',
+      ],
+    },
+    steps: {
+      heading: 'How to Compare Two Texts',
+      items: [
+        'Paste the original text into the left box.',
+        'Paste the changed text into the right box.',
+        'Optionally enable "Ignore case" or "Ignore whitespace" if those differences should not count.',
+        'Click Compare Text.',
+        'Read the result: green lines marked + exist only on the right, red lines marked − exist only on the left, and the counters summarise how much changed.',
+        'Turn on "Hide unchanged lines" to collapse the untouched parts and focus on the differences.',
+      ],
+    },
+    example: {
+      heading: 'What a Text Diff Looks Like',
+      description: 'One row was edited and one was replaced; the untouched rows are reported as unchanged.',
+      input: 'Left:  2,Alan Turing,editor\nRight: 2,Alan Turing,admin',
+      output: '- 2,Alan Turing,editor\n+ 2,Alan Turing,admin',
+      inputLabel: 'Inputs',
+      outputLabel: 'Difference',
+    },
+    tips: {
+      heading: 'Tips for Cleaner Comparisons',
+      items: [
+        { title: 'Ignore whitespace for reformatted text', text: 'If one version was re-indented or wrapped differently, whitespace changes will drown out the real edits. Enabling "Ignore whitespace" trims each line and collapses runs of spaces and tabs before comparing.' },
+        { title: 'Ignore case for identifiers and slugs', text: 'When comparing lists of keys, emails, or slugs where capitalisation is not meaningful, "Ignore case" keeps the diff focused on genuine differences.' },
+        { title: 'Compare sections, not whole files', text: 'The comparison is line-based, so two very large and almost entirely different texts are expensive to align. If you hit the size limit, compare the relevant sections instead.' },
+        { title: 'Watch for invisible changes', text: 'A line that looks identical but is reported as changed usually differs by a trailing space, a tab instead of spaces, or a different line ending. Windows CRLF and Unix LF endings are normalised automatically, so those never show up as false differences.' },
+      ],
+    },
+    faqs: [
+      { question: 'What is the difference between this and JSON Diff?', answer: 'This tool compares text literally, line by line, so formatting and ordering count as differences. JSON Diff parses both sides first and compares the resulting structure, so reindenting or reordering keys is not reported as a change. Use this one for plain text and JSON Diff for JSON documents.' },
+      { question: 'Does it compare word by word or line by line?', answer: 'Line by line. A line that changed anywhere within it is shown as a removed line followed by an added line, so you can see the before and the after in full.' },
+      { question: 'Are Windows and Unix line endings treated as differences?', answer: 'No. CRLF and LF endings are normalised before comparing, so a file saved on Windows and the same file saved on Linux will not show every line as changed.' },
+      { question: 'Is there a size limit?', answer: 'Matching lines at the start and end of both texts are handled cheaply, so a small change inside a long file is fast. Only the differing middle is aligned with a full comparison, and if that middle is very large on both sides the tool tells you to compare smaller sections rather than freezing the page.' },
+      { question: 'Is my text private?', answer: 'Yes. Both texts are compared entirely in your browser and are never uploaded or stored.' },
+    ],
+  },
+
   'json-diff': {
     intro: {
       heading: 'Compare Two JSON Documents',

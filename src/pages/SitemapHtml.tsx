@@ -19,6 +19,7 @@ export function SitemapHtml() {
     { path: '/json-to-typescript', label: 'JSON to TypeScript' },
     { path: '/json-validator', label: 'JSON Validator' },
     { path: '/character-counter', label: 'Character Counter' },
+    { path: '/text-diff', label: 'Text Diff' },
     { path: '/blog', label: 'Blog' },
     { path: '/tutorials', label: 'Tutorials' },
     { path: '/about', label: 'About' },

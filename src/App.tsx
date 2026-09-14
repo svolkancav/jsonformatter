@@ -79,6 +79,7 @@ const Base64Tool = lazy(() => import('./pages/Base64Tool').then(module => ({ def
 const UuidGenerator = lazy(() => import('./pages/UuidGenerator').then(module => ({ default: module.UuidGeneratorPage })));
 const TimestampConverter = lazy(() => import('./pages/TimestampConverter').then(module => ({ default: module.TimestampConverterPage })));
 const JsonDiff = lazy(() => import('./pages/JsonDiff').then(module => ({ default: module.JsonDiffPage })));
+const TextDiff = lazy(() => import('./pages/TextDiff').then(module => ({ default: module.TextDiffPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicyPage })));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
@@ -130,6 +131,7 @@ function App() {
                   <Route path="/uuid-generator" element={<UuidGenerator />} />
                   <Route path="/timestamp-converter" element={<TimestampConverter />} />
                   <Route path="/json-diff" element={<JsonDiff />} />
+                  <Route path="/text-diff" element={<TextDiff />} />
                   <Route path="/json-schema-generator" element={<JsonSchemaGenerator />} />
                   <Route path="/jsonpath-tester" element={<JsonPathTester />} />
                   

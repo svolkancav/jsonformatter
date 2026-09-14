@@ -147,6 +147,12 @@ export const staticRoutes = [
     keywords: 'unix timestamp converter, epoch converter, timestamp to date, date to timestamp, epoch to date, unix time, convert timestamp',
   },
   {
+    path: '/text-diff',
+    title: 'Text Diff | Free Online String & Text Compare Tool',
+    description: 'Free online text diff tool. Compare two strings or text blocks line by line and see exactly what was added, removed, or changed. Runs entirely in your browser.',
+    keywords: 'text diff, string compare, compare two strings, text compare, diff checker, string comparison tool, compare text online, text difference',
+  },
+  {
     path: '/json-diff',
     title: 'JSON Diff | Free Online JSON Compare Tool',
     description: 'Free online JSON diff tool. Compare two JSON documents and see exactly what was added, removed, or changed. Runs entirely in your browser.',

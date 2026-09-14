@@ -11,15 +11,35 @@ export function ToolSearch() {
   const [active, setActive] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
 
+  // Every term has to match somewhere, rather than the whole query matching as
+  // one contiguous substring — otherwise natural phrasings like "string
+  // compare" or "json compare" find nothing even though the tool is right
+  // there. Results are then ordered so a name match outranks a match that only
+  // came from the description.
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return TOOLS.filter(
-      (t) =>
-        t.label.toLowerCase().includes(q) ||
-        t.desc.toLowerCase().includes(q) ||
-        t.slug.replace(/-/g, ' ').includes(q),
-    ).slice(0, 8);
+    const terms = q.split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+
+    const rank = (t: (typeof TOOLS)[number]) => {
+      const label = t.label.toLowerCase();
+      const name = t.slug.replace(/-/g, ' ');
+      if (label === q || name === q) return 0;
+      if (label.startsWith(q) || name.startsWith(q)) return 1;
+      if (label.includes(q) || name.includes(q)) return 2;
+      if (terms.every((term) => label.includes(term) || name.includes(term))) return 3;
+      return 4;
+    };
+
+    return TOOLS.map((t) => ({
+      tool: t,
+      haystack: `${t.label} ${t.desc} ${t.slug.replace(/-/g, ' ')}`.toLowerCase(),
+    }))
+      .filter(({ haystack }) => terms.every((term) => haystack.includes(term)))
+      .map(({ tool }) => ({ tool, rank: rank(tool) }))
+      .sort((a, b) => a.rank - b.rank)
+      .slice(0, 8)
+      .map(({ tool }) => tool);
   }, [query]);
 
   useEffect(() => {
