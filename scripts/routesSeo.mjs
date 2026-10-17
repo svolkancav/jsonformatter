@@ -309,6 +309,12 @@ export const staticRoutes = [
     keywords: 'cookie policy, GDPR, CCPA, privacy, cookie consent',
   },
   {
+    path: '/terms',
+    title: 'Terms of Service | JSON Formatter',
+    description: 'Terms of service for JSON Formatter: use licence, disclaimer, limitation of liability, user content and data, and governing law.',
+    keywords: 'terms of service, terms and conditions, use licence, liability',
+  },
+  {
     path: '/disclaimer',
     title: 'Disclaimer | JSON Formatter',
     description: 'Disclaimer for JSON Formatter: information accuracy, no warranties, and limitation of liability.',

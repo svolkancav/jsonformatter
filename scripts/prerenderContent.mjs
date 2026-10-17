@@ -11,7 +11,7 @@
 // createRoot().render() — not hydration — so React simply replaces it.
 
 import { transformSync } from 'esbuild';
-import { readFileSync, writeFileSync, mkdtempSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, mkdtempSync } from 'fs';
 import { tmpdir } from 'os';
 import { join, dirname } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
@@ -232,6 +232,95 @@ function localeToolBody(def, labels, whatIsHeading) {
   return out.join('');
 }
 
+// Pages whose text lives directly in JSX — the legal and about pages — are read
+// back out of their own source at build time. Copying the prose into a data
+// file would have worked too, but then the copy and the component drift the
+// first time someone edits one and not the other; this keeps the component the
+// single source of truth and leaves its layout untouched.
+const JSX_TEXT_PAGES = {
+  '/about': 'src/pages/AboutPage.tsx',
+  '/contact': 'src/pages/Contact.tsx',
+  '/privacy-policy': 'src/pages/PrivacyPolicy.tsx',
+  '/cookie-policy': 'src/pages/CookiePolicy.tsx',
+  '/disclaimer': 'src/pages/Disclaimer.tsx',
+  '/terms': 'src/pages/Terms.tsx',
+};
+
+const JSX_BLOCK = /<(h1|h2|h3|p|li)\b[^>]*>([\s\S]*?)<\/\1>/g;
+
+const cleanJsx = (raw) =>
+  raw
+    .replace(/\{\s*'([^']*)'\s*\}/g, '$1') // {' '} and other string literals
+    .replace(/\{[^{}]*\}/g, '') // remaining JSX expressions
+    .replace(/<[^>]+>/g, ' ') // nested links and icons
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+function jsxPageBody(relPath) {
+  const file = join(root, relPath);
+  if (!existsSync(file)) return null;
+  const src = readFileSync(file, 'utf8');
+
+  const out = [];
+  let openList = false;
+  const closeList = () => {
+    if (openList) {
+      out.push('</ul>');
+      openList = false;
+    }
+  };
+
+  for (const match of src.matchAll(JSX_BLOCK)) {
+    const [, tag] = match;
+    const text = cleanJsx(match[2]);
+    if (text.length < 2) continue;
+
+    if (tag === 'li') {
+      if (!openList) {
+        out.push('<ul class="list-disc pl-6 space-y-1 text-gray-600 dark:text-gray-400 mb-4">');
+        openList = true;
+      }
+      out.push(`<li>${esc(text)}</li>`);
+      continue;
+    }
+    closeList();
+    if (tag === 'h1') out.push(`<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">${esc(text)}</h1>`);
+    else if (tag === 'h2') out.push(`<h2 ${H2}>${esc(text)}</h2>`);
+    else if (tag === 'h3') out.push(`<h3 ${H3}>${esc(text)}</h3>`);
+    else out.push(`<p ${P}>${esc(text)}</p>`);
+  }
+  closeList();
+  return out.length ? out.join('') : null;
+}
+
+function tutorialsBody(data) {
+  const out = [
+    `<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">${esc(data.TUTORIALS_HEADING)}</h1>`,
+    `<p class="text-xl text-gray-600 dark:text-gray-400 mb-8">${esc(data.TUTORIALS_TAGLINE)}</p>`,
+  ];
+  for (const tutorial of data.tutorials) {
+    out.push(`<section ${SECTION}><h2 ${H2}>${esc(tutorial.title)}</h2>`);
+    out.push(`<p ${P}>${esc(tutorial.description)}</p>`);
+    out.push(`<p ${P}>${esc(tutorial.level)} · ${esc(tutorial.duration)}</p>`);
+    out.push(`<h3 ${H3}>What you will learn</h3><ul class="list-disc pl-6 space-y-1 text-gray-600 dark:text-gray-400 mb-4">`);
+    out.push(tutorial.content.map((item) => `<li>${esc(item)}</li>`).join(''));
+    out.push('</ul></section>');
+  }
+  out.push(`<section ${SECTION}><h2 ${H2}>${esc(data.TUTORIALS_CTA_HEADING)}</h2><p ${P}>${esc(data.TUTORIALS_CTA_BODY)}</p></section>`);
+  return out.join('');
+}
+
+// The HTML sitemap is a list of links declared inside its component.
+function sitemapBody() {
+  const src = readFileSync(join(root, 'src/pages/SitemapHtml.tsx'), 'utf8');
+  const entries = [...src.matchAll(/\{ path: '([^']+)', label: '([^']+)' \}/g)].map((m) => ({
+    href: m[1],
+    label: m[2],
+  }));
+  return listBody('HTML Sitemap', 'Every page on this site in one list.', [{ entries }]);
+}
+
 export async function createBodyBuilder() {
   const [
     { TOOLS, FAMILY_LABELS },
@@ -243,6 +332,7 @@ export async function createBodyBuilder() {
     { glossaryTerms },
     { trTools },
     { localeTools, UI_LABELS },
+    tutorialsData,
   ] = await Promise.all([
     loadData('src/data/toolsRegistry.ts'),
     loadData('src/data/toolContent.ts'),
@@ -253,6 +343,7 @@ export async function createBodyBuilder() {
     loadData('src/data/glossary.ts'),
     loadData('src/data/trContent.ts'),
     loadData('src/data/localeContent.ts'),
+    loadData('src/data/tutorials.ts'),
   ]);
 
   const localeBySlug = new Map();
@@ -265,7 +356,7 @@ export async function createBodyBuilder() {
     ]);
 
   const toolsBySlug = new Map(TOOLS.map((t) => [t.slug, t]));
-  const stats = { tool: 0, blog: 0, listing: 0, reference: 0, locale: 0, fallback: 0 };
+  const stats = { tool: 0, blog: 0, listing: 0, reference: 0, locale: 0, page: 0, fallback: 0 };
 
   const toolGroups = Object.entries(FAMILY_LABELS).map(([family, meta]) => ({
     heading: meta.title,
@@ -308,13 +399,20 @@ export async function createBodyBuilder() {
     '/tr': () => localeHub('tr', TR_LABELS, trTools),
     '/de': () => localeHub('de', UI_LABELS.de, localeTools.filter((d) => d.locale === 'de')),
     '/es': () => localeHub('es', UI_LABELS.es, localeTools.filter((d) => d.locale === 'es')),
+    '/tutorials': () => tutorialsBody(tutorialsData),
+    '/sitemap': () => sitemapBody(),
   };
 
   const build = (route) => {
     const slug = route.path.replace(/^\//, '');
     let inner;
 
-    if (LISTINGS[route.path]) {
+    if (JSX_TEXT_PAGES[route.path]) {
+      inner = jsxPageBody(JSX_TEXT_PAGES[route.path]);
+      if (inner) stats.page++;
+    }
+
+    if (!inner && LISTINGS[route.path]) {
       inner = LISTINGS[route.path]();
       stats.listing++;
     } else if (route.path.startsWith('/blog/')) {

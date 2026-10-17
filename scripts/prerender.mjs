@@ -148,5 +148,5 @@ const alternates = buildAlternates(SITE);
 for (const route of allRoutes) writeRoute(template, route, build(route), alternates.get(route.path));
 
 console.log(`prerender: wrote ${allRoutes.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
-console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.locale} locale, ${stats.fallback} title-only`);
+console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.locale} locale, ${stats.page} page, ${stats.fallback} title-only`);
 console.log(`prerender: hreflang on ${allRoutes.filter((r) => alternates.has(r.path)).length} routes`);
