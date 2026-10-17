@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Your AdSense publisher id (matches the script in index.html and public/ads.txt).
-const AD_CLIENT = 'ca-pub-5398027060352897';
+// Your AdSense publisher id (matches public/ads.txt and AdSense.tsx, which
+// injects the script after consent).
+const AD_CLIENT = 'ca-pub-5644908570185902';
 
 /**
  * Maps each placement to its AdSense ad-unit slot id (the numeric

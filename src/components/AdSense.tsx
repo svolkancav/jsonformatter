@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // AdSense publisher id (matches public/ads.txt and AdSlot.tsx).
-const AD_CLIENT = 'ca-pub-5398027060352897';
+const AD_CLIENT = 'ca-pub-5644908570185902';
 
 // Module-level guard so the script is injected at most once.
 let adsenseLoaded = false;
