@@ -796,6 +796,200 @@ name = "Ada"`,
     ],
   },
 
+  'json-validator': {
+    intro: {
+      heading: 'Validate JSON and Find the Exact Error',
+      paragraphs: [
+        'JSON has a deliberately small grammar, and parsers enforce it strictly. There is no tolerance for a trailing comma, a single-quoted string, an unquoted key, or a stray comment — any one of them makes the whole document unparseable, and the error a parser reports often points at the character where it gave up rather than the character you actually mistyped. A validator closes that gap: it checks the document against the JSON grammar and tells you the line and column where the structure first stopped making sense.',
+        'Validation is worth doing before the data reaches anything expensive. A malformed payload that reaches your API becomes a 500 with a stack trace; the same payload checked in the browser is a five-second fix. It is also the fastest way to settle an argument about whose side a bug is on — if the response does not parse, the problem is upstream of your code.',
+        'Note the difference between syntax and schema. This tool answers "is this valid JSON?", not "does this JSON have the fields my application expects?". A document can be perfectly valid and still be wrong for your use case; for that second question use the JSON Schema Generator to describe the shape you expect, then validate against it.',
+        'Everything is parsed in your browser. Nothing is uploaded, so you can safely check payloads containing tokens or customer data.',
+      ],
+    },
+    steps: {
+      heading: 'How to Validate JSON',
+      items: [
+        'Paste the JSON you want to check into the editor.',
+        'The document is parsed as you type — valid JSON is confirmed immediately.',
+        'If it is invalid, read the reported position and the message describing what the parser expected there.',
+        'Look slightly before the reported position: an unclosed bracket or a missing comma is usually a few characters earlier than where the parser noticed.',
+        'Fix the problem, confirm the document validates, then copy the clean JSON out.',
+      ],
+    },
+    example: {
+      heading: 'A Document That Fails and Why',
+      description: 'The trailing comma after the last property is legal in JavaScript but not in JSON, so the parser stops at the closing brace.',
+      input: '{\n  "id": 1,\n  "name": "Ada",\n}',
+      output: 'Unexpected token } in JSON at position 29\n\nThe comma after "Ada" promises another\nkey/value pair that never arrives.',
+      inputLabel: 'Invalid JSON',
+      outputLabel: 'Error',
+    },
+    tips: {
+      heading: 'What Usually Breaks',
+      items: [
+        { title: 'Trailing commas', text: 'JavaScript object literals allow a comma after the final entry; JSON does not. This is the single most common cause of an invalid document, especially in hand-edited config files.' },
+        { title: 'The wrong kind of quote', text: 'JSON strings require double quotes. Single quotes, smart quotes pasted from a word processor, and backticks are all rejected. Keys must be quoted too, which trips up anyone used to writing JavaScript objects.' },
+        { title: 'Comments', text: 'Standard JSON has no comment syntax. Dialects like JSON5 and JSONC add them, and some tools accept them, but a strict parser will not. Strip comments before validating, or convert the file to a format that supports them such as YAML or TOML.' },
+        { title: 'An invisible byte order mark', text: 'A file saved as UTF-8 with BOM starts with bytes that are not whitespace and not an opening brace. The document looks perfect on screen and still fails to parse. Re-save the file as UTF-8 without BOM.' },
+        { title: 'NaN, Infinity and undefined', text: 'These are JavaScript values with no JSON equivalent. A serializer that emits them produces output no conformant parser will read back. Represent them as null or as strings instead.' },
+        { title: 'Duplicate keys', text: 'The specification does not forbid repeating a key, so most parsers accept it and silently keep the last occurrence. The document validates, and you quietly lose data — worth checking by eye when a value is mysteriously wrong.' },
+      ],
+    },
+    faqs: [
+      { question: 'Does valid JSON mean my data is correct?', answer: 'No. Validation checks grammar only. A document with every field misspelled, or with a string where your code expects a number, is still valid JSON. Use a JSON Schema to check the shape and types your application depends on.' },
+      { question: 'Why does the error position look wrong?', answer: 'A parser reports where the document stopped being consistent, which is often after the real mistake. A bracket left unclosed near the top is only detected at the end of the file. Work backwards from the reported position to the last structure you are certain is complete.' },
+      { question: 'Is a bare string or number valid JSON?', answer: 'Yes. Since RFC 7159 any JSON value may stand alone, so "hello", 42, true and null are all valid documents. Older parsers that predate that revision accept only an object or array at the top level.' },
+      { question: 'Are comments ever allowed?', answer: 'Not in standard JSON. JSONC (used by VS Code settings) and JSON5 permit them, and some parsers accept them as an extension, but anything strictly conformant will reject a document containing them.' },
+      { question: 'What about very large numbers?', answer: 'JSON numbers have no defined precision limit, but most parsers read them as IEEE 754 doubles, so integers beyond 2^53 lose precision silently. The document validates; the value is still wrong. Transmit large identifiers as strings.' },
+      { question: 'Is my data private?', answer: 'Yes. Parsing happens entirely in your browser and nothing is uploaded or stored.' },
+    ],
+  },
+
+  'character-counter': {
+    intro: {
+      heading: 'Count Characters, Words and Lines',
+      paragraphs: [
+        'Almost every text field you write into has a limit, and the limit is almost never where you would guess. A meta description that renders cleanly in search results, a post that fits a social platform, an SMS that stays one segment, a database column declared VARCHAR(255) — each counts something slightly different, and finding out after the fact usually means truncated text somewhere public.',
+        'This tool counts characters with and without spaces, words, lines and paragraphs as you type, so you can see where you stand against whichever limit you are writing for. It is also useful in the other direction: checking that generated or imported text is not unexpectedly empty, padded, or full of line breaks you did not intend.',
+        'Counting looks trivial and is not, once text stops being plain ASCII. An emoji, an accented letter typed as a combining pair, or a flag made of two regional indicators can each count as one thing to a reader and several to a program. The section below explains where those differences come from, because they are the reason two character counters can disagree about the same sentence.',
+        'Your text stays in the browser. Nothing is uploaded, so drafts and private notes are safe to paste.',
+      ],
+    },
+    steps: {
+      heading: 'How to Count Text',
+      items: [
+        'Paste or type your text into the box.',
+        'Read the counts, which update on every keystroke.',
+        'Compare the with-spaces and without-spaces figures — different platforms count each way.',
+        'Use the word and line counts to check structure, for example that an import really has the number of rows you expect.',
+      ],
+    },
+    example: {
+      heading: 'The Same Text, Different Counts',
+      description: 'Spaces, line breaks and non-ASCII characters all change the answer, which is why the counts are reported separately.',
+      input: 'Hello, world!\nIt is a fine day.',
+      output: 'Characters (with spaces)    : 30\nCharacters (without spaces) : 24\nWords                       : 7\nLines                       : 2',
+      inputLabel: 'Text',
+      outputLabel: 'Counts',
+    },
+    tips: {
+      heading: 'Limits Worth Knowing',
+      items: [
+        { title: 'Search result snippets', text: 'Google truncates by pixel width rather than character count, but roughly 50 to 60 characters for a title and 150 to 160 for a meta description is the practical ceiling on desktop. Mobile is shorter. Put the important words first so a truncation still reads sensibly.' },
+        { title: 'SMS segments', text: 'A plain GSM-7 message fits 160 characters. Include a single character outside that alphabet — a curly apostrophe pasted from a word processor is the classic culprit — and the whole message switches to UCS-2, dropping the limit to 70 and often doubling the cost.' },
+        { title: 'Database columns', text: 'VARCHAR(255) in MySQL counts characters, but the bytes behind them depend on the encoding: under utf8mb4 one character can take four bytes. An index or row-size limit expressed in bytes will be reached long before the character count is.' },
+        { title: 'Emoji are not one character', text: 'To JavaScript, length counts UTF-16 code units. Most emoji are two, a flag is four, and an emoji with a skin-tone modifier or a family built from joiners can be far more. A field that allows 20 characters may accept only five emoji.' },
+        { title: 'Accents can be written two ways', text: 'The letter e-acute exists both as a single code point and as a plain e followed by a combining accent. They look identical and count differently. Normalising text to NFC before measuring or storing it avoids counts that change depending on where the text was typed.' },
+        { title: 'Trailing whitespace hides', text: 'A space or newline at the end of a pasted line is invisible but counted, and it is a frequent cause of a value failing an exact-match comparison. Comparing the with-spaces and without-spaces counts is a quick way to spot padding.' },
+      ],
+    },
+    faqs: [
+      { question: 'How is a word counted?', answer: 'A word is a run of characters separated by whitespace, which matches how most editors count. Hyphenated compounds count as one word and a number counts as a word, so the figure can differ slightly from a word processor using its own rules.' },
+      { question: 'Why does my count differ from another tool?', answer: 'Usually because of what each tool does with line breaks, trailing whitespace, or characters outside ASCII. A counter working in UTF-16 code units will report more than one counting visible characters whenever emoji or combining accents are present.' },
+      { question: 'Does it count an empty line?', answer: 'Yes. Lines are counted by line breaks, so a blank line between paragraphs is a line. This matters when you are checking the row count of pasted data.' },
+      { question: 'Can I count a whole document?', answer: 'Yes — paste as much as you like. Everything is counted locally, so size is limited only by your browser rather than by an upload limit.' },
+      { question: 'Is my text private?', answer: 'Yes. The text never leaves your browser; there is no upload and nothing is stored.' },
+    ],
+  },
+
+  'json-to-csharp': {
+    intro: {
+      heading: 'Convert JSON to C# Classes',
+      paragraphs: [
+        'Consuming a JSON API in C# means having a type to deserialize into. Writing that type by hand for a response with thirty fields and three levels of nesting is slow, and the mistakes it produces are quiet ones: a property spelled slightly differently simply arrives as null at runtime, with no compiler error to warn you. This tool reads your JSON and generates the matching class hierarchy, so the names and types line up with the payload from the start.',
+        'Nested objects become their own named classes, arrays become List<T> of the element type, and values are mapped to the closest C# type — string, int, double, bool. Where the JSON uses names that are not valid C# identifiers, or uses camelCase where your codebase uses PascalCase, you get properties named the C# way with the original key preserved for the serializer.',
+        'Which serializer you are targeting changes a few details. System.Text.Json ships with .NET and is the default for new projects; Newtonsoft.Json is still extremely common in existing code and is more forgiving about loose typing. The generated classes work with both, but the attribute you reach for and the behaviour around nulls and casing differ, which the notes below cover.',
+        'Generation happens entirely in your browser — your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to C#',
+      items: [
+        'Paste a representative JSON response into the input box. Use a sample with every optional field populated, so nothing is inferred as the wrong type.',
+        'Set the root class name to something meaningful — it names the whole hierarchy.',
+        'Generate the classes and read through the inferred types, paying attention to numbers and anything that came through as object.',
+        'Copy the result into your project, one file per class or all together as nested types.',
+        'Deserialize with JsonSerializer.Deserialize<Root>(json) for System.Text.Json, or JsonConvert.DeserializeObject<Root>(json) for Newtonsoft.',
+      ],
+    },
+    example: {
+      heading: 'JSON to a C# Class',
+      description: 'Each key becomes a property with the matching type; the nested object becomes a class of its own.',
+      input: '{\n  "id": 1,\n  "name": "Ada",\n  "address": { "city": "London" }\n}',
+      output: 'public class Root\n{\n    public int Id { get; set; }\n    public string Name { get; set; }\n    public Address Address { get; set; }\n}\n\npublic class Address\n{\n    public string City { get; set; }\n}',
+      inputLabel: 'JSON',
+      outputLabel: 'C#',
+    },
+    tips: {
+      heading: 'Getting the Types Right',
+      items: [
+        { title: 'Match property names without renaming keys', text: 'C# convention is PascalCase; most JSON APIs send camelCase. Rather than naming properties after the JSON, keep C# naming and bridge the gap at the serializer: System.Text.Json takes PropertyNamingPolicy = JsonNamingPolicy.CamelCase globally, or [JsonPropertyName("someKey")] per property. Newtonsoft uses [JsonProperty("someKey")] or a CamelCasePropertyNamesContractResolver.' },
+        { title: 'Integers larger than int', text: 'A sample containing a small id infers int, and the type holds until production sends an identifier above 2.1 billion — then deserialization throws. Database ids, timestamps in milliseconds and anything snowflake-shaped should be long, or string if the source system treats them as opaque.' },
+        { title: 'Money should not be double', text: 'Inferring double from 19.99 is correct about the shape and wrong about the intent. Binary floating point cannot represent most decimal fractions exactly, so sums drift. Change monetary fields to decimal by hand after generating.' },
+        { title: 'Nullable reference types', text: 'In a project with nullable reference types enabled, generated string properties produce a warning because nothing guarantees the JSON supplies them. Mark genuinely optional fields as string? and required ones with the required modifier, so the compiler enforces what the API actually promises.' },
+        { title: 'Dates arrive as strings', text: 'JSON has no date type. An ISO 8601 string deserializes into DateTime or DateTimeOffset automatically with both serializers; prefer DateTimeOffset when the payload carries an offset, since DateTime silently discards it. A Unix timestamp needs a custom converter.' },
+        { title: 'Fields that vary in type', text: 'If a key is sometimes a string and sometimes a number, no single property type fits. Use JsonElement (System.Text.Json) or JToken (Newtonsoft) to hold it, and branch on the value kind — attempting to force it into object loses the information you need to decide.' },
+      ],
+    },
+    faqs: [
+      { question: 'System.Text.Json or Newtonsoft.Json?', answer: 'System.Text.Json ships with .NET, is faster and allocates less, and is the right default for new code. Newtonsoft.Json is more permissive and has features System.Text.Json still lacks, such as broad TypeNameHandling and more flexible custom contracts, so it remains common in existing projects. The generated classes suit either.' },
+      { question: 'Why is a property null after deserializing?', answer: 'Almost always a name mismatch. System.Text.Json is case-sensitive by default, so a PascalCase property will not bind to a camelCase key unless you set a naming policy or add [JsonPropertyName]. Setting PropertyNameCaseInsensitive = true is the quick fix.' },
+      { question: 'Should I generate records instead of classes?', answer: 'Records suit payloads you only read, giving value equality and concise syntax, and both serializers support them. Classes with settable properties are easier when you mutate the object or when a framework needs a parameterless constructor.' },
+      { question: 'How are arrays handled?', answer: 'An array becomes List<T> where T is inferred from the elements. An array of objects produces a named class for the element type. An empty array gives the generator nothing to infer from, so supply a sample with at least one element.' },
+      { question: 'What happens to null values in the sample?', answer: 'A key whose only observed value is null carries no type information, so it is emitted as object. Find a sample where the field is populated, then set the type by hand.' },
+      { question: 'Is my JSON private?', answer: 'Yes. Generation runs entirely in your browser and nothing is uploaded.' },
+    ],
+  },
+
+  'json-to-typescript': {
+    intro: {
+      heading: 'Convert JSON to TypeScript Interfaces',
+      paragraphs: [
+        'TypeScript can only help you with data it knows the shape of. Fetch a JSON response without a type and everything downstream is any, which removes exactly the protection you adopted TypeScript for. Writing the interface by hand is the fix, and for a large response it is also the part everyone skips. This tool reads your JSON and produces the matching interfaces, nested types included.',
+        'Objects become interfaces, arrays become typed arrays, and primitives map to string, number and boolean. Nested objects are extracted into their own named interfaces rather than inlined, so you can reference an inner type directly instead of digging through index access types.',
+        'There is one thing worth being clear about before you rely on the result. TypeScript types are erased at compile time: an interface describes what you believe the server sends, and nothing checks that belief at runtime. If the API changes a field from a number to a string, your code keeps compiling and fails somewhere far from the cause. The notes below cover when that matters and what to do about it.',
+        'Everything runs in your browser — your JSON is never uploaded.',
+      ],
+    },
+    steps: {
+      heading: 'How to Convert JSON to TypeScript',
+      items: [
+        'Paste a representative JSON sample into the input box, ideally one where every optional field is present.',
+        'Set the root interface name — the nested interfaces are named from it and from the keys.',
+        'Generate the interfaces and review the inferred types, especially arrays and anything that came out as any.',
+        'Copy the result into a .ts file, or into a types.ts shared across your API layer.',
+        'Mark genuinely optional fields with ? and tighten any unions by hand, since a single sample cannot show you which fields may be absent.',
+      ],
+    },
+    example: {
+      heading: 'JSON to a TypeScript Interface',
+      description: 'The nested object is extracted into its own interface so it can be referenced on its own.',
+      input: '{\n  "id": 1,\n  "name": "Ada",\n  "tags": ["admin"],\n  "address": { "city": "London" }\n}',
+      output: 'interface Address {\n  city: string;\n}\n\ninterface Root {\n  id: number;\n  name: string;\n  tags: string[];\n  address: Address;\n}',
+      inputLabel: 'JSON',
+      outputLabel: 'TypeScript',
+    },
+    tips: {
+      heading: 'Making the Types Trustworthy',
+      items: [
+        { title: 'Types do not validate at runtime', text: 'An interface is a compile-time claim and disappears from the emitted JavaScript. Nothing stops a response that contradicts it. For data crossing a network boundary, pair the generated interface with a runtime validator such as Zod or Valibot and parse at the edge — then everything inside your application really is the type it says it is.' },
+        { title: 'Optional is not the same as nullable', text: 'A field that may be missing is name?: string; a field always present but sometimes empty is name: string | null. They are different, and conflating them produces undefined where your code checked for null. One JSON sample cannot tell them apart, so this is the first thing to fix by hand.' },
+        { title: 'Mixed arrays need a union', text: 'An array containing both numbers and strings infers as (string | number)[] at best and any[] at worst. If the array really is heterogeneous, write the union explicitly; if the mixture was an accident in your sample, fix the sample.' },
+        { title: 'Large integers lose precision', text: 'JSON.parse reads numbers as IEEE 754 doubles, so an id beyond 2^53 is silently rounded before your type ever sees it. Typing it as number hides the problem. Ask the API for such identifiers as strings, or parse with a library that preserves them as BigInt.' },
+        { title: 'Prefer unknown over any for gaps', text: 'Where the generator cannot infer a type, any switches off checking for everything that touches the value. unknown keeps it honest: the compiler forces you to narrow before use, which turns a silent hole into a deliberate decision.' },
+        { title: 'Interface or type alias', text: 'For object shapes the two are nearly interchangeable. Interfaces support declaration merging and give cleaner error messages for extended shapes; type aliases are needed for unions, intersections and mapped types. Generated output uses interfaces because API payloads are plain object shapes.' },
+      ],
+    },
+    faqs: [
+      { question: 'Will these types catch a breaking API change?', answer: 'No, not on their own. TypeScript checks your code against the type you wrote, not the server against it. If the API changes, the code still compiles and fails at runtime. Validate the response with a schema library at the boundary if that risk matters.' },
+      { question: 'How do I mark optional fields?', answer: 'Add ? after the property name. A single JSON sample cannot reveal optionality, so the generator assumes every observed key is always present; compare a few responses, or read the API documentation, and mark the rest.' },
+      { question: 'Why did a field come out as any?', answer: 'Because the sample gave nothing to infer from — usually a null value or an empty array. Find a sample where the field is populated, or narrow the type by hand; prefer unknown to any if you genuinely do not know.' },
+      { question: 'Should I use interface or type?', answer: 'Either works for object shapes. Interfaces merge across declarations and often produce more readable errors; type aliases are required for unions and mapped types. Pick one and apply it consistently across the codebase.' },
+      { question: 'Can I generate types for a whole API at once?', answer: 'This tool converts one JSON document at a time. If the API publishes an OpenAPI or JSON Schema description, generating from that is better: it carries optionality, formats and enums that no single example response can show.' },
+      { question: 'Is my JSON private?', answer: 'Yes. Generation happens entirely in your browser and nothing is uploaded.' },
+    ],
+  },
+
   'json-diff': {
     intro: {
       heading: 'Compare Two JSON Documents',
