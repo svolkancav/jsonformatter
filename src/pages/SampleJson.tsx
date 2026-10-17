@@ -124,12 +124,29 @@ export function SampleJsonDetail() {
         <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">What is this sample for?</h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{sample.useCase}</p>
+          {sample.notes?.map((note, i) => (
+            <p key={i} className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">{note}</p>
+          ))}
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">
             All processing on this site runs in your browser — open this sample in the{' '}
             <Link to="/json-formatter" state={{ prefill: sample.json }} className="text-blue-600 dark:text-blue-400 hover:underline">JSON Formatter</Link>,{' '}
             <Link to="/json-viewer" state={{ prefill: sample.json }} className="text-blue-600 dark:text-blue-400 hover:underline">Viewer</Link>, or any converter to experiment freely.
           </p>
         </div>
+
+        {sample.fields?.length > 0 && (
+          <section className="mt-8 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Fields in this dataset</h2>
+            <dl className="space-y-3">
+              {sample.fields.map((field) => (
+                <div key={field.name}>
+                  <dt className="font-mono text-sm font-semibold text-gray-900 dark:text-white">{field.name}</dt>
+                  <dd className="text-gray-600 dark:text-gray-400 leading-relaxed">{field.note}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
         <AdSlot slotId="sample_detail_footer" />
 

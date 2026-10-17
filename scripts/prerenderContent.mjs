@@ -136,12 +136,21 @@ function listBody(heading, lead, items) {
 }
 
 function sampleBody(sample) {
+  const notes = (sample.notes ?? []).map((n) => `<p ${P}>${esc(n)}</p>`).join('');
+  const fields = (sample.fields ?? [])
+    .map(
+      (f) =>
+        `<dt class="font-mono text-sm font-semibold text-gray-900 dark:text-white">${esc(f.name)}</dt>` +
+        `<dd class="text-gray-600 dark:text-gray-400 mb-2">${esc(f.note)}</dd>`,
+    )
+    .join('');
   return (
     `<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">${esc(sample.title)}</h1>` +
     `<p class="text-xl text-gray-600 dark:text-gray-400 mb-8">${esc(sample.description)}</p>` +
-    `<section ${SECTION}><h2 ${H2}>When to use this dataset</h2><p ${P}>${esc(sample.useCase)}</p>` +
+    `<section ${SECTION}><h2 ${H2}>What is this sample for?</h2><p ${P}>${esc(sample.useCase)}</p>${notes}` +
     `<p ${P}>Category: ${esc(sample.category)}</p></section>` +
-    `<section ${SECTION}><h2 ${H2}>The JSON</h2><pre ${PRE}><code>${esc(sample.json)}</code></pre></section>`
+    `<section ${SECTION}><h2 ${H2}>The JSON</h2><pre ${PRE}><code>${esc(sample.json)}</code></pre></section>` +
+    (fields ? `<section ${SECTION}><h2 ${H2}>Fields in this dataset</h2><dl>${fields}</dl></section>` : '')
   );
 }
 
@@ -154,7 +163,12 @@ function errorBody(err) {
     `<section ${SECTION}><h2 ${H2}>What causes it</h2><p ${P}>${esc(err.cause)}</p></section>` +
     `<section ${SECTION}><h2 ${H2}>How to fix it</h2><p ${P}>${esc(err.fix)}</p>` +
     `<h3 ${H3}>Broken</h3><pre ${PRE}><code>${esc(err.badExample)}</code></pre>` +
-    `<h3 ${H3}>Fixed</h3><pre ${PRE}><code>${esc(err.goodExample)}</code></pre></section>`
+    `<h3 ${H3}>Fixed</h3><pre ${PRE}><code>${esc(err.goodExample)}</code></pre></section>` +
+    ((err.details ?? []).length
+      ? `<section ${SECTION}><h2 ${H2}>Reading the message</h2>` +
+        err.details.map((d) => `<p ${P}>${esc(d)}</p>`).join('') +
+        '</section>'
+      : '')
   );
 }
 
