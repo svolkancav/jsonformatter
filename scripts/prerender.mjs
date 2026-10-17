@@ -1,10 +1,13 @@
 // Post-build prerender: bakes a unique <title>, meta description/keywords,
-// canonical, Open Graph / Twitter tags and a JSON-LD block into the raw HTML
-// for every route, writing dist/<route>/index.html.
+// canonical, Open Graph / Twitter tags, a JSON-LD block AND the page's actual
+// text into the raw HTML for every route, writing dist/<route>/index.html.
 //
 // Why: the app is a client-rendered SPA, so without this every URL ships the
 // SAME homepage <title>/meta in its raw HTML — Google sees ~identical pages and
-// none can rank. This gives each route correct metadata in the initial HTML.
+// none can rank. Worse, the body was an empty <div id="root">, so the words
+// only existed after JavaScript ran and anything reading the raw HTML saw a
+// blank page. This gives each route correct metadata *and* real content in the
+// initial HTML. Body markup is built in prerenderContent.mjs.
 //
 // Pure Node string work — no headless browser, no runtime deps. Safe: if the
 // web server doesn't serve these per-route files, behaviour is unchanged.
@@ -13,6 +16,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { SITE, staticRoutes } from './routesSeo.mjs';
+import { createBodyBuilder } from './prerenderContent.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -57,7 +61,7 @@ function buildJsonLd(route) {
   return `<script type="application/ld+json">${JSON.stringify(page)}</script>`;
 }
 
-function renderRoute(template, route) {
+function renderRoute(template, route, body) {
   // Trailing slash for home to match the client SEO component and sitemap.xml.
   const url = SITE + route.path;
   let html = template;
@@ -72,11 +76,14 @@ function renderRoute(template, route) {
   html = setLink(html, 'canonical', url);
   // Inject JSON-LD just before </head>.
   html = html.replace('</head>', `    ${buildJsonLd(route)}\n  </head>`);
+  // Fill the mount point. React replaces this wholesale on load (main.tsx uses
+  // createRoot().render(), not hydrateRoot), so no markup match is required.
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
   return html;
 }
 
-function writeRoute(template, route) {
-  const html = renderRoute(template, route);
+function writeRoute(template, route, body) {
+  const html = renderRoute(template, route, body);
   const outDir = route.path === '/' ? distDir : join(distDir, route.path);
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'index.html'), html);
@@ -127,6 +134,9 @@ const template = readFileSync(templatePath, 'utf8');
 const blogRoutes = parseBlogRoutes();
 const allRoutes = [...staticRoutes, ...blogRoutes];
 
-for (const route of allRoutes) writeRoute(template, route);
+const { build, stats } = await createBodyBuilder();
+
+for (const route of allRoutes) writeRoute(template, route, build(route));
 
 console.log(`prerender: wrote ${allRoutes.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
+console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.fallback} title-only`);

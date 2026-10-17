@@ -159,6 +159,18 @@ export const staticRoutes = [
     keywords: 'json diff, json compare, compare json, json difference, diff json online, json comparison tool',
   },
   {
+    path: '/json-to-csharp',
+    title: 'JSON to C# Class Converter | Free Online JSON to C# Tool',
+    description: 'Convert JSON to C# classes instantly. Free online JSON to C# generator with correct types, nullable handling and nested classes. Runs entirely in your browser.',
+    keywords: 'json to csharp, json to c# class, json to c# converter, generate c# classes, c# class generator, json deserialize c#',
+  },
+  {
+    path: '/json-to-typescript',
+    title: 'JSON to TypeScript Interface Converter | Free Online Tool',
+    description: 'Convert JSON to TypeScript interfaces instantly. Free online JSON to TypeScript generator with accurate types, optional properties and nested interfaces. Runs in your browser.',
+    keywords: 'json to typescript, json to interface, json to ts, generate typescript interfaces, typescript interface generator, json types',
+  },
+  {
     path: '/json-to-go',
     title: 'JSON to Go Struct Converter | Free Online JSON to Go Tool',
     description: 'Convert JSON to Go structs instantly. Free online JSON to Go struct generator with correct types and json tags. Runs entirely in your browser.',
