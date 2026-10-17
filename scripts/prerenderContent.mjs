@@ -194,6 +194,30 @@ function glossaryBody(terms) {
   return out.join('');
 }
 
+// Section headings come from the page components so the prerendered copy is in
+// the same language as what renders — an English heading above Turkish body
+// text would read as machine-generated filler.
+const TR_LABELS = { whatIs: 'Nedir?', howTo: 'Nasıl Kullanılır?', faq: 'Sık Sorulan Sorular', hubTitle: 'Ücretsiz JSON Araçları (Türkçe)', hubTagline: 'JSON biçimlendirin, görüntüleyin ve dönüştürün — ücretsiz ve tamamen tarayıcınızda.' };
+
+function localeToolBody(def, labels, whatIsHeading) {
+  const out = [
+    `<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">${esc(def.h1)}</h1>`,
+    `<p class="text-xl text-gray-600 dark:text-gray-400 mb-8">${esc(def.tagline)}</p>`,
+    `<section ${SECTION}><h2 ${H2}>${esc(whatIsHeading)}</h2>`,
+    (def.intro ?? []).map((para) => `<p ${P}>${esc(para)}</p>`).join(''),
+    '</section>',
+    `<section ${SECTION}><h2 ${H2}>${esc(labels.howTo)}</h2><ol class="list-decimal pl-6 space-y-2 text-gray-600 dark:text-gray-400">`,
+    (def.steps ?? []).map((s) => `<li>${esc(s)}</li>`).join(''),
+    '</ol></section>',
+  ];
+  if (def.faqs?.length) {
+    out.push(`<section ${SECTION}><h2 ${H2}>${esc(labels.faq)}</h2>`);
+    out.push(def.faqs.map((f) => `<h3 ${H3}>${esc(f.q)}</h3><p ${P}>${esc(f.a)}</p>`).join(''));
+    out.push('</section>');
+  }
+  return out.join('');
+}
+
 export async function createBodyBuilder() {
   const [
     { TOOLS, FAMILY_LABELS },
@@ -203,6 +227,8 @@ export async function createBodyBuilder() {
     { jsonErrors, errorBySlug },
     { cheatSheets, cheatBySlug },
     { glossaryTerms },
+    { trTools },
+    { localeTools, UI_LABELS },
   ] = await Promise.all([
     loadData('src/data/toolsRegistry.ts'),
     loadData('src/data/toolContent.ts'),
@@ -211,10 +237,21 @@ export async function createBodyBuilder() {
     loadData('src/data/jsonErrors.ts'),
     loadData('src/data/cheatsheets.ts'),
     loadData('src/data/glossary.ts'),
+    loadData('src/data/trContent.ts'),
+    loadData('src/data/localeContent.ts'),
   ]);
 
+  const localeBySlug = new Map();
+  for (const def of trTools) localeBySlug.set(`/tr/${def.slug}`, { def, labels: TR_LABELS });
+  for (const def of localeTools) localeBySlug.set(`/${def.locale}/${def.slug}`, { def, labels: UI_LABELS[def.locale] });
+
+  const localeHub = (locale, labels, defs) =>
+    listBody(labels.hubTitle, labels.hubTagline, [
+      { entries: defs.map((d) => ({ href: `/${locale}/${d.slug}`, label: d.h1, desc: d.tagline })) },
+    ]);
+
   const toolsBySlug = new Map(TOOLS.map((t) => [t.slug, t]));
-  const stats = { tool: 0, blog: 0, listing: 0, reference: 0, fallback: 0 };
+  const stats = { tool: 0, blog: 0, listing: 0, reference: 0, locale: 0, fallback: 0 };
 
   const toolGroups = Object.entries(FAMILY_LABELS).map(([family, meta]) => ({
     heading: meta.title,
@@ -254,6 +291,9 @@ export async function createBodyBuilder() {
         { entries: cheatSheets.map((c) => ({ href: `/cheatsheet/${c.slug}`, label: c.title, desc: c.description })) },
       ]),
     '/glossary': () => glossaryBody(glossaryTerms),
+    '/tr': () => localeHub('tr', TR_LABELS, trTools),
+    '/de': () => localeHub('de', UI_LABELS.de, localeTools.filter((d) => d.locale === 'de')),
+    '/es': () => localeHub('es', UI_LABELS.es, localeTools.filter((d) => d.locale === 'es')),
   };
 
   const build = (route) => {
@@ -287,6 +327,10 @@ export async function createBodyBuilder() {
         inner = cheatBody(sheet);
         stats.reference++;
       }
+    } else if (localeBySlug.has(route.path)) {
+      const { def, labels } = localeBySlug.get(route.path);
+      inner = localeToolBody(def, labels, labels === TR_LABELS ? `${def.h1} Nedir?` : labels.whatIs);
+      stats.locale++;
     } else if (toolsBySlug.has(slug)) {
       inner = toolBody(toolsBySlug.get(slug), toolContent[slug]);
       stats.tool++;

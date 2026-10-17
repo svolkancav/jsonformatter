@@ -15,7 +15,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { SITE, staticRoutes } from './routesSeo.mjs';
+import { SITE, staticRoutes, buildAlternates } from './routesSeo.mjs';
 import { createBodyBuilder } from './prerenderContent.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -61,7 +61,7 @@ function buildJsonLd(route) {
   return `<script type="application/ld+json">${JSON.stringify(page)}</script>`;
 }
 
-function renderRoute(template, route, body) {
+function renderRoute(template, route, body, alternates) {
   // Trailing slash for home to match the client SEO component and sitemap.xml.
   const url = SITE + route.path;
   let html = template;
@@ -74,6 +74,14 @@ function renderRoute(template, route, body) {
   html = setMeta(html, 'name', 'twitter:title', route.title);
   html = setMeta(html, 'name', 'twitter:description', route.description);
   html = setLink(html, 'canonical', url);
+  // Translations of the same page point at each other, so each language
+  // version can rank on its own instead of competing as a duplicate.
+  if (alternates) {
+    const tags = alternates
+      .map((a) => `    <link rel="alternate" hreflang="${a.hreflang}" href="${esc(a.href)}" />`)
+      .join('\n');
+    html = html.replace('</head>', `${tags}\n  </head>`);
+  }
   // Inject JSON-LD just before </head>.
   html = html.replace('</head>', `    ${buildJsonLd(route)}\n  </head>`);
   // Fill the mount point. React replaces this wholesale on load (main.tsx uses
@@ -82,8 +90,8 @@ function renderRoute(template, route, body) {
   return html;
 }
 
-function writeRoute(template, route, body) {
-  const html = renderRoute(template, route, body);
+function writeRoute(template, route, body, alternates) {
+  const html = renderRoute(template, route, body, alternates);
   const outDir = route.path === '/' ? distDir : join(distDir, route.path);
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'index.html'), html);
@@ -135,8 +143,10 @@ const blogRoutes = parseBlogRoutes();
 const allRoutes = [...staticRoutes, ...blogRoutes];
 
 const { build, stats } = await createBodyBuilder();
+const alternates = buildAlternates(SITE);
 
-for (const route of allRoutes) writeRoute(template, route, build(route));
+for (const route of allRoutes) writeRoute(template, route, build(route), alternates.get(route.path));
 
 console.log(`prerender: wrote ${allRoutes.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
-console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.fallback} title-only`);
+console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.locale} locale, ${stats.fallback} title-only`);
+console.log(`prerender: hreflang on ${allRoutes.filter((r) => alternates.has(r.path)).length} routes`);

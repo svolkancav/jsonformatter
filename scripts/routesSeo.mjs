@@ -7,6 +7,36 @@
 
 export const SITE = 'https://jsonformater.com';
 
+// Which URLs are the same page in another language. The locale data files do
+// not share a key across all three languages (trContent uses Turkish slugs as
+// its key, localeContent uses English ones), so the mapping is written out
+// rather than derived. Every page in a group gets a full set of hreflang
+// alternates, which is what stops Google reading the translations as
+// near-duplicates of the English page.
+export const localeGroups = [
+  { en: '/', tr: '/tr', de: '/de', es: '/es' },
+  { en: '/json-formatter', tr: '/tr/json-formatlayici', de: '/de/json-formatierer', es: '/es/formateador-json' },
+  { en: '/json-viewer', tr: '/tr/json-goruntuleyici', de: '/de/json-betrachter', es: '/es/visor-json' },
+  { en: '/json-to-csv', tr: '/tr/json-csv-cevirici', de: '/de/json-zu-csv', es: '/es/json-a-csv' },
+  { en: '/json-to-excel', tr: '/tr/json-excel-cevirici', de: '/de/json-zu-excel', es: '/es/json-a-excel' },
+  { en: '/json-validator', tr: '/tr/json-dogrulayici' },
+  { en: '/excel-to-json', tr: '/tr/excel-json-cevirici' },
+];
+
+/** path -> [{ hreflang, href }], including x-default pointing at English. */
+export function buildAlternates(site) {
+  const map = new Map();
+  for (const group of localeGroups) {
+    const links = Object.entries(group).map(([lang, path]) => ({
+      hreflang: lang,
+      href: site + (path === '/' ? '/' : path),
+    }));
+    links.push({ hreflang: 'x-default', href: site + (group.en === '/' ? '/' : group.en) });
+    for (const path of Object.values(group)) map.set(path, links);
+  }
+  return map;
+}
+
 export const staticRoutes = [
   {
     path: '/',
