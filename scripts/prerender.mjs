@@ -17,6 +17,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { SITE, staticRoutes, buildAlternates } from './routesSeo.mjs';
 import { createBodyBuilder } from './prerenderContent.mjs';
+import { writeSitemap } from './sitemap.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -145,8 +146,15 @@ const allRoutes = [...staticRoutes, ...blogRoutes];
 const { build, stats } = await createBodyBuilder();
 const alternates = buildAlternates(SITE);
 
-for (const route of allRoutes) writeRoute(template, route, build(route), alternates.get(route.path));
+const bodies = new Map(allRoutes.map((route) => [route.path, build(route)]));
+
+for (const route of allRoutes) writeRoute(template, route, bodies.get(route.path), alternates.get(route.path));
+
+// Built from the routes that were actually written, so the sitemap cannot fall
+// out of step with what exists.
+const sitemap = writeSitemap(SITE, allRoutes, (route) => bodies.get(route.path) ?? '', distDir);
 
 console.log(`prerender: wrote ${allRoutes.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
 console.log(`prerender: bodies — ${stats.tool} tool, ${stats.blog} blog, ${stats.listing} listing, ${stats.reference} reference, ${stats.locale} locale, ${stats.page} page, ${stats.fallback} title-only`);
 console.log(`prerender: hreflang on ${allRoutes.filter((r) => alternates.has(r.path)).length} routes`);
+console.log(`sitemap: ${sitemap.total} urls, ${sitemap.changed} with a new lastmod`);
