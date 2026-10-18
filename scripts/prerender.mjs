@@ -62,6 +62,53 @@ function buildJsonLd(route) {
   return `<script type="application/ld+json">${JSON.stringify(page)}</script>`;
 }
 
+// Section names for breadcrumb trails. Breadcrumbs are one of the few
+// structured-data types Google still renders in results — FAQ and HowTo rich
+// results were withdrawn for general sites in 2023 — so this is worth emitting
+// in the raw HTML rather than only client-side.
+const SEGMENT_LABELS = {
+  blog: 'Blog',
+  tools: 'Tools',
+  'sample-json': 'Sample JSON',
+  'json-errors': 'JSON Errors',
+  cheatsheet: 'Cheat Sheets',
+  glossary: 'Glossary',
+  tutorials: 'Tutorials',
+  tr: 'Türkçe',
+  de: 'Deutsch',
+  es: 'Español',
+};
+
+function buildBreadcrumbs(route) {
+  if (route.path === '/') return null;
+
+  const segments = route.path.split('/').filter(Boolean);
+  const items = [{ name: 'Home', url: SITE + '/' }];
+
+  segments.forEach((segment, index) => {
+    const isLast = index === segments.length - 1;
+    const url = SITE + '/' + segments.slice(0, index + 1).join('/');
+    // The leaf is named after the page itself; the SEO title carries a
+    // marketing suffix after a pipe that does not belong in a breadcrumb.
+    const name = isLast ? route.title.split('|')[0].trim() : SEGMENT_LABELS[segment];
+    if (!name) return;
+    items.push({ name, url });
+  });
+
+  if (items.length < 2) return null;
+
+  return `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  })}</script>`;
+}
+
 function renderRoute(template, route, body, alternates) {
   // Trailing slash for home to match the client SEO component and sitemap.xml.
   const url = SITE + route.path;
@@ -85,6 +132,8 @@ function renderRoute(template, route, body, alternates) {
   }
   // Inject JSON-LD just before </head>.
   html = html.replace('</head>', `    ${buildJsonLd(route)}\n  </head>`);
+  const crumbs = buildBreadcrumbs(route);
+  if (crumbs) html = html.replace('</head>', `    ${crumbs}\n  </head>`);
   // Fill the mount point. React replaces this wholesale on load (main.tsx uses
   // createRoot().render(), not hydrateRoot), so no markup match is required.
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
