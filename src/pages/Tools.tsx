@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { JsonFormatter } from '../components/JsonFormatter';
-import { CSharpGenerator } from '../components/CSharpGenerator';
 import { ExcelToJsonConverter } from '../components/ExcelToJsonConverter';
 import { JsonToExcelConverter } from '../components/JsonToExcelConverter';
 import { ToolNavigation, ToolType } from '../components/ToolNavigation';

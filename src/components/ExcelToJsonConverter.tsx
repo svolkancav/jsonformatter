@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Upload, Download, Copy, CheckCircle2, AlertCircle, FileSpreadsheet, FileText } from 'lucide-react';
+import { Upload, Download, Copy, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 

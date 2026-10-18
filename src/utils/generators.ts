@@ -355,10 +355,6 @@ export function generatePythonClasses(json: string, rootName: string = 'Root'): 
       return str.charAt(0).toUpperCase() + str.slice(1).replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
     }
 
-    function toSnakeCase(str: string): string {
-      return str.replace(/([A-Z])/g, '_$1').toLowerCase().replace(/^_/, '');
-    }
-
     function generateClass(obj: any, name: string): string {
       if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
         return '';
