@@ -96,8 +96,15 @@ export function AdSlot({ slotId, format = 'responsive' }: AdSlotProps) {
   // No consent: render nothing (no placeholder, no ad).
   if (!consent) return null;
 
-  // Consent given but no real slot id configured yet: show a dev placeholder.
+  // Consent given but no real slot id configured yet.
+  //
+  // In production this renders nothing. The placeholder below is a development
+  // aid and must never ship: with 81 placements and no ad units created, every
+  // visitor who accepted cookies saw two grey boxes per page reading
+  // "Ad placeholder: json_formatter_header". That reads as an unfinished site,
+  // which is the opposite of what an AdSense review needs to see.
   if (!adSlot) {
+    if (!import.meta.env.DEV) return null;
     return (
       <div className="my-4" aria-label="Advertisement">
         <div

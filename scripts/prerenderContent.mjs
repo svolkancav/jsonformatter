@@ -238,6 +238,11 @@ function localeToolBody(def, labels, whatIsHeading) {
 // first time someone edits one and not the other; this keeps the component the
 // single source of truth and leaves its layout untouched.
 const JSX_TEXT_PAGES = {
+  // The homepage carries real educational prose in JSX — "What is JSON?",
+  // syntax rules, JSON vs XML. An earlier version of this script rendered a
+  // tool listing here instead, which made the raw homepage a 92% duplicate of
+  // /tools and hid the text the page actually shows.
+  '/': 'src/pages/Home.tsx',
   '/about': 'src/pages/AboutPage.tsx',
   '/contact': 'src/pages/Contact.tsx',
   '/privacy-policy': 'src/pages/PrivacyPolicy.tsx',
@@ -371,7 +376,6 @@ export async function createBodyBuilder() {
   // Hub pages: the listing *is* the content, so render the same entries the
   // page shows rather than leaving them as a bare heading.
   const LISTINGS = {
-    '/': () => listBody('Free Online JSON Tools', 'Format, validate, convert and inspect JSON — plus everyday developer utilities. Everything runs in your browser.', toolGroups),
     '/tools': () => listBody('All Tools', 'Every tool on the site, grouped by what it does.', toolGroups),
     '/blog': () =>
       listBody('Blog', 'Guides and deep dives on JSON, data formats and the tools around them.', [
