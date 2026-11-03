@@ -253,14 +253,24 @@ const JSX_TEXT_PAGES = {
 
 const JSX_BLOCK = /<(h1|h2|h3|p|li)\b[^>]*>([\s\S]*?)<\/\1>/g;
 
-const cleanJsx = (raw) =>
-  raw
+const cleanJsx = (raw) => {
+  const text = raw
     .replace(/\{\s*'([^']*)'\s*\}/g, '$1') // {' '} and other string literals
     .replace(/\{[^{}]*\}/g, '') // remaining JSX expressions
     .replace(/<[^>]+>/g, ' ') // nested links and icons
     .replace(/&nbsp;/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+  if (text) return text;
+
+  // An element whose whole content is conditional — {tab === 'a' && 'Title A'}
+  // {tab === 'b' && 'Title B'} — strips to nothing, which is how the homepage
+  // ended up as the only page with no <h1>. Take the first branch: it is what
+  // the page shows in its initial state.
+  const firstBranch = raw.match(/&&\s*'([^']+)'/);
+  return firstBranch ? firstBranch[1].trim() : '';
+};
 
 function jsxPageBody(relPath) {
   const file = join(root, relPath);
